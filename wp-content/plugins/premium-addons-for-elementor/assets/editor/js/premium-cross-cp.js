@@ -23,17 +23,19 @@
                 l = {
                     index: 0
                 };
+
             switch (f) {
                 case "section":
+                case "container":
                     j.elements = a(g.elements), k = elementor.getPreviewContainer();
                     break;
                 case "column":
                     j.elements = a(g.elements);
-                    "section" === e ? k = d.getContainer() : "column" === e ? (k = d.getContainer().parent, l.index = d.getOption("_index") + 1) : "widget" === e ? (k = d.getContainer().parent.parent, l.index = d.getContainer().parent.view.getOption("_index") + 1) : void 0;
+                    ("section" === e || "container" === e) ? k = d.getContainer() : "column" === e ? (k = d.getContainer().parent, l.index = d.getOption("_index") + 1) : "widget" === e ? (k = d.getContainer().parent.parent, l.index = d.getContainer().parent.view.getOption("_index") + 1) : void 0;
                     break;
                 case "widget":
                     j.widgetType = b.eletype, k = d.getContainer();
-                    "section" === e ? k = d.children.findByIndex(0).getContainer() : "column" === e ? k = d.getContainer() : "widget" === e ? (k = d.getContainer().parent, e.index = d.getOption("_index") + 1, l.index = d.getOption("_index") + 1) : void 0;
+                    ("section" === e) ? k = d.children.findByIndex(0).getContainer() : "column" === e ? k = d.getContainer() : "widget" === e ? (k = d.getContainer().parent, e.index = d.getOption("_index") + 1, l.index = d.getOption("_index") + 1) : void 0;
             }
             var m = $e.run("document/elements/create", {
                 model: j,
@@ -96,7 +98,7 @@
         iframeUrl: "https://leap13.github.io/pa-cdcp/",
         initCallback: function () { }
     });
-    var c = ["section", "column", "widget"],
+    var c = ["section", "column", "widget", "container"],
         d = [];
     c.forEach(function (a, e) {
         elementor.hooks.addFilter("elements/" + c[e] + "/contextMenuGroups", function (a, f) {
@@ -104,7 +106,7 @@
                 name: "premium_" + c[e],
                 actions: [{
                     name: "premium_addons_copy",
-                    title: "PA | Copy Section",
+                    title: "PA | Copy Element",
                     icon: "pa-dash-icon",
                     callback: function () {
                         var a = {};
@@ -112,7 +114,7 @@
                     }
                 }, {
                     name: "premium_addons_paste",
-                    title: "PA | Paste Section",
+                    title: "PA | Paste Element",
                     icon: "pa-dash-icon",
                     callback: function () {
                         xdLocalStorage.getItem("premium-c-p-element", function (a) {

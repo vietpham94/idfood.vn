@@ -1104,7 +1104,10 @@ class Premium_Progressbar extends Widget_Base {
 		$settings = $this->get_settings_for_display();
 
 		$this->add_inline_editing_attributes( 'premium_progressbar_left_label' );
+		$this->add_render_attribute( 'premium_progressbar_left_label', 'class', 'premium-progressbar-left-label' );
+
 		$this->add_inline_editing_attributes( 'premium_progressbar_right_label' );
+		$this->add_render_attribute( 'premium_progressbar_right_label', 'class', 'premium-progressbar-right-label' );
 
 		$length = isset( $settings['premium_progressbar_progress_percentage']['size'] ) ? $settings['premium_progressbar_progress_percentage']['size'] : $settings['premium_progressbar_progress_percentage'];
 
@@ -1169,11 +1172,11 @@ class Premium_Progressbar extends Widget_Base {
 	<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'progressbar' ) ); ?>>
 
 		<?php if ( 'left_right_labels' === $settings['premium_progressbar_select_label'] ) : ?>
-			<p class="premium-progressbar-left-label">
-				<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_progressbar_left_label' ) ); ?>><?php echo wp_kses_post( $settings['premium_progressbar_left_label'] ); ?></span>
+			<p <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_progressbar_left_label' ) ); ?>>
+				<?php echo wp_kses_post( $settings['premium_progressbar_left_label'] ); ?>
 			</p>
-			<p class="premium-progressbar-right-label">
-				<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_progressbar_right_label' ) ); ?>><?php echo wp_kses_post( $settings['premium_progressbar_right_label'] ); ?></span>
+			<p <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_progressbar_right_label' ) ); ?>>
+				<?php echo wp_kses_post( $settings['premium_progressbar_right_label'] ); ?>
 			</p>
 		<?php endif; ?>
 
@@ -1241,7 +1244,9 @@ class Premium_Progressbar extends Widget_Base {
 			</div>
 		<?php endif; ?>
 
-		<div class="clearfix"></div>
+		<?php if ( 'circle' !== $type ) : ?>
+			<div class="clearfix"></div>
+		<?php endif; ?>
 		<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'wrap' ) ); ?>>
 			<?php if ( 'line' === $type ) : ?>
 				<div class="premium-progressbar-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
@@ -1269,15 +1274,13 @@ class Premium_Progressbar extends Widget_Base {
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'progress_lottie' ) ); ?>></div>
 						<?php endif; ?>
 					<?php endif; ?>
-				<p class="premium-progressbar-left-label">
-					<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_progressbar_left_label' ) ); ?>>
-						<?php echo wp_kses_post( $settings['premium_progressbar_left_label'] ); ?>
-					</span>
+				<p <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_progressbar_left_label' ) ); ?>>
+					<?php echo wp_kses_post( $settings['premium_progressbar_left_label'] ); ?>
 				</p>
 				<?php if ( 'yes' === $settings['show_percentage_value'] ) : ?>
-					<p class="premium-progressbar-right-label">
-						<span <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_progressbar_right_label' ) ); ?>>0%</span>
-					</p>
+					<?php if ( 'yes' === $settings['show_percentage_value'] ) : ?>
+						<p <?php echo wp_kses_post( $this->get_render_attribute_string( 'premium_progressbar_right_label' ) ); ?>>0%</p>
+					<?php endif; ?>
 				<?php endif; ?>
 				</div>
 			<?php endif; ?>

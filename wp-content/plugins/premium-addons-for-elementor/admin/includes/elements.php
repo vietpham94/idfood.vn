@@ -1102,6 +1102,9 @@ $elements = array(
 			array(
 				'key' => 'premium-duplicator',
 			),
+			array(
+				'key' => 'premium-assets-generator',
+			),
 		),
 	),
 );

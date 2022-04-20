@@ -190,10 +190,32 @@ class Premium_Vscroll extends Widget_Base {
 		$temp_repeater = new REPEATER();
 
 		$temp_repeater->add_control(
+			'live_temp_content',
+			array(
+				'label'       => __( 'Template Title', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'classes'     => 'premium-live-temp-title control-hidden',
+				'label_block' => true,
+			)
+		);
+
+		$temp_repeater->add_control(
+			'section_template_live',
+			array(
+				'type'        => Controls_Manager::BUTTON,
+				'label_block' => true,
+				'button_type' => 'default papro-btn-block',
+				'text'        => __( 'Create / Edit Template', 'premium-addons-for-elementor' ),
+				'event'       => 'createLiveTemp',
+			)
+		);
+
+		$temp_repeater->add_control(
 			'section_template',
 			array(
-				'label'       => __( 'Elementor Template', 'premium-addons-for-elementor' ),
+				'label'       => __( 'OR Select Existing Template', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SELECT2,
+				'classes'     => 'premium-live-temp-label',
 				'options'     => $this->getTemplateInstance()->get_elementor_page_list(),
 				'multiple'    => false,
 				'label_block' => true,
@@ -219,7 +241,7 @@ class Premium_Vscroll extends Widget_Base {
 				'condition'   => array(
 					'content_type' => 'templates',
 				),
-				'title_field' => '{{{ section_template }}}',
+				'title_field' => '{{{  "" !== section_template ? section_template : "Live Template" }}}',
 			)
 		);
 
@@ -1157,6 +1179,7 @@ class Premium_Vscroll extends Widget_Base {
 					<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'vscroll_sections_wrap' ) ); ?>>
 
 						<?php
+						$temp_id = '';
 						foreach ( $templates as $index => $section ) :
 							$section_id = $this->get_template_id( $index );
 
@@ -1173,8 +1196,8 @@ class Premium_Vscroll extends Widget_Base {
 							?>
 							<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'section_' . $index ) ); ?>>
 								<?php
-									$template_title = $section['section_template'];
-									echo $this->getTemplateInstance()->get_template_content( $template_title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									$temp_id = empty( $section['section_template'] ) ? $section['live_temp_content'] : $section['section_template'];
+									echo $this->getTemplateInstance()->get_template_content( $temp_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								?>
 							</div>
 						<?php endforeach; ?>

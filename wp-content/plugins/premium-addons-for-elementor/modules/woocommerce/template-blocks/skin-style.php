@@ -186,7 +186,7 @@ abstract class Skin_Style {
 		$this->add_render_attribute(
 			'wrapper',
 			array(
-				// 'class'             => 'premium-woo-dots-' . $settings['dots_position'],
+				'class'             => 'premium-woo-hidden',
 				'data-woo_carousel' => wp_json_encode( $slick_options ),
 			)
 		);

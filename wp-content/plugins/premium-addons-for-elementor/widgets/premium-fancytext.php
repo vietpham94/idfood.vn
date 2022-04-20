@@ -979,7 +979,7 @@ class Premium_Fancytext extends Widget_Base {
 			<?php endif; ?>
 
 		<?php if ( 'typing' === $effect ) : ?>
-			<span class="premium-fancy-text"></span>
+			<span id="<?php echo esc_attr( 'premium-fancy-text-' . $this->get_id() ); ?>" class="premium-fancy-text"></span>
 		<?php elseif ( 'auto-fade' === $effect ) : ?>
 			<span class="premium-fancy-text">
 				<svg class="premium-fancy-svg-text" viewBox="0 -200 1500 400" width="100%" height="100%" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
@@ -1136,7 +1136,7 @@ class Premium_Fancytext extends Widget_Base {
 				<span class="premium-prefix-text"><span {{{ view.getRenderAttributeString('prefix') }}}>{{{ settings.premium_fancy_prefix_text }}}</span></span>
 
 			<# if ( 'typing' === effect ) { #>
-				<span class="premium-fancy-text"></span>
+				<span id="premium-fancy-text-{{{view.getID()}}}" class="premium-fancy-text"></span>
 			<# } else if ( 'auto-fade' === effect ) { #>
 				<span class="premium-fancy-text" >
 				<svg class="premium-fancy-svg-text" viewBox="0 -200 1500 400" width="100%" height="100%" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" >

@@ -12,6 +12,7 @@ function mfpd_create_menu()
     add_action('admin_init', 'register_firebase_settings');
 }
 
+// Form setting firebase token
 function firebase_settings_page()
 {
     ?>
@@ -32,14 +33,9 @@ function firebase_settings_page()
     </div>
 <?php }
 
-// Push notification to client device
-function push_notification(int $handler_user_id, int $order_id, $notification = array())
+// Push order notification to Supplier
+function push_order_notification(int $handler_user_id, int $order_id, $notification = array())
 {
-    $apiAccessKey = get_option('firebase_token');
-    if (empty($apiAccessKey)) {
-        return;
-    }
-
     if (empty($notification)) {
         $notification = array(
             'title' => 'Đơn đặt hàng mới',
@@ -49,20 +45,63 @@ function push_notification(int $handler_user_id, int $order_id, $notification = 
         );
     }
 
-    $fcmUrl = 'https://fcm.googleapis.com/fcm/send';
     $firebase_token = get_user_meta($handler_user_id, 'firebase_token', true);
-
     if (empty($firebase_token)) {
         return;
     }
 
+    if (empty($order_id)) {
+        return;
+    }
+
+    $receiver_tokens = array($firebase_token);
+    $data_attached = array('order_id' => $order_id);
+
+    push_notifications($receiver_tokens, $notification, $data_attached);
+
+    $notification_data = array(
+        'post_title' => $notification['title'],
+        'post_type' => 'notification',
+        'post_content' => $notification['body']
+    );
+    $notification_id = wp_insert_post($notification_data);
+
+    if ($notification_id) {
+        update_field('order_id', $order_id, [$notification_id]);
+        update_field('receiver_id', $handler_user_id, [$notification_id]);
+        update_field('status', 0, [$notification_id]);
+        update_field('type', 'order', [$notification_id]);
+    }
+}
+
+// Push notifications Firebase
+function push_notifications(array $receiver_tokens, $notification = array(), $data_attached = array())
+{
+    $apiAccessKey = get_option('firebase_token');
+    if (empty($apiAccessKey)) {
+        return;
+    }
+
+    if (empty($notification)) {
+        return;
+    }
+
+    if (empty($receiver_tokens)) {
+        return;
+    }
+
+    $fcmUrl = 'https://fcm.googleapis.com/fcm/send';
     $fcmNotification = [
-        //'registration_ids' => $tokenList, //multiple token array
-        'to' => $firebase_token, //single token
         'notification' => $notification,
-        "priority" => "high",
-        'data' => ['order_id' => $order_id]
+        'priority' => "high",
+        'data' => $data_attached
     ];
+
+    if (sizeof($receiver_tokens) == 1) {
+        $fcmNotification['to'] = $receiver_tokens[0];
+    } else {
+        $fcmNotification['registration_ids'] = $receiver_tokens;
+    }
 
     $headers = array('Authorization: Bearer ' . $apiAccessKey, 'Content-Type: application/json; UTF-8');
 
@@ -76,26 +115,5 @@ function push_notification(int $handler_user_id, int $order_id, $notification = 
     $result = curl_exec($ch);
     write_log(__FILE__ . ':77 ' . $result);
     curl_close($ch);
-
-    $notification = array(
-        'title' => $notification['title'],
-        'body' => $notification['body'],
-        'receiver_id' => $handler_user_id,
-        'order_id' => $order_id
-    );
-    notifications_install_data($notification);
-
     return $result;
-}
-
-// Save notification to database
-function notifications_install_data($data)
-{
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'notifications';
-    $query = $wpdb->prepare('SHOW TABLES LIKE %s', $wpdb->esc_like($table_name));
-
-    if ($wpdb->get_var($query) == $table_name) {
-        $wpdb->insert($table_name, $data);
-    }
 }

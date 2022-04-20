@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Premium Addons for Elementor\n"
-"POT-Creation-Date: 2022-02-09 16:56+0200\n"
+"POT-Creation-Date: 2022-03-17 13:44+0200\n"
 "PO-Revision-Date: 2018-02-15 10:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: Leap13\n"
@@ -22,98 +22,102 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-3: wpcs\n"
 "X-Poedit-SearchPathExcluded-4: vendor\n"
 
-#: admin/includes/admin-helper.php:263 admin/includes/admin-helper.php:846
+#: admin/includes/admin-helper.php:267 admin/includes/admin-helper.php:906
 #: admin/includes/templates/version-control.php:22
 msgid "Rollback to Previous Version"
 msgstr ""
 
-#: admin/includes/admin-helper.php:265 admin/includes/admin-helper.php:275
+#: admin/includes/admin-helper.php:269 admin/includes/admin-helper.php:279
 #, php-format
 msgid "Are you sure you want to reinstall version %s?"
 msgstr ""
 
-#: admin/includes/admin-helper.php:266
+#: admin/includes/admin-helper.php:270
 msgid "Continue"
 msgstr ""
 
-#: admin/includes/admin-helper.php:267
+#: admin/includes/admin-helper.php:271
 msgid "Cancel"
 msgstr ""
 
-#: admin/includes/admin-helper.php:301
+#: admin/includes/admin-helper.php:305
 msgid "Settings"
 msgstr ""
 
-#: admin/includes/admin-helper.php:303
+#: admin/includes/admin-helper.php:307
 #: admin/includes/templates/version-control.php:28
 msgid "Rollback to Version "
 msgstr ""
 
-#: admin/includes/admin-helper.php:311 assets/editor/js/editor.js:296
+#: admin/includes/admin-helper.php:315 assets/editor/js/editor.js:296
 msgid "Go Pro"
 msgstr ""
 
-#: admin/includes/admin-helper.php:346
+#: admin/includes/admin-helper.php:350
 msgid "View Premium Addons for Elementor Documentation"
 msgstr ""
 
-#: admin/includes/admin-helper.php:346
+#: admin/includes/admin-helper.php:350
 msgid "Docs & FAQs"
 msgstr ""
 
-#: admin/includes/admin-helper.php:347
+#: admin/includes/admin-helper.php:351
 msgid "View Premium Addons Video Tutorials"
 msgstr ""
 
-#: admin/includes/admin-helper.php:347
+#: admin/includes/admin-helper.php:351
 msgid "Video Tutorials"
 msgstr ""
 
-#: admin/includes/admin-helper.php:387
+#: admin/includes/admin-helper.php:391
 #: modules/woocommerce/widgets/woo-products.php:234
-#: modules/woocommerce/widgets/woo-products.php:1181
+#: modules/woocommerce/widgets/woo-products.php:1184
 #: widgets/premium-banner.php:625 widgets/premium-blog.php:158
 #: widgets/premium-grid.php:1320
 msgid "General"
 msgstr ""
 
-#: admin/includes/admin-helper.php:394
+#: admin/includes/admin-helper.php:398
 msgid "Widgets & Add-ons"
 msgstr ""
 
-#: admin/includes/admin-helper.php:401
+#: admin/includes/admin-helper.php:405
 msgid "Global Features"
 msgstr ""
 
-#: admin/includes/admin-helper.php:408 widgets/premium-videobox.php:2839
+#: admin/includes/admin-helper.php:412 widgets/premium-videobox.php:3247
 msgid "Integrations"
 msgstr ""
 
-#: admin/includes/admin-helper.php:415
+#: admin/includes/admin-helper.php:419
 msgid "Version Control"
 msgstr ""
 
-#: admin/includes/admin-helper.php:422
+#: admin/includes/admin-helper.php:426
 msgid "White Labeling"
 msgstr ""
 
-#: admin/includes/admin-helper.php:429
+#: admin/includes/admin-helper.php:433
 msgid "System Info"
 msgstr ""
 
-#: admin/includes/admin-helper.php:553
+#: admin/includes/admin-helper.php:557
 msgid "Get Premium Addons PRO"
 msgstr ""
 
-#: admin/includes/admin-helper.php:558
+#: admin/includes/admin-helper.php:562
 #, php-format
 msgid ""
 "Supercharge your Elementor with %1$sPRO Widgets & Addons%2$s that you won't "
 "find anywhere else."
 msgstr ""
 
-#: admin/includes/admin-helper.php:564
+#: admin/includes/admin-helper.php:568
 msgid "Get PRO"
+msgstr ""
+
+#: admin/includes/admin-helper.php:952
+msgid "You are not allowed to do this action"
 msgstr ""
 
 #: admin/includes/admin-notices.php:154
@@ -159,17 +163,13 @@ msgid "Maybe Later"
 msgstr ""
 
 #: admin/includes/admin-notices.php:259
-msgid "Five NEW skins for "
+msgid "Premium Badge Global Addon"
 msgstr ""
 
 #: admin/includes/admin-notices.php:260
-msgid "Premium WooCommerce Products Listing widget"
-msgstr ""
-
-#: admin/includes/admin-notices.php:261
 #, php-format
 msgid ""
-"are now available in Premium Addons Pro. <a href=\"%s\" target=\"_blank"
+"is now available in Premium Addons Pro. <a href=\"%s\" target=\"_blank"
 "\">Check it out now!</a>"
 msgstr ""
 
@@ -193,7 +193,7 @@ msgstr ""
 
 #: admin/includes/elements.php:26 admin/includes/elements.php:559
 #: modules/woocommerce/widgets/woo-products.php:265
-#: modules/woocommerce/widgets/woo-products.php:1596
+#: modules/woocommerce/widgets/woo-products.php:1634
 #: widgets/premium-blog.php:1180 widgets/premium-carousel.php:57
 #: widgets/premium-carousel.php:159 widgets/premium-person.php:1021
 #: widgets/premium-person.php:1634
@@ -277,8 +277,8 @@ msgid "Image Accordion"
 msgstr ""
 
 #: admin/includes/elements.php:169 admin/includes/elements.php:694
-#: widgets/premium-videobox.php:53 widgets/premium-videobox.php:144
-#: widgets/premium-videobox.php:1430
+#: widgets/premium-videobox.php:53 widgets/premium-videobox.php:146
+#: widgets/premium-videobox.php:1564
 msgid "Video Box"
 msgstr ""
 
@@ -300,7 +300,7 @@ msgid "Multi Scroll"
 msgstr ""
 
 #: admin/includes/elements.php:224 admin/includes/elements.php:749
-#: widgets/premium-vscroll.php:489
+#: widgets/premium-vscroll.php:511
 msgid "Parallax"
 msgstr ""
 
@@ -322,7 +322,7 @@ msgid "Blob Generator"
 msgstr ""
 
 #: admin/includes/elements.php:268 admin/includes/elements.php:799
-#: widgets/premium-modalbox.php:74 widgets/premium-modalbox.php:1528
+#: widgets/premium-modalbox.php:74 widgets/premium-modalbox.php:1549
 msgid "Modal Box"
 msgstr ""
 
@@ -374,7 +374,7 @@ msgstr ""
 #: widgets/premium-button.php:150 widgets/premium-button.php:740
 #: widgets/premium-contactform.php:263 widgets/premium-contactform.php:513
 #: widgets/premium-image-button.php:151 widgets/premium-image-button.php:689
-#: widgets/premium-modalbox.php:451 widgets/premium-pricing-table.php:608
+#: widgets/premium-modalbox.php:472 widgets/premium-pricing-table.php:608
 #: widgets/premium-pricing-table.php:925 widgets/premium-pricing-table.php:1927
 msgid "Button"
 msgstr ""
@@ -500,73 +500,83 @@ msgstr ""
 msgid "Rolling Back to Version "
 msgstr ""
 
-#: admin/includes/templates/features.php:28
+#: admin/includes/templates/features.php:29
 #: includes/templates/scripts/template-modal-header-logo.php:13
-#: widgets/premium-carousel.php:180 widgets/premium-carousel.php:217
+#: widgets/premium-carousel.php:180 widgets/premium-carousel.php:240
 msgid "Templates"
 msgstr ""
 
-#: admin/includes/templates/features.php:29
+#: admin/includes/templates/features.php:30
 msgid ""
 "Build Professional Website in Minutes Using Our Pre-Made Premium Elementor "
 "Templates."
 msgstr ""
 
-#: admin/includes/templates/features.php:43
+#: admin/includes/templates/features.php:47
 #: modules/premium-equal-height/module.php:98 widgets/premium-blog.php:241
 #: widgets/premium-person.php:399
 msgid "Equal Height"
 msgstr ""
 
-#: admin/includes/templates/features.php:44
+#: admin/includes/templates/features.php:48
 msgid "Make your widgets the same height with just ONE click."
 msgstr ""
 
-#: admin/includes/templates/features.php:58
+#: admin/includes/templates/features.php:65
 msgid "Custom Mouse Cursor"
 msgstr ""
 
-#: admin/includes/templates/features.php:59
+#: admin/includes/templates/features.php:66
 msgid ""
 "Change the default mouse cursor with icon, image, or Lottie animation for "
 "any Elementor section, column, or widget."
 msgstr ""
 
-#: admin/includes/templates/features.php:79
+#: admin/includes/templates/features.php:89
+msgid "Global Badge"
+msgstr ""
+
+#: admin/includes/templates/features.php:90
+msgid ""
+"Add icon, image, Lottie, or SVG blob shape badge to any Elementor section, "
+"column, or widget."
+msgstr ""
+
+#: admin/includes/templates/features.php:113
 #: modules/pa-display-conditions/module.php:65
 msgid "Display Conditions"
 msgstr ""
 
-#: admin/includes/templates/features.php:80
+#: admin/includes/templates/features.php:114
 msgid ""
 "Show/hide content dynamically based on location, browser, operating system, "
 "user role, device type, Woocommerce, ACF, etc."
 msgstr ""
 
-#: admin/includes/templates/features.php:94
+#: admin/includes/templates/features.php:131
 #: modules/premium-section-floating-effects/module.php:102
 msgid "Floating Effects"
 msgstr ""
 
-#: admin/includes/templates/features.php:95
+#: admin/includes/templates/features.php:132
 msgid ""
 "Apply advanced floating effects on any Elementor element or a custom CSS "
 "selector."
 msgstr ""
 
-#: admin/includes/templates/features.php:109
+#: admin/includes/templates/features.php:149
 msgid "Cross-Domain Copy N’ Paste"
 msgstr ""
 
-#: admin/includes/templates/features.php:110
+#: admin/includes/templates/features.php:150
 msgid "Copy any Elementor content from site to another in just ONE click."
 msgstr ""
 
-#: admin/includes/templates/features.php:124
+#: admin/includes/templates/features.php:167
 msgid "Duplicator"
 msgstr ""
 
-#: admin/includes/templates/features.php:125
+#: admin/includes/templates/features.php:168
 msgid "Duplicate any post, page or template on your website."
 msgstr ""
 
@@ -631,43 +641,53 @@ msgstr ""
 msgid "This will load the JS file for markers clusters."
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:32
+#: admin/includes/templates/modules-settings.php:33
+msgid "Dynamic Assets Generate"
+msgstr ""
+
+#: admin/includes/templates/modules-settings.php:34
+msgid ""
+"Generates CSS/JS files dynamically for each page based on the elements in "
+"it. Enable this setting for better performance (recommended)."
+msgstr ""
+
+#: admin/includes/templates/modules-settings.php:50
 msgid "Master Switch"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:33
+#: admin/includes/templates/modules-settings.php:51
 msgid "Use this to switch on or off ALL Widgets & Add-ons at once."
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:37
+#: admin/includes/templates/modules-settings.php:55
 msgid "Switch On"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:38
+#: admin/includes/templates/modules-settings.php:56
 msgid "Switch Off"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:40
+#: admin/includes/templates/modules-settings.php:58
 msgid "Disable Unused Widgets"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:102
+#: admin/includes/templates/modules-settings.php:120
 msgid "("
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:106
+#: admin/includes/templates/modules-settings.php:124
 msgid "pro"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:113
+#: admin/includes/templates/modules-settings.php:131
 msgid "Live Demo"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:119
+#: admin/includes/templates/modules-settings.php:137
 msgid "Docs"
 msgstr ""
 
-#: admin/includes/templates/modules-settings.php:127
+#: admin/includes/templates/modules-settings.php:145
 msgid "Video Tutorial"
 msgstr ""
 
@@ -830,34 +850,77 @@ msgid ""
 "sites faster and better."
 msgstr ""
 
+#: assets/frontend/min-js/TweenMax.min.js:1
+msgid "Linear,Quad,Cubic,Quart,Quint,Strong"
+msgstr ""
+
+#: assets/frontend/min-js/TweenMax.min.js:1
+msgid "onComplete,onUpdate,onStart,onRepeat,onReverseComplete,onInterrupt"
+msgstr ""
+
+#: assets/frontend/min-js/TweenMax.min.js:1
+msgid "staggerTo,staggerFrom,staggerFromTo"
+msgstr ""
+
+#: assets/frontend/min-js/TweenMax.min.js:1
+msgid ""
+"parent,duration,ease,delay,overwrite,runBackwards,startAt,yoyo,"
+"immediateRender,repeat,repeatDelay,data,paused,reversed,lazy,callbackScope,"
+"stringFilter,id,yoyoEase,stagger,inherit,repeatRefresh,keyframes,autoRevert,"
+"scrollTrigger"
+msgstr ""
+
+#: assets/frontend/min-js/TweenMax.min.js:1
+msgid "to,from,fromTo,delayedCall,set,killTweensOf"
+msgstr ""
+
+#: assets/frontend/min-js/TweenMax.min.js:1
+msgid "padding,margin,Width,Radius"
+msgstr ""
+
+#: assets/frontend/min-js/TweenMax.min.js:1
+msgid "x,y,z,scale,scaleX,scaleY,xPercent,yPercent,"
+msgstr ""
+
+#: assets/frontend/min-js/TweenMax.min.js:1
+msgid ""
+"0:translateX,1:translateY,2:translateZ,8:rotate,8:rotationZ,8:rotateZ,9:"
+"rotateX,10:rotateY"
+msgstr ""
+
+#: assets/frontend/min-js/TweenMax.min.js:1
+msgid ""
+"x,y,z,top,right,bottom,left,width,height,fontSize,padding,margin,perspective"
+msgstr ""
+
 #: includes/addons-cross-cp.php:49
-msgid "Not a Valid"
+msgid "Not a valid user"
 msgstr ""
 
 #: includes/addons-cross-cp.php:57
 msgid "Empty Content."
 msgstr ""
 
-#: includes/class-premium-template-tags.php:270
-#: includes/class-premium-template-tags.php:309
+#: includes/class-premium-template-tags.php:275
+#: includes/class-premium-template-tags.php:314
 msgid "Empty Post Type."
 msgstr ""
 
-#: includes/class-premium-template-tags.php:761
+#: includes/class-premium-template-tags.php:768
 msgid "No Comments"
 msgstr ""
 
-#: includes/class-premium-template-tags.php:762
+#: includes/class-premium-template-tags.php:769
 msgid "1 Comment"
 msgstr ""
 
-#: includes/class-premium-template-tags.php:763
+#: includes/class-premium-template-tags.php:770
 msgid "% Comments"
 msgstr ""
 
-#: includes/class-premium-template-tags.php:1116
-#: modules/woocommerce/widgets/woo-products.php:808
-#: modules/woocommerce/widgets/woo-products.php:1389
+#: includes/class-premium-template-tags.php:1126
+#: modules/woocommerce/widgets/woo-products.php:811
+#: modules/woocommerce/widgets/woo-products.php:1427
 #: widgets/premium-blog.php:1332 widgets/premium-blog.php:2494
 msgid "Pagination"
 msgstr ""
@@ -1250,7 +1313,7 @@ msgstr ""
 
 #: includes/helper-functions.php:185 includes/helper-functions.php:195
 #: widgets/premium-button.php:160 widgets/premium-image-button.php:161
-#: widgets/premium-modalbox.php:466 widgets/premium-modalbox.php:666
+#: widgets/premium-modalbox.php:487 widgets/premium-modalbox.php:687
 msgid "Premium Addons"
 msgstr ""
 
@@ -1471,33 +1534,33 @@ msgstr ""
 msgid "Chinese (traditional)"
 msgstr ""
 
-#: includes/helper-functions.php:799
+#: includes/helper-functions.php:782
 #: includes/pa-display-conditions/conditions/device.php:39
-#: widgets/premium-videobox.php:682
+#: widgets/premium-videobox.php:690
 msgid "Desktop"
 msgstr ""
 
-#: includes/helper-functions.php:800 widgets/premium-videobox.php:683
+#: includes/helper-functions.php:783 widgets/premium-videobox.php:691
 msgid "Tablet"
 msgstr ""
 
-#: includes/helper-functions.php:801 widgets/premium-videobox.php:684
+#: includes/helper-functions.php:784 widgets/premium-videobox.php:692
 msgid "Mobile"
 msgstr ""
 
-#: includes/helper-functions.php:812
+#: includes/helper-functions.php:795
 msgid "Widescreen"
 msgstr ""
 
-#: includes/helper-functions.php:813
+#: includes/helper-functions.php:796
 msgid "Laptop"
 msgstr ""
 
-#: includes/helper-functions.php:814
+#: includes/helper-functions.php:797
 msgid "Tablet Extra"
 msgstr ""
 
-#: includes/helper-functions.php:815
+#: includes/helper-functions.php:798
 msgid "Mobile Extra"
 msgstr ""
 
@@ -1742,8 +1805,8 @@ msgid "Set the minimum amount in the cart to be checked."
 msgstr ""
 
 #: includes/pa-display-conditions/conditions/woo-total-price.php:56
-#: modules/woocommerce/widgets/woo-products.php:624
-#: widgets/premium-blog.php:319 widgets/premium-videobox.php:219
+#: modules/woocommerce/widgets/woo-products.php:627
+#: widgets/premium-blog.php:319 widgets/premium-videobox.php:222
 msgid "Source"
 msgstr ""
 
@@ -1776,12 +1839,12 @@ msgid "Date & Time"
 msgstr ""
 
 #: includes/pa-display-conditions/pa-controls-handler.php:95
-#: widgets/premium-countdown.php:313 widgets/premium-videobox.php:274
+#: widgets/premium-countdown.php:313 widgets/premium-videobox.php:277
 msgid "Day"
 msgstr ""
 
 #: includes/pa-display-conditions/pa-controls-handler.php:96
-#: modules/woocommerce/widgets/woo-products.php:753
+#: modules/woocommerce/widgets/woo-products.php:756
 #: widgets/premium-blog.php:510
 msgid "Date"
 msgstr ""
@@ -1854,7 +1917,7 @@ msgstr ""
 msgid "Get Pro"
 msgstr ""
 
-#: includes/templates/classes/manager.php:183 widgets/premium-blog.php:1126
+#: includes/templates/classes/manager.php:179 widgets/premium-blog.php:1126
 #: widgets/premium-grid.php:460
 msgid "All"
 msgstr ""
@@ -1873,13 +1936,21 @@ msgid "Back to Library"
 msgstr ""
 
 #: includes/templates/scripts/template-modal-header.php:10
-#: widgets/premium-modalbox.php:381
+#: widgets/premium-modalbox.php:402
 msgid "Close"
 msgstr ""
 
-#: includes/templates/scripts/template-modal-insert-button.php:11
+#: includes/templates/scripts/template-modal-insert-button.php:12
+msgid "INSERT w/o Images"
+msgstr ""
+
+#: includes/templates/scripts/template-modal-insert-button.php:20
+#: includes/templates/scripts/template-modal-item.php:24
+msgid "Insert Template"
+msgstr ""
+
 #: includes/templates/scripts/template-modal-item.php:20
-msgid "Insert"
+msgid "Insert w/o Images"
 msgstr ""
 
 #: includes/templates/scripts/template-modal-keywords.php:10
@@ -1894,8 +1965,8 @@ msgstr ""
 msgid "Loading"
 msgstr ""
 
-#: includes/templates/types/section.php:25 widgets/premium-vscroll.php:216
-#: widgets/premium-vscroll.php:240
+#: includes/templates/types/section.php:25 widgets/premium-vscroll.php:238
+#: widgets/premium-vscroll.php:262
 msgid "Sections"
 msgstr ""
 
@@ -1911,12 +1982,12 @@ msgstr ""
 #: widgets/premium-button.php:157 widgets/premium-dual-header.php:391
 #: widgets/premium-fancytext.php:203 widgets/premium-icon-list.php:199
 #: widgets/premium-icon-list.php:242 widgets/premium-image-button.php:158
-#: widgets/premium-modalbox.php:380 widgets/premium-modalbox.php:453
-#: widgets/premium-modalbox.php:662 widgets/premium-pricing-table.php:257
+#: widgets/premium-modalbox.php:401 widgets/premium-modalbox.php:474
+#: widgets/premium-modalbox.php:683 widgets/premium-pricing-table.php:257
 #: widgets/premium-pricing-table.php:376 widgets/premium-pricing-table.php:618
 #: widgets/premium-pricing-table.php:697 widgets/premium-pricing-table.php:1559
 #: widgets/premium-pricing-table.php:1844 widgets/premium-title.php:640
-#: widgets/premium-videobox.php:769 widgets/premium-videobox.php:1321
+#: widgets/premium-videobox.php:777 widgets/premium-videobox.php:1455
 msgid "Text"
 msgstr ""
 
@@ -1993,9 +2064,9 @@ msgid "Any Condition is Met"
 msgstr ""
 
 #: modules/pa-display-conditions/module.php:176
-#: modules/woocommerce/widgets/woo-products.php:827
-#: modules/woocommerce/widgets/woo-products.php:934
-#: widgets/premium-carousel.php:230 widgets/premium-countdown.php:172
+#: modules/woocommerce/widgets/woo-products.php:830
+#: modules/woocommerce/widgets/woo-products.php:937
+#: widgets/premium-carousel.php:253 widgets/premium-countdown.php:172
 #: widgets/premium-grid.php:669 widgets/premium-pricing-table.php:682
 #: widgets/premium-progressbar.php:147
 msgid "Type"
@@ -2096,9 +2167,9 @@ msgid "Motion"
 msgstr ""
 
 #: modules/premium-section-floating-effects/module.php:177
-#: modules/woocommerce/widgets/woo-products.php:1348
+#: modules/woocommerce/widgets/woo-products.php:1351
 #: widgets/premium-blog.php:615 widgets/premium-grid.php:1047
-#: widgets/premium-person.php:272 widgets/premium-videobox.php:999
+#: widgets/premium-person.php:272 widgets/premium-videobox.php:1046
 msgid "Translate"
 msgstr ""
 
@@ -2143,10 +2214,10 @@ msgid "Rotate Z"
 msgstr ""
 
 #: modules/premium-section-floating-effects/module.php:444
-#: modules/woocommerce/widgets/woo-products.php:1344
+#: modules/woocommerce/widgets/woo-products.php:1347
 #: widgets/premium-banner.php:302 widgets/premium-blog.php:610
 #: widgets/premium-grid.php:1042 widgets/premium-person.php:267
-#: widgets/premium-videobox.php:994
+#: widgets/premium-videobox.php:1041
 msgid "Scale"
 msgstr ""
 
@@ -2189,11 +2260,11 @@ msgstr ""
 #: modules/woocommerce/skins/skin-base.php:116
 #: modules/woocommerce/skins/skin-base.php:305
 #: modules/woocommerce/skins/skin-base.php:613
-#: modules/woocommerce/widgets/woo-products.php:1445
-#: modules/woocommerce/widgets/woo-products.php:1496
-#: modules/woocommerce/widgets/woo-products.php:1547
-#: modules/woocommerce/widgets/woo-products.php:1651
-#: modules/woocommerce/widgets/woo-products.php:1854
+#: modules/woocommerce/widgets/woo-products.php:1483
+#: modules/woocommerce/widgets/woo-products.php:1534
+#: modules/woocommerce/widgets/woo-products.php:1585
+#: modules/woocommerce/widgets/woo-products.php:1689
+#: modules/woocommerce/widgets/woo-products.php:1892
 #: widgets/premium-banner.php:633 widgets/premium-banner.php:1023
 #: widgets/premium-blog.php:1510 widgets/premium-blog.php:1568
 #: widgets/premium-blog.php:1937 widgets/premium-blog.php:2130
@@ -2201,8 +2272,8 @@ msgstr ""
 #: widgets/premium-blog.php:2401 widgets/premium-blog.php:2537
 #: widgets/premium-blog.php:2623 widgets/premium-blog.php:2709
 #: widgets/premium-blog.php:2916 widgets/premium-button.php:802
-#: widgets/premium-button.php:984 widgets/premium-carousel.php:852
-#: widgets/premium-carousel.php:907 widgets/premium-contactform.php:559
+#: widgets/premium-button.php:984 widgets/premium-carousel.php:896
+#: widgets/premium-carousel.php:951 widgets/premium-contactform.php:559
 #: widgets/premium-contactform.php:625 widgets/premium-countdown.php:662
 #: widgets/premium-countdown.php:790 widgets/premium-countdown.php:945
 #: widgets/premium-counter.php:609 widgets/premium-counter.php:806
@@ -2213,19 +2284,19 @@ msgstr ""
 #: widgets/premium-grid.php:2075 widgets/premium-grid.php:2409
 #: widgets/premium-icon-list.php:1029 widgets/premium-image-separator.php:639
 #: widgets/premium-lottie.php:527 widgets/premium-lottie.php:573
-#: widgets/premium-modalbox.php:990 widgets/premium-modalbox.php:1087
-#: widgets/premium-modalbox.php:1183 widgets/premium-modalbox.php:1248
-#: widgets/premium-modalbox.php:1300 widgets/premium-modalbox.php:1417
-#: widgets/premium-modalbox.php:1475 widgets/premium-person.php:1449
+#: widgets/premium-modalbox.php:1011 widgets/premium-modalbox.php:1108
+#: widgets/premium-modalbox.php:1204 widgets/premium-modalbox.php:1269
+#: widgets/premium-modalbox.php:1321 widgets/premium-modalbox.php:1438
+#: widgets/premium-modalbox.php:1496 widgets/premium-person.php:1449
 #: widgets/premium-person.php:1564 widgets/premium-person.php:1685
 #: widgets/premium-pricing-table.php:991 widgets/premium-pricing-table.php:1809
 #: widgets/premium-pricing-table.php:2175
 #: widgets/premium-pricing-table.php:2193 widgets/premium-progressbar.php:1048
 #: widgets/premium-title.php:984 widgets/premium-title.php:1002
-#: widgets/premium-videobox.php:1709 widgets/premium-videobox.php:1919
-#: widgets/premium-videobox.php:1990 widgets/premium-videobox.php:2069
-#: widgets/premium-vscroll.php:795 widgets/premium-vscroll.php:892
-#: widgets/premium-vscroll.php:952
+#: widgets/premium-videobox.php:1843 widgets/premium-videobox.php:2053
+#: widgets/premium-videobox.php:2124 widgets/premium-videobox.php:2203
+#: widgets/premium-videobox.php:2290 widgets/premium-vscroll.php:817
+#: widgets/premium-vscroll.php:914 widgets/premium-vscroll.php:974
 msgid "Background Color"
 msgstr ""
 
@@ -2237,8 +2308,8 @@ msgstr ""
 #: widgets/premium-banner.php:304 widgets/premium-blog.php:612
 #: widgets/premium-fancytext.php:632 widgets/premium-grid.php:1044
 #: widgets/premium-icon-list.php:952 widgets/premium-image-scroll.php:440
-#: widgets/premium-person.php:269 widgets/premium-videobox.php:996
-#: widgets/premium-videobox.php:1165
+#: widgets/premium-person.php:269 widgets/premium-videobox.php:1043
+#: widgets/premium-videobox.php:1212
 msgid "Blur"
 msgstr ""
 
@@ -2247,10 +2318,10 @@ msgid "Contrast"
 msgstr ""
 
 #: modules/premium-section-floating-effects/module.php:765
-#: modules/woocommerce/widgets/woo-products.php:1345
+#: modules/woocommerce/widgets/woo-products.php:1348
 #: widgets/premium-banner.php:303 widgets/premium-blog.php:611
 #: widgets/premium-grid.php:1043 widgets/premium-person.php:268
-#: widgets/premium-videobox.php:995
+#: widgets/premium-videobox.php:1042
 msgid "Grayscale"
 msgstr ""
 
@@ -2301,11 +2372,11 @@ msgstr ""
 #: modules/woocommerce/skins/skin-8.php:541
 #: modules/woocommerce/skins/skin-9.php:265
 #: modules/woocommerce/skins/skin-9.php:468
-#: modules/woocommerce/widgets/woo-products.php:1236
-#: modules/woocommerce/widgets/woo-products.php:1427
+#: modules/woocommerce/widgets/woo-products.php:1239
+#: modules/woocommerce/widgets/woo-products.php:1465
 #: widgets/premium-banner.php:821 widgets/premium-blog.php:1489
 #: widgets/premium-blog.php:2224 widgets/premium-blog.php:2515
-#: widgets/premium-button.php:761 widgets/premium-carousel.php:830
+#: widgets/premium-button.php:761 widgets/premium-carousel.php:874
 #: widgets/premium-contactform.php:543 widgets/premium-dual-header.php:659
 #: widgets/premium-dual-header.php:856 widgets/premium-dual-header.php:1068
 #: widgets/premium-grid.php:1685 widgets/premium-grid.php:1895
@@ -2313,12 +2384,12 @@ msgstr ""
 #: widgets/premium-icon-list.php:920 widgets/premium-image-button.php:710
 #: widgets/premium-image-scroll.php:646 widgets/premium-image-scroll.php:721
 #: widgets/premium-image-scroll.php:754 widgets/premium-lottie.php:520
-#: widgets/premium-modalbox.php:412 widgets/premium-modalbox.php:980
-#: widgets/premium-modalbox.php:1230 widgets/premium-modalbox.php:1396
+#: widgets/premium-modalbox.php:433 widgets/premium-modalbox.php:1001
+#: widgets/premium-modalbox.php:1251 widgets/premium-modalbox.php:1417
 #: widgets/premium-person.php:1197 widgets/premium-pricing-table.php:1979
 #: widgets/premium-pricing-table.php:2234 widgets/premium-title.php:956
-#: widgets/premium-title.php:1471 widgets/premium-videobox.php:712
-#: widgets/premium-vscroll.php:462 widgets/premium-vscroll.php:857
+#: widgets/premium-title.php:1471 widgets/premium-videobox.php:720
+#: widgets/premium-vscroll.php:484 widgets/premium-vscroll.php:879
 msgid "Normal"
 msgstr ""
 
@@ -2328,7 +2399,7 @@ msgstr ""
 #: widgets/premium-icon-list.php:287 widgets/premium-image-button.php:401
 #: widgets/premium-image-button.php:479 widgets/premium-image-separator.php:229
 #: widgets/premium-lottie.php:191 widgets/premium-lottie.php:462
-#: widgets/premium-modalbox.php:263 widgets/premium-modalbox.php:703
+#: widgets/premium-modalbox.php:263 widgets/premium-modalbox.php:724
 #: widgets/premium-pricing-table.php:219 widgets/premium-pricing-table.php:444
 #: widgets/premium-progressbar.php:357 widgets/premium-title.php:279
 msgid "Reverse"
@@ -2344,10 +2415,10 @@ msgstr ""
 #: widgets/premium-grid.php:768 widgets/premium-icon-list.php:272
 #: widgets/premium-image-button.php:386 widgets/premium-image-button.php:465
 #: widgets/premium-image-separator.php:216 widgets/premium-lottie.php:181
-#: widgets/premium-modalbox.php:249 widgets/premium-modalbox.php:690
+#: widgets/premium-modalbox.php:249 widgets/premium-modalbox.php:711
 #: widgets/premium-pricing-table.php:206 widgets/premium-pricing-table.php:431
 #: widgets/premium-progressbar.php:343 widgets/premium-title.php:265
-#: widgets/premium-videobox.php:592
+#: widgets/premium-videobox.php:600
 msgid "Loop"
 msgstr ""
 
@@ -2356,9 +2427,9 @@ msgid "Infinite"
 msgstr ""
 
 #: modules/premium-section-floating-effects/module.php:863
-#: modules/woocommerce/widgets/woo-products.php:339
-#: modules/woocommerce/widgets/woo-products.php:938
-#: modules/woocommerce/widgets/woo-products.php:1349
+#: modules/woocommerce/widgets/woo-products.php:342
+#: modules/woocommerce/widgets/woo-products.php:941
+#: modules/woocommerce/widgets/woo-products.php:1352
 #: widgets/premium-banner.php:319 widgets/premium-counter.php:600
 #: widgets/premium-fancytext.php:256
 msgid "Custom"
@@ -2413,7 +2484,7 @@ msgstr ""
 msgid "Elastic In Out"
 msgstr ""
 
-#: modules/woocommerce/module.php:111
+#: modules/woocommerce/module.php:112
 msgid "Saved"
 msgstr ""
 
@@ -2448,17 +2519,17 @@ msgstr ""
 #: modules/woocommerce/skins/skin-7.php:106
 #: modules/woocommerce/skins/skin-8.php:106
 #: modules/woocommerce/skins/skin-9.php:104
-#: modules/woocommerce/widgets/woo-products.php:1326
+#: modules/woocommerce/widgets/woo-products.php:1329
 #: widgets/premium-banner.php:154 widgets/premium-blog.php:1641
 #: widgets/premium-counter.php:292 widgets/premium-grid.php:1391
 #: widgets/premium-icon-list.php:197 widgets/premium-image-scroll.php:168
 #: widgets/premium-image-scroll.php:608 widgets/premium-image-separator.php:160
-#: widgets/premium-image-separator.php:185 widgets/premium-modalbox.php:452
-#: widgets/premium-modalbox.php:646 widgets/premium-person.php:450
+#: widgets/premium-image-separator.php:185 widgets/premium-modalbox.php:473
+#: widgets/premium-modalbox.php:667 widgets/premium-person.php:450
 #: widgets/premium-person.php:732 widgets/premium-person.php:1115
 #: widgets/premium-pricing-table.php:167 widgets/premium-pricing-table.php:392
 #: widgets/premium-testimonials.php:134 widgets/premium-testimonials.php:352
-#: widgets/premium-title.php:204 widgets/premium-videobox.php:1207
+#: widgets/premium-title.php:204 widgets/premium-videobox.php:1341
 msgid "Image"
 msgstr ""
 
@@ -2500,7 +2571,7 @@ msgstr ""
 #: modules/woocommerce/skins/skin-5.php:150
 #: modules/woocommerce/skins/skin-6.php:162
 #: modules/woocommerce/skins/skin-8.php:160
-#: modules/woocommerce/widgets/woo-products.php:869
+#: modules/woocommerce/widgets/woo-products.php:872
 #: widgets/premium-banner.php:532 widgets/premium-blog.php:832
 #: widgets/premium-blog.php:1137 widgets/premium-blog.php:1402
 #: widgets/premium-button.php:653 widgets/premium-countdown.php:361
@@ -2509,10 +2580,10 @@ msgstr ""
 #: widgets/premium-grid.php:554 widgets/premium-icon-list.php:737
 #: widgets/premium-image-button.php:602 widgets/premium-image-separator.php:339
 #: widgets/premium-lottie.php:340 widgets/premium-maps.php:631
-#: widgets/premium-maps.php:718 widgets/premium-modalbox.php:765
+#: widgets/premium-maps.php:718 widgets/premium-modalbox.php:786
 #: widgets/premium-person.php:235 widgets/premium-pricing-table.php:550
 #: widgets/premium-pricing-table.php:1745 widgets/premium-title.php:370
-#: widgets/premium-title.php:400 widgets/premium-videobox.php:2020
+#: widgets/premium-title.php:400 widgets/premium-videobox.php:2154
 msgid "Alignment"
 msgstr ""
 
@@ -2524,7 +2595,7 @@ msgstr ""
 #: modules/woocommerce/skins/skin-5.php:154
 #: modules/woocommerce/skins/skin-6.php:166
 #: modules/woocommerce/skins/skin-8.php:164
-#: modules/woocommerce/widgets/woo-products.php:873
+#: modules/woocommerce/widgets/woo-products.php:876
 #: widgets/premium-banner.php:536 widgets/premium-blog.php:836
 #: widgets/premium-blog.php:1141 widgets/premium-blog.php:1406
 #: widgets/premium-button.php:657 widgets/premium-countdown.php:365
@@ -2538,13 +2609,13 @@ msgstr ""
 #: widgets/premium-icon-list.php:851 widgets/premium-image-button.php:606
 #: widgets/premium-image-separator.php:343 widgets/premium-lottie.php:344
 #: widgets/premium-maps.php:635 widgets/premium-maps.php:722
-#: widgets/premium-modalbox.php:769 widgets/premium-person.php:239
+#: widgets/premium-modalbox.php:790 widgets/premium-person.php:239
 #: widgets/premium-person.php:286 widgets/premium-pricing-table.php:554
 #: widgets/premium-pricing-table.php:775 widgets/premium-pricing-table.php:1749
 #: widgets/premium-progressbar.php:480 widgets/premium-title.php:319
 #: widgets/premium-title.php:374 widgets/premium-title.php:404
-#: widgets/premium-title.php:546 widgets/premium-videobox.php:2024
-#: widgets/premium-vscroll.php:274 widgets/premium-vscroll.php:372
+#: widgets/premium-title.php:546 widgets/premium-videobox.php:2158
+#: widgets/premium-vscroll.php:296 widgets/premium-vscroll.php:394
 msgid "Left"
 msgstr ""
 
@@ -2557,7 +2628,7 @@ msgstr ""
 #: modules/woocommerce/skins/skin-6.php:170
 #: modules/woocommerce/skins/skin-8.php:168
 #: modules/woocommerce/skins/skin-8.php:264
-#: modules/woocommerce/widgets/woo-products.php:877
+#: modules/woocommerce/widgets/woo-products.php:880
 #: widgets/premium-banner.php:540 widgets/premium-blog.php:840
 #: widgets/premium-blog.php:872 widgets/premium-blog.php:1145
 #: widgets/premium-blog.php:1410 widgets/premium-button.php:661
@@ -2572,12 +2643,12 @@ msgstr ""
 #: widgets/premium-icon-list.php:821 widgets/premium-image-button.php:610
 #: widgets/premium-image-separator.php:347 widgets/premium-lottie.php:348
 #: widgets/premium-maps.php:639 widgets/premium-maps.php:726
-#: widgets/premium-modalbox.php:773 widgets/premium-person.php:243
+#: widgets/premium-modalbox.php:794 widgets/premium-person.php:243
 #: widgets/premium-person.php:290 widgets/premium-pricing-table.php:558
 #: widgets/premium-pricing-table.php:1753 widgets/premium-progressbar.php:484
 #: widgets/premium-title.php:323 widgets/premium-title.php:378
 #: widgets/premium-title.php:408 widgets/premium-title.php:550
-#: widgets/premium-videobox.php:2028
+#: widgets/premium-videobox.php:2162 widgets/premium-videobox.php:2347
 msgid "Center"
 msgstr ""
 
@@ -2589,7 +2660,7 @@ msgstr ""
 #: modules/woocommerce/skins/skin-5.php:162
 #: modules/woocommerce/skins/skin-6.php:174
 #: modules/woocommerce/skins/skin-8.php:172
-#: modules/woocommerce/widgets/woo-products.php:881
+#: modules/woocommerce/widgets/woo-products.php:884
 #: widgets/premium-banner.php:544 widgets/premium-blog.php:844
 #: widgets/premium-blog.php:1149 widgets/premium-blog.php:1414
 #: widgets/premium-button.php:665 widgets/premium-countdown.php:373
@@ -2603,13 +2674,13 @@ msgstr ""
 #: widgets/premium-icon-list.php:847 widgets/premium-image-button.php:614
 #: widgets/premium-image-separator.php:351 widgets/premium-lottie.php:352
 #: widgets/premium-maps.php:643 widgets/premium-maps.php:730
-#: widgets/premium-modalbox.php:777 widgets/premium-person.php:247
+#: widgets/premium-modalbox.php:798 widgets/premium-person.php:247
 #: widgets/premium-person.php:294 widgets/premium-pricing-table.php:562
 #: widgets/premium-pricing-table.php:779 widgets/premium-pricing-table.php:1757
 #: widgets/premium-progressbar.php:488 widgets/premium-title.php:327
 #: widgets/premium-title.php:382 widgets/premium-title.php:412
-#: widgets/premium-title.php:554 widgets/premium-videobox.php:2032
-#: widgets/premium-vscroll.php:275 widgets/premium-vscroll.php:373
+#: widgets/premium-title.php:554 widgets/premium-videobox.php:2166
+#: widgets/premium-vscroll.php:297 widgets/premium-vscroll.php:395
 msgid "Right"
 msgstr ""
 
@@ -2664,9 +2735,9 @@ msgstr ""
 #: modules/woocommerce/skins/skin-base.php:396
 #: modules/woocommerce/skins/skin-base.php:411
 #: modules/woocommerce/skins/skin-base.php:624
-#: modules/woocommerce/widgets/woo-products.php:1402
-#: modules/woocommerce/widgets/woo-products.php:1683
-#: modules/woocommerce/widgets/woo-products.php:1880
+#: modules/woocommerce/widgets/woo-products.php:1440
+#: modules/woocommerce/widgets/woo-products.php:1721
+#: modules/woocommerce/widgets/woo-products.php:1918
 #: widgets/premium-banner.php:1113 widgets/premium-blog.php:1627
 #: widgets/premium-blog.php:2010 widgets/premium-blog.php:2177
 #: widgets/premium-blog.php:2329 widgets/premium-blog.php:2480
@@ -2685,9 +2756,9 @@ msgstr ""
 #: widgets/premium-image-button.php:1127
 #: widgets/premium-image-separator.php:729 widgets/premium-lottie.php:662
 #: widgets/premium-maps.php:618 widgets/premium-maps.php:706
-#: widgets/premium-maps.php:795 widgets/premium-modalbox.php:1037
-#: widgets/premium-modalbox.php:1336 widgets/premium-modalbox.php:1514
-#: widgets/premium-modalbox.php:1679 widgets/premium-person.php:1261
+#: widgets/premium-maps.php:795 widgets/premium-modalbox.php:1058
+#: widgets/premium-modalbox.php:1357 widgets/premium-modalbox.php:1535
+#: widgets/premium-modalbox.php:1718 widgets/premium-person.php:1261
 #: widgets/premium-person.php:1328 widgets/premium-person.php:1383
 #: widgets/premium-person.php:1542 widgets/premium-person.php:1620
 #: widgets/premium-person.php:1725 widgets/premium-pricing-table.php:1005
@@ -2701,10 +2772,10 @@ msgstr ""
 #: widgets/premium-pricing-table.php:2318
 #: widgets/premium-pricing-table.php:2423 widgets/premium-progressbar.php:1082
 #: widgets/premium-testimonials.php:740 widgets/premium-title.php:1172
-#: widgets/premium-title.php:1356 widgets/premium-videobox.php:1619
-#: widgets/premium-videobox.php:1723 widgets/premium-videobox.php:1859
-#: widgets/premium-videobox.php:2118 widgets/premium-vscroll.php:708
-#: widgets/premium-vscroll.php:1010
+#: widgets/premium-title.php:1356 widgets/premium-videobox.php:1753
+#: widgets/premium-videobox.php:1857 widgets/premium-videobox.php:1993
+#: widgets/premium-videobox.php:2252 widgets/premium-vscroll.php:730
+#: widgets/premium-vscroll.php:1032
 msgid "Padding"
 msgstr ""
 
@@ -2722,7 +2793,7 @@ msgstr ""
 #: widgets/premium-person.php:767 widgets/premium-person.php:1342
 #: widgets/premium-pricing-table.php:586 widgets/premium-pricing-table.php:596
 #: widgets/premium-pricing-table.php:917 widgets/premium-pricing-table.php:1833
-#: widgets/premium-videobox.php:1301
+#: widgets/premium-videobox.php:1435
 msgid "Description"
 msgstr ""
 
@@ -2782,12 +2853,12 @@ msgstr ""
 #: modules/woocommerce/skins/skin-base.php:294
 #: modules/woocommerce/skins/skin-base.php:458
 #: modules/woocommerce/skins/skin-base.php:537
-#: modules/woocommerce/widgets/woo-products.php:1434
-#: modules/woocommerce/widgets/woo-products.php:1485
-#: modules/woocommerce/widgets/woo-products.php:1536
-#: modules/woocommerce/widgets/woo-products.php:1619
-#: modules/woocommerce/widgets/woo-products.php:1709
-#: modules/woocommerce/widgets/woo-products.php:1843
+#: modules/woocommerce/widgets/woo-products.php:1472
+#: modules/woocommerce/widgets/woo-products.php:1523
+#: modules/woocommerce/widgets/woo-products.php:1574
+#: modules/woocommerce/widgets/woo-products.php:1657
+#: modules/woocommerce/widgets/woo-products.php:1747
+#: modules/woocommerce/widgets/woo-products.php:1881
 #: widgets/premium-banner.php:852 widgets/premium-banner.php:924
 #: widgets/premium-banner.php:984 widgets/premium-blog.php:1496
 #: widgets/premium-blog.php:1554 widgets/premium-blog.php:1722
@@ -2796,8 +2867,8 @@ msgstr ""
 #: widgets/premium-blog.php:2366 widgets/premium-blog.php:2523
 #: widgets/premium-blog.php:2609 widgets/premium-blog.php:2695
 #: widgets/premium-blog.php:2848 widgets/premium-blog.php:2890
-#: widgets/premium-carousel.php:837 widgets/premium-carousel.php:892
-#: widgets/premium-carousel.php:1019 widgets/premium-countdown.php:636
+#: widgets/premium-carousel.php:881 widgets/premium-carousel.php:936
+#: widgets/premium-carousel.php:1063 widgets/premium-countdown.php:636
 #: widgets/premium-countdown.php:765 widgets/premium-countdown.php:892
 #: widgets/premium-countdown.php:931 widgets/premium-counter.php:520
 #: widgets/premium-counter.php:880 widgets/premium-dual-header.php:1032
@@ -2809,10 +2880,10 @@ msgstr ""
 #: widgets/premium-icon-list.php:1328 widgets/premium-icon-list.php:1599
 #: widgets/premium-icon-list.php:1713 widgets/premium-image-scroll.php:393
 #: widgets/premium-image-separator.php:603 widgets/premium-maps.php:580
-#: widgets/premium-maps.php:669 widgets/premium-modalbox.php:894
-#: widgets/premium-modalbox.php:1160 widgets/premium-modalbox.php:1237
-#: widgets/premium-modalbox.php:1289 widgets/premium-modalbox.php:1403
-#: widgets/premium-modalbox.php:1461 widgets/premium-person.php:1228
+#: widgets/premium-maps.php:669 widgets/premium-modalbox.php:915
+#: widgets/premium-modalbox.php:1181 widgets/premium-modalbox.php:1258
+#: widgets/premium-modalbox.php:1310 widgets/premium-modalbox.php:1424
+#: widgets/premium-modalbox.php:1482 widgets/premium-person.php:1228
 #: widgets/premium-person.php:1283 widgets/premium-person.php:1350
 #: widgets/premium-person.php:1421 widgets/premium-person.php:1645
 #: widgets/premium-pricing-table.php:956 widgets/premium-pricing-table.php:1135
@@ -2831,8 +2902,8 @@ msgstr ""
 #: widgets/premium-testimonials.php:501 widgets/premium-testimonials.php:544
 #: widgets/premium-testimonials.php:598 widgets/premium-title.php:883
 #: widgets/premium-title.php:1246 widgets/premium-title.php:1394
-#: widgets/premium-videobox.php:1118 widgets/premium-videobox.php:1542
-#: widgets/premium-videobox.php:1905 widgets/premium-videobox.php:2055
+#: widgets/premium-videobox.php:1165 widgets/premium-videobox.php:1676
+#: widgets/premium-videobox.php:2039 widgets/premium-videobox.php:2189
 msgid "Color"
 msgstr ""
 
@@ -2865,7 +2936,7 @@ msgstr ""
 #: widgets/premium-icon-list.php:1366 widgets/premium-icon-list.php:1473
 #: widgets/premium-image-button.php:849 widgets/premium-image-button.php:1115
 #: widgets/premium-maps.php:605 widgets/premium-maps.php:694
-#: widgets/premium-maps.php:783 widgets/premium-modalbox.php:1667
+#: widgets/premium-maps.php:783 widgets/premium-modalbox.php:1706
 #: widgets/premium-person.php:1316 widgets/premium-person.php:1530
 #: widgets/premium-pricing-table.php:1083
 #: widgets/premium-pricing-table.php:1169
@@ -2883,8 +2954,8 @@ msgstr ""
 #: widgets/premium-pricing-table.php:2411 widgets/premium-progressbar.php:720
 #: widgets/premium-progressbar.php:781 widgets/premium-progressbar.php:827
 #: widgets/premium-testimonials.php:569 widgets/premium-title.php:1160
-#: widgets/premium-title.php:1344 widgets/premium-videobox.php:2130
-#: widgets/premium-vscroll.php:693 widgets/premium-vscroll.php:998
+#: widgets/premium-title.php:1344 widgets/premium-videobox.php:2264
+#: widgets/premium-vscroll.php:715 widgets/premium-vscroll.php:1020
 msgid "Margin"
 msgstr ""
 
@@ -2963,13 +3034,13 @@ msgstr ""
 #: modules/woocommerce/skins/skin-base.php:191
 #: modules/woocommerce/skins/skin-base.php:381
 #: modules/woocommerce/skins/skin-base.php:644
-#: modules/woocommerce/widgets/woo-products.php:1259
-#: modules/woocommerce/widgets/woo-products.php:1296
-#: modules/woocommerce/widgets/woo-products.php:1464
-#: modules/woocommerce/widgets/woo-products.php:1515
-#: modules/woocommerce/widgets/woo-products.php:1566
-#: modules/woocommerce/widgets/woo-products.php:1668
-#: modules/woocommerce/widgets/woo-products.php:1868
+#: modules/woocommerce/widgets/woo-products.php:1262
+#: modules/woocommerce/widgets/woo-products.php:1299
+#: modules/woocommerce/widgets/woo-products.php:1502
+#: modules/woocommerce/widgets/woo-products.php:1553
+#: modules/woocommerce/widgets/woo-products.php:1604
+#: modules/woocommerce/widgets/woo-products.php:1706
+#: modules/woocommerce/widgets/woo-products.php:1906
 #: widgets/premium-banner.php:779 widgets/premium-banner.php:803
 #: widgets/premium-banner.php:1053 widgets/premium-banner.php:1077
 #: widgets/premium-banner.php:1143 widgets/premium-blog.php:1532
@@ -2981,8 +3052,8 @@ msgstr ""
 #: widgets/premium-blog.php:2732 widgets/premium-blog.php:2756
 #: widgets/premium-blog.php:2930 widgets/premium-button.php:824
 #: widgets/premium-button.php:848 widgets/premium-button.php:1045
-#: widgets/premium-button.php:1069 widgets/premium-carousel.php:871
-#: widgets/premium-carousel.php:926 widgets/premium-contactform.php:355
+#: widgets/premium-button.php:1069 widgets/premium-carousel.php:915
+#: widgets/premium-carousel.php:970 widgets/premium-contactform.php:355
 #: widgets/premium-contactform.php:581 widgets/premium-countdown.php:715
 #: widgets/premium-countdown.php:740 widgets/premium-countdown.php:975
 #: widgets/premium-counter.php:683 widgets/premium-counter.php:715
@@ -3002,10 +3073,10 @@ msgstr ""
 #: widgets/premium-image-scroll.php:857 widgets/premium-image-separator.php:673
 #: widgets/premium-image-separator.php:701 widgets/premium-lottie.php:623
 #: widgets/premium-lottie.php:647 widgets/premium-maps.php:762
-#: widgets/premium-modalbox.php:1018 widgets/premium-modalbox.php:1116
-#: widgets/premium-modalbox.php:1267 widgets/premium-modalbox.php:1319
-#: widgets/premium-modalbox.php:1439 widgets/premium-modalbox.php:1497
-#: widgets/premium-modalbox.php:1647 widgets/premium-person.php:1123
+#: widgets/premium-modalbox.php:1039 widgets/premium-modalbox.php:1137
+#: widgets/premium-modalbox.php:1288 widgets/premium-modalbox.php:1340
+#: widgets/premium-modalbox.php:1460 widgets/premium-modalbox.php:1518
+#: widgets/premium-modalbox.php:1686 widgets/premium-person.php:1123
 #: widgets/premium-person.php:1150 widgets/premium-person.php:1491
 #: widgets/premium-person.php:1515 widgets/premium-person.php:1713
 #: widgets/premium-pricing-table.php:1029
@@ -3019,10 +3090,10 @@ msgstr ""
 #: widgets/premium-pricing-table.php:2387 widgets/premium-progressbar.php:613
 #: widgets/premium-progressbar.php:1070 widgets/premium-testimonials.php:693
 #: widgets/premium-testimonials.php:717 widgets/premium-title.php:1305
-#: widgets/premium-title.php:1329 widgets/premium-videobox.php:1447
-#: widgets/premium-videobox.php:1603 widgets/premium-videobox.php:2106
-#: widgets/premium-vscroll.php:667 widgets/premium-vscroll.php:774
-#: widgets/premium-vscroll.php:809 widgets/premium-vscroll.php:986
+#: widgets/premium-title.php:1329 widgets/premium-videobox.php:1581
+#: widgets/premium-videobox.php:1737 widgets/premium-videobox.php:2240
+#: widgets/premium-vscroll.php:689 widgets/premium-vscroll.php:796
+#: widgets/premium-vscroll.php:831 widgets/premium-vscroll.php:1008
 msgid "Border Radius"
 msgstr ""
 
@@ -3049,17 +3120,17 @@ msgstr ""
 #: modules/woocommerce/skins/skin-8.php:601
 #: modules/woocommerce/skins/skin-9.php:322
 #: modules/woocommerce/skins/skin-9.php:535
-#: modules/woocommerce/widgets/woo-products.php:1273
-#: modules/woocommerce/widgets/woo-products.php:1478
+#: modules/woocommerce/widgets/woo-products.php:1276
+#: modules/woocommerce/widgets/woo-products.php:1516
 #: widgets/premium-blog.php:2276 widgets/premium-blog.php:2601
-#: widgets/premium-button.php:921 widgets/premium-carousel.php:885
+#: widgets/premium-button.php:921 widgets/premium-carousel.php:929
 #: widgets/premium-contactform.php:607 widgets/premium-grid.php:1776
 #: widgets/premium-grid.php:1976 widgets/premium-grid.php:2302
 #: widgets/premium-icon-list.php:551 widgets/premium-image-button.php:875
 #: widgets/premium-image-scroll.php:517 widgets/premium-image-scroll.php:681
 #: widgets/premium-image-scroll.php:818 widgets/premium-lottie.php:217
-#: widgets/premium-lottie.php:566 widgets/premium-modalbox.php:1077
-#: widgets/premium-modalbox.php:1282 widgets/premium-modalbox.php:1454
+#: widgets/premium-lottie.php:566 widgets/premium-modalbox.php:1098
+#: widgets/premium-modalbox.php:1303 widgets/premium-modalbox.php:1475
 #: widgets/premium-pricing-table.php:2057
 #: widgets/premium-pricing-table.php:2339
 msgid "Hover"
@@ -3080,11 +3151,11 @@ msgstr ""
 #: modules/woocommerce/skins/skin-7.php:509
 #: modules/woocommerce/skins/skin-8.php:462
 #: modules/woocommerce/skins/skin-9.php:393
-#: modules/woocommerce/templates/product-1.php:83
-#: modules/woocommerce/templates/product-2.php:132
-#: modules/woocommerce/templates/product-3.php:78
-#: modules/woocommerce/templates/product-4.php:81
-#: modules/woocommerce/templates/product-6.php:75
+#: modules/woocommerce/templates/product-1.php:84
+#: modules/woocommerce/templates/product-2.php:133
+#: modules/woocommerce/templates/product-3.php:79
+#: modules/woocommerce/templates/product-4.php:82
+#: modules/woocommerce/templates/product-6.php:76
 msgid "Quick View"
 msgstr ""
 
@@ -3128,7 +3199,7 @@ msgstr ""
 #: modules/woocommerce/skins/skin-8.php:115
 #: modules/woocommerce/skins/skin-9.php:113
 #: modules/woocommerce/skins/skin-base.php:450
-#: modules/woocommerce/widgets/woo-products.php:752
+#: modules/woocommerce/widgets/woo-products.php:755
 #: widgets/premium-banner.php:402 widgets/premium-banner.php:844
 #: widgets/premium-blog.php:508 widgets/premium-blog.php:1829
 #: widgets/premium-counter.php:148 widgets/premium-grid.php:801
@@ -3171,7 +3242,7 @@ msgstr ""
 #: modules/woocommerce/skins/skin-8.php:133
 #: modules/woocommerce/skins/skin-9.php:131
 #: modules/woocommerce/skins/skin-base.php:810
-#: modules/woocommerce/widgets/woo-products.php:756
+#: modules/woocommerce/widgets/woo-products.php:759
 msgid "Rating"
 msgstr ""
 
@@ -3188,7 +3259,7 @@ msgstr ""
 #: modules/woocommerce/skins/skin-9.php:140
 #: modules/woocommerce/skins/skin-base.php:696
 #: modules/woocommerce/skins/skin-base.php:728
-#: modules/woocommerce/widgets/woo-products.php:755
+#: modules/woocommerce/widgets/woo-products.php:758
 #: widgets/premium-pricing-table.php:293 widgets/premium-pricing-table.php:327
 #: widgets/premium-pricing-table.php:899 widgets/premium-pricing-table.php:1209
 #: widgets/premium-pricing-table.php:1340
@@ -3226,10 +3297,10 @@ msgid "Quick View Icon"
 msgstr ""
 
 #: modules/woocommerce/skins/skin-10.php:433
-#: modules/woocommerce/skins/skin-9.php:442 widgets/premium-carousel.php:255
+#: modules/woocommerce/skins/skin-9.php:442 widgets/premium-carousel.php:278
 #: widgets/premium-grid.php:411 widgets/premium-grid.php:1641
-#: widgets/premium-pricing-table.php:770 widgets/premium-videobox.php:657
-#: widgets/premium-vscroll.php:271
+#: widgets/premium-pricing-table.php:770 widgets/premium-videobox.php:665
+#: widgets/premium-vscroll.php:293
 msgid "Position"
 msgstr ""
 
@@ -3259,24 +3330,24 @@ msgstr ""
 #: modules/woocommerce/skins/skin-8.php:509
 #: modules/woocommerce/skins/skin-base.php:84
 #: modules/woocommerce/skins/skin-base.php:273
-#: modules/woocommerce/widgets/woo-products.php:1636
-#: modules/woocommerce/widgets/woo-products.php:1770
+#: modules/woocommerce/widgets/woo-products.php:1674
+#: modules/woocommerce/widgets/woo-products.php:1808
 #: widgets/premium-blog.php:2904 widgets/premium-button.php:636
-#: widgets/premium-carousel.php:784 widgets/premium-carousel.php:1007
+#: widgets/premium-carousel.php:828 widgets/premium-carousel.php:1051
 #: widgets/premium-countdown.php:875 widgets/premium-counter.php:538
 #: widgets/premium-counter.php:567 widgets/premium-grid.php:1663
 #: widgets/premium-icon-list.php:429 widgets/premium-icon-list.php:1137
 #: widgets/premium-image-button.php:585 widgets/premium-lottie.php:291
-#: widgets/premium-maps.php:263 widgets/premium-modalbox.php:727
-#: widgets/premium-modalbox.php:1216 widgets/premium-person.php:1408
+#: widgets/premium-maps.php:263 widgets/premium-modalbox.php:748
+#: widgets/premium-modalbox.php:1237 widgets/premium-person.php:1408
 #: widgets/premium-person.php:1673 widgets/premium-pricing-table.php:708
 #: widgets/premium-pricing-table.php:729 widgets/premium-pricing-table.php:750
 #: widgets/premium-pricing-table.php:974 widgets/premium-pricing-table.php:1616
 #: widgets/premium-progressbar.php:214 widgets/premium-progressbar.php:941
 #: widgets/premium-progressbar.php:987 widgets/premium-testimonials.php:360
 #: widgets/premium-testimonials.php:610 widgets/premium-title.php:1265
-#: widgets/premium-videobox.php:1570 widgets/premium-videobox.php:1844
-#: widgets/premium-videobox.php:1931
+#: widgets/premium-videobox.php:1704 widgets/premium-videobox.php:1978
+#: widgets/premium-videobox.php:2065
 msgid "Size"
 msgstr ""
 
@@ -3309,8 +3380,8 @@ msgstr ""
 
 #: modules/woocommerce/skins/skin-4.php:92
 #: modules/woocommerce/skins/skin-8.php:239
-#: widgets/premium-image-scroll.php:575 widgets/premium-videobox.php:936
-#: widgets/premium-videobox.php:1191
+#: widgets/premium-image-scroll.php:575 widgets/premium-videobox.php:983
+#: widgets/premium-videobox.php:1325
 msgid "Overlay"
 msgstr ""
 
@@ -3345,7 +3416,8 @@ msgstr ""
 #: widgets/premium-icon-list.php:770 widgets/premium-icon-list.php:817
 #: widgets/premium-lottie.php:277 widgets/premium-pricing-table.php:1303
 #: widgets/premium-title.php:297 widgets/premium-title.php:448
-#: widgets/premium-videobox.php:346 widgets/premium-vscroll.php:388
+#: widgets/premium-videobox.php:349 widgets/premium-videobox.php:2348
+#: widgets/premium-vscroll.php:410
 msgid "Top"
 msgstr ""
 
@@ -3353,8 +3425,8 @@ msgstr ""
 #: widgets/premium-blog.php:876 widgets/premium-dual-header.php:363
 #: widgets/premium-fancytext.php:723 widgets/premium-icon-list.php:825
 #: widgets/premium-lottie.php:276 widgets/premium-pricing-table.php:1311
-#: widgets/premium-title.php:449 widgets/premium-videobox.php:347
-#: widgets/premium-vscroll.php:390
+#: widgets/premium-title.php:449 widgets/premium-videobox.php:350
+#: widgets/premium-vscroll.php:412
 msgid "Bottom"
 msgstr ""
 
@@ -3383,9 +3455,9 @@ msgstr ""
 #: widgets/premium-blog.php:1862 widgets/premium-blog.php:1926
 #: widgets/premium-blog.php:2380 widgets/premium-icon-list.php:1185
 #: widgets/premium-icon-list.php:1343 widgets/premium-image-separator.php:621
-#: widgets/premium-modalbox.php:911 widgets/premium-person.php:1435
-#: widgets/premium-person.php:1659 widgets/premium-videobox.php:1556
-#: widgets/premium-videobox.php:1684
+#: widgets/premium-modalbox.php:932 widgets/premium-person.php:1435
+#: widgets/premium-person.php:1659 widgets/premium-videobox.php:1690
+#: widgets/premium-videobox.php:1818
 msgid "Hover Color"
 msgstr ""
 
@@ -3475,499 +3547,538 @@ msgid "Layout"
 msgstr ""
 
 #: modules/woocommerce/widgets/woo-products.php:263
-#: modules/woocommerce/widgets/woo-products.php:296
+#: modules/woocommerce/widgets/woo-products.php:299
 #: widgets/premium-blog.php:214
 msgid "Grid"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:307
+#: modules/woocommerce/widgets/woo-products.php:310
 msgid "Products Per Row"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:310
+#: modules/woocommerce/widgets/woo-products.php:313
 #: widgets/premium-blog.php:272 widgets/premium-grid.php:261
-#: widgets/premium-person.php:353 widgets/premium-videobox.php:405
+#: widgets/premium-person.php:353 widgets/premium-videobox.php:412
 msgid "1 Column"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:311
+#: modules/woocommerce/widgets/woo-products.php:314
 #: widgets/premium-blog.php:273 widgets/premium-grid.php:262
-#: widgets/premium-person.php:354 widgets/premium-videobox.php:406
+#: widgets/premium-person.php:354 widgets/premium-videobox.php:413
 msgid "2 Columns"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:312
+#: modules/woocommerce/widgets/woo-products.php:315
 #: widgets/premium-blog.php:274 widgets/premium-grid.php:263
-#: widgets/premium-person.php:355 widgets/premium-videobox.php:407
+#: widgets/premium-person.php:355 widgets/premium-videobox.php:414
 msgid "3 Columns"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:313
+#: modules/woocommerce/widgets/woo-products.php:316
 #: widgets/premium-blog.php:275 widgets/premium-grid.php:264
-#: widgets/premium-person.php:356 widgets/premium-videobox.php:408
+#: widgets/premium-person.php:356 widgets/premium-videobox.php:415
 msgid "4 Columns"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:314
+#: modules/woocommerce/widgets/woo-products.php:317
 #: widgets/premium-blog.php:276 widgets/premium-grid.php:265
-#: widgets/premium-person.php:357 widgets/premium-videobox.php:409
+#: widgets/premium-person.php:357 widgets/premium-videobox.php:416
 msgid "5 Columns"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:315
+#: modules/woocommerce/widgets/woo-products.php:318
 #: widgets/premium-blog.php:277 widgets/premium-grid.php:266
-#: widgets/premium-person.php:358 widgets/premium-videobox.php:410
+#: widgets/premium-person.php:358 widgets/premium-videobox.php:417
 msgid "6 Columns"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:333
+#: modules/woocommerce/widgets/woo-products.php:336
 msgid "Metro Style"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:336
+#: modules/woocommerce/widgets/woo-products.php:339
 #: widgets/premium-grid.php:987 widgets/premium-person.php:164
 #: widgets/premium-title.php:175
 msgid "Style 1"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:337
+#: modules/woocommerce/widgets/woo-products.php:340
 msgid "style 2"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:338
+#: modules/woocommerce/widgets/woo-products.php:341
 msgid "style 4"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:352
+#: modules/woocommerce/widgets/woo-products.php:355
 msgid "Width Pattern"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:353
+#: modules/woocommerce/widgets/woo-products.php:356
 msgid ""
 "Each row is divided into 12 cells. Add widths for the products separated by "
 "comma, for example: 6,3,3"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:366
+#: modules/woocommerce/widgets/woo-products.php:369
 msgid "Height Pattern"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:367
+#: modules/woocommerce/widgets/woo-products.php:370
 msgid ""
 "Each row is divided into 12 cells. Add heights for the products separated by "
 "comma, for example: 6,3,3"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:380
+#: modules/woocommerce/widgets/woo-products.php:383
 msgid "Products Per Page"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:381
+#: modules/woocommerce/widgets/woo-products.php:384
 msgid "Choose how many products do you want to be displayed per page"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:404
+#: modules/woocommerce/widgets/woo-products.php:407
 msgid "Carousel Options"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:416
+#: modules/woocommerce/widgets/woo-products.php:419
 msgid "Show Arrows"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:425
+#: modules/woocommerce/widgets/woo-products.php:428
 #: widgets/premium-blog.php:1303 widgets/premium-person.php:1057
 msgid "Arrows Position"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:451
+#: modules/woocommerce/widgets/woo-products.php:454
 msgid "Show Dots"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:476
-#: modules/woocommerce/widgets/woo-products.php:986
-#: modules/woocommerce/widgets/woo-products.php:1788
-#: widgets/premium-carousel.php:271 widgets/premium-dual-header.php:427
+#: modules/woocommerce/widgets/woo-products.php:479
+#: modules/woocommerce/widgets/woo-products.php:989
+#: modules/woocommerce/widgets/woo-products.php:1826
+#: widgets/premium-carousel.php:294 widgets/premium-dual-header.php:427
 #: widgets/premium-pricing-table.php:793 widgets/premium-pricing-table.php:820
 #: widgets/premium-title.php:672
 msgid "Horizontal Offset"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:492
-#: modules/woocommerce/widgets/woo-products.php:1027
-#: modules/woocommerce/widgets/woo-products.php:1806
-#: widgets/premium-carousel.php:287 widgets/premium-dual-header.php:456
+#: modules/woocommerce/widgets/woo-products.php:495
+#: modules/woocommerce/widgets/woo-products.php:1030
+#: modules/woocommerce/widgets/woo-products.php:1844
+#: widgets/premium-carousel.php:310 widgets/premium-dual-header.php:456
 #: widgets/premium-pricing-table.php:847 widgets/premium-title.php:701
 msgid "Vertical Offset"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:512
+#: modules/woocommerce/widgets/woo-products.php:515
 msgid "Number of Products"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:524
+#: modules/woocommerce/widgets/woo-products.php:527
 msgid "Products to Show"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:526
+#: modules/woocommerce/widgets/woo-products.php:529
 msgid ""
 "Make sure to have the number of products larger than the number of products "
 "to show"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:537
+#: modules/woocommerce/widgets/woo-products.php:540
 msgid "Products to Scroll"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:547
+#: modules/woocommerce/widgets/woo-products.php:550
 msgid "Autoplay Slides"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:556
+#: modules/woocommerce/widgets/woo-products.php:559
 msgid "Autoplay Interval"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:568
-#: widgets/premium-carousel.php:512 widgets/premium-fancytext.php:448
+#: modules/woocommerce/widgets/woo-products.php:571
+#: widgets/premium-carousel.php:548 widgets/premium-fancytext.php:448
 msgid "Pause on Hover"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:579
-#: widgets/premium-carousel.php:377
+#: modules/woocommerce/widgets/woo-products.php:582
+#: widgets/premium-carousel.php:400
 msgid "Infinite Loop"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:589
-#: widgets/premium-blog.php:1237 widgets/premium-carousel.php:431
+#: modules/woocommerce/widgets/woo-products.php:592
+#: widgets/premium-blog.php:1237 widgets/premium-carousel.php:458
 #: widgets/premium-person.php:1042
 msgid "Autoplay Speed"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:614
+#: modules/woocommerce/widgets/woo-products.php:617
 #: widgets/premium-blog.php:310
 msgid "Query"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:634
+#: modules/woocommerce/widgets/woo-products.php:637
 msgid "Category Filter Rule"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:638
+#: modules/woocommerce/widgets/woo-products.php:641
 msgid "Match Categories"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:639
+#: modules/woocommerce/widgets/woo-products.php:642
 msgid "Exclude Categories"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:650
+#: modules/woocommerce/widgets/woo-products.php:653
 msgid "Select Categories"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:663
+#: modules/woocommerce/widgets/woo-products.php:666
 msgid "Tag Filter Rule"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:667
+#: modules/woocommerce/widgets/woo-products.php:670
 msgid "Match Tags"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:668
+#: modules/woocommerce/widgets/woo-products.php:671
 msgid "Exclude Tags"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:679
+#: modules/woocommerce/widgets/woo-products.php:682
 msgid "Select Tags"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:692
+#: modules/woocommerce/widgets/woo-products.php:695
 #: widgets/premium-blog.php:478
 msgid "Offset"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:695
+#: modules/woocommerce/widgets/woo-products.php:698
 msgid "Set the starting index."
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:705
+#: modules/woocommerce/widgets/woo-products.php:708
 msgid "Exclude Current Product"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:707
+#: modules/woocommerce/widgets/woo-products.php:710
 #: widgets/premium-blog.php:469 widgets/premium-blog.php:492
 msgid "Yes"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:708
+#: modules/woocommerce/widgets/woo-products.php:711
 #: widgets/premium-blog.php:470 widgets/premium-blog.php:493
 msgid "No"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:709
+#: modules/woocommerce/widgets/woo-products.php:712
 msgid "This option will remove the current from the query."
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:719
+#: modules/woocommerce/widgets/woo-products.php:722
 msgid "Advanced"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:731
+#: modules/woocommerce/widgets/woo-products.php:734
 msgid "Filter By"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:735
-#: modules/woocommerce/widgets/woo-products.php:1340
+#: modules/woocommerce/widgets/woo-products.php:738
+#: modules/woocommerce/widgets/woo-products.php:1343
 #: widgets/premium-banner.php:299 widgets/premium-blog.php:505
 #: widgets/premium-blog.php:583 widgets/premium-blog.php:607
 #: widgets/premium-blog.php:690 widgets/premium-button.php:217
 #: widgets/premium-grid.php:1039 widgets/premium-icon-list.php:951
 #: widgets/premium-image-button.php:218 widgets/premium-lottie.php:215
 #: widgets/premium-modalbox.php:187 widgets/premium-person.php:264
-#: widgets/premium-progressbar.php:462 widgets/premium-videobox.php:991
+#: widgets/premium-progressbar.php:462 widgets/premium-videobox.php:1038
 msgid "None"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:736
+#: modules/woocommerce/widgets/woo-products.php:739
 msgid "Featured"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:737
+#: modules/woocommerce/widgets/woo-products.php:740
 msgid "Sale"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:748
+#: modules/woocommerce/widgets/woo-products.php:751
 msgid "Order by"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:754
+#: modules/woocommerce/widgets/woo-products.php:757
 msgid "Popularity"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:757
+#: modules/woocommerce/widgets/woo-products.php:760
 #: widgets/premium-blog.php:512
 msgid "Random"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:758
+#: modules/woocommerce/widgets/woo-products.php:761
 msgid "Menu Order"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:769
+#: modules/woocommerce/widgets/woo-products.php:772
 #: widgets/premium-blog.php:522
 msgid "Order"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:773
+#: modules/woocommerce/widgets/woo-products.php:776
 #: widgets/premium-blog.php:526
 msgid "Descending"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:774
+#: modules/woocommerce/widgets/woo-products.php:777
 #: widgets/premium-blog.php:527
 msgid "Ascending"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:785
+#: modules/woocommerce/widgets/woo-products.php:788
 msgid "Empty Query Message"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:787
+#: modules/woocommerce/widgets/woo-products.php:790
 msgid "No products were found for this query."
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:819
+#: modules/woocommerce/widgets/woo-products.php:822
 #: widgets/premium-blog.php:1343
 msgid "Enable Pagination"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:830
+#: modules/woocommerce/widgets/woo-products.php:833
 msgid "Numbers"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:831
+#: modules/woocommerce/widgets/woo-products.php:834
 msgid "Numbers + Pre/Next Arrow"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:843
+#: modules/woocommerce/widgets/woo-products.php:846
 #: widgets/premium-blog.php:1376
 msgid "Previous Page String"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:845
+#: modules/woocommerce/widgets/woo-products.php:848
 msgid "« Previous"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:856
+#: modules/woocommerce/widgets/woo-products.php:859
 #: widgets/premium-blog.php:1389
 msgid "Next Page String"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:858
+#: modules/woocommerce/widgets/woo-products.php:861
 msgid "Next »"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:914
+#: modules/woocommerce/widgets/woo-products.php:917
 msgid "Sale/Featured Ribbons"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:925
+#: modules/woocommerce/widgets/woo-products.php:928
 msgid "Show Sale Ribbon"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:937
+#: modules/woocommerce/widgets/woo-products.php:940
 #: widgets/premium-banner.php:318 widgets/premium-countdown.php:402
-#: widgets/premium-grid.php:1194 widgets/premium-vscroll.php:487
+#: widgets/premium-grid.php:1194 widgets/premium-videobox.php:1274
+#: widgets/premium-vscroll.php:509
 msgid "Default"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:950
-#: modules/woocommerce/widgets/woo-products.php:972
-#: modules/woocommerce/widgets/woo-products.php:1124
+#: modules/woocommerce/widgets/woo-products.php:953
+#: modules/woocommerce/widgets/woo-products.php:975
+#: modules/woocommerce/widgets/woo-products.php:1127
 msgid "String"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:953
+#: modules/woocommerce/widgets/woo-products.php:956
 msgid ""
 "Show Sale % Value ( [value] Autocalculated offer value will replace this )."
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:964
+#: modules/woocommerce/widgets/woo-products.php:967
 msgid "Show Featured Ribbon"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:974
+#: modules/woocommerce/widgets/woo-products.php:977
 msgid "Hot"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1068
+#: modules/woocommerce/widgets/woo-products.php:1071
 #: widgets/premium-blog.php:2211 widgets/premium-blog.php:2468
 #: widgets/premium-person.php:377 widgets/premium-pricing-table.php:1634
 #: widgets/premium-progressbar.php:187 widgets/premium-testimonials.php:224
 msgid "Spacing"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1105
-#: modules/woocommerce/widgets/woo-products.php:1758
+#: modules/woocommerce/widgets/woo-products.php:1108
+#: modules/woocommerce/widgets/woo-products.php:1796
 msgid "Out Of Stock Ribbon"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1116
+#: modules/woocommerce/widgets/woo-products.php:1119
 msgid "Show Ribbon"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1126
+#: modules/woocommerce/widgets/woo-products.php:1129
 msgid "Out Of Stock"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1149
+#: modules/woocommerce/widgets/woo-products.php:1152
 #: widgets/premium-banner.php:605 widgets/premium-blog.php:1434
-#: widgets/premium-button.php:706 widgets/premium-carousel.php:562
+#: widgets/premium-button.php:706 widgets/premium-carousel.php:606
 #: widgets/premium-countdown.php:608 widgets/premium-counter.php:489
 #: widgets/premium-dual-header.php:596 widgets/premium-fancytext.php:503
 #: widgets/premium-grid.php:1285 widgets/premium-icon-list.php:978
 #: widgets/premium-image-button.php:655 widgets/premium-image-scroll.php:588
 #: widgets/premium-image-separator.php:550 widgets/premium-lottie.php:476
-#: widgets/premium-maps.php:541 widgets/premium-modalbox.php:827
+#: widgets/premium-maps.php:541 widgets/premium-modalbox.php:848
 #: widgets/premium-person.php:1085 widgets/premium-progressbar.php:567
-#: widgets/premium-testimonials.php:331 widgets/premium-videobox.php:1397
-#: widgets/premium-vscroll.php:562
+#: widgets/premium-testimonials.php:331 widgets/premium-videobox.php:1531
+#: widgets/premium-vscroll.php:584
 msgid "Helpful Documentations"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1154
+#: modules/woocommerce/widgets/woo-products.php:1157
 #: widgets/premium-blog.php:1439 widgets/premium-button.php:711
-#: widgets/premium-carousel.php:567 widgets/premium-fancytext.php:507
+#: widgets/premium-carousel.php:611 widgets/premium-fancytext.php:507
 #: widgets/premium-grid.php:1290 widgets/premium-icon-list.php:983
 #: widgets/premium-image-button.php:660 widgets/premium-image-separator.php:554
-#: widgets/premium-maps.php:551 widgets/premium-modalbox.php:832
-#: widgets/premium-person.php:1096 widgets/premium-videobox.php:1402
+#: widgets/premium-maps.php:551 widgets/premium-modalbox.php:853
+#: widgets/premium-person.php:1096 widgets/premium-videobox.php:1536
 msgid "Getting started »"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1155
+#: modules/woocommerce/widgets/woo-products.php:1158
 msgid "WooCommerce Display Conditions »"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1192
-#: widgets/premium-blog.php:785 widgets/premium-videobox.php:1477
+#: modules/woocommerce/widgets/woo-products.php:1195
+#: widgets/premium-blog.php:785 widgets/premium-videobox.php:1611
 msgid "Rows Spacing"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1213
-#: widgets/premium-blog.php:808 widgets/premium-videobox.php:1504
+#: modules/woocommerce/widgets/woo-products.php:1216
+#: widgets/premium-blog.php:808 widgets/premium-videobox.php:1638
 msgid "Columns Spacing"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1337
+#: modules/woocommerce/widgets/woo-products.php:1340
 msgid "Image Hover Style"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1341
+#: modules/woocommerce/widgets/woo-products.php:1344
 msgid "Swap Images"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1342
+#: modules/woocommerce/widgets/woo-products.php:1345
 #: widgets/premium-banner.php:300 widgets/premium-blog.php:608
 #: widgets/premium-grid.php:1040 widgets/premium-person.php:265
-#: widgets/premium-videobox.php:992
+#: widgets/premium-videobox.php:1039
 msgid "Zoom In"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1343
+#: modules/woocommerce/widgets/woo-products.php:1346
 #: widgets/premium-banner.php:301 widgets/premium-blog.php:609
 #: widgets/premium-fancytext.php:253 widgets/premium-grid.php:1041
-#: widgets/premium-person.php:266 widgets/premium-videobox.php:993
+#: widgets/premium-person.php:266 widgets/premium-videobox.php:1040
 msgid "Zoom Out"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1346
+#: modules/woocommerce/widgets/woo-products.php:1349
 #: widgets/premium-banner.php:305 widgets/premium-blog.php:613
 #: widgets/premium-grid.php:1045 widgets/premium-person.php:270
-#: widgets/premium-videobox.php:997
+#: widgets/premium-videobox.php:1044
 msgid "Bright"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1347
+#: modules/woocommerce/widgets/woo-products.php:1350
 #: widgets/premium-banner.php:306 widgets/premium-blog.php:614
 #: widgets/premium-grid.php:1046 widgets/premium-person.php:271
-#: widgets/premium-videobox.php:998
+#: widgets/premium-videobox.php:1045
 msgid "Sepia"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1529
+#: modules/woocommerce/widgets/woo-products.php:1380
+#: widgets/premium-banner.php:315 widgets/premium-blog.php:646
+#: widgets/premium-blog.php:1759 widgets/premium-contactform.php:209
+#: widgets/premium-contactform.php:292 widgets/premium-fancytext.php:865
+#: widgets/premium-grid.php:200 widgets/premium-grid.php:384
+#: widgets/premium-grid.php:638 widgets/premium-grid.php:1014
+#: widgets/premium-image-separator.php:281 widgets/premium-maps.php:398
+#: widgets/premium-progressbar.php:595 widgets/premium-progressbar.php:1002
+msgid "Height"
+msgstr ""
+
+#: modules/woocommerce/widgets/woo-products.php:1398
+#: widgets/premium-image-scroll.php:484 widgets/premium-image-separator.php:306
+msgid "Image Fit"
+msgstr ""
+
+#: modules/woocommerce/widgets/woo-products.php:1402
+#: widgets/premium-blog.php:673 widgets/premium-grid.php:230
+#: widgets/premium-image-scroll.php:487 widgets/premium-image-separator.php:310
+#: widgets/premium-progressbar.php:666
+msgid "Fill"
+msgstr ""
+
+#: modules/woocommerce/widgets/woo-products.php:1403
+#: widgets/premium-blog.php:672 widgets/premium-grid.php:231
+#: widgets/premium-image-scroll.php:315 widgets/premium-image-scroll.php:488
+#: widgets/premium-image-separator.php:309
+#: widgets/premium-image-separator.php:482 widgets/premium-videobox.php:1087
+msgid "Cover"
+msgstr ""
+
+#: modules/woocommerce/widgets/woo-products.php:1404
+#: widgets/premium-blog.php:674 widgets/premium-image-scroll.php:314
+#: widgets/premium-image-separator.php:311
+#: widgets/premium-image-separator.php:481 widgets/premium-videobox.php:1086
+msgid "Contain"
+msgstr ""
+
+#: modules/woocommerce/widgets/woo-products.php:1567
 #: widgets/premium-blog.php:1547 widgets/premium-blog.php:2687
-#: widgets/premium-grid.php:2054 widgets/premium-vscroll.php:917
+#: widgets/premium-grid.php:2054 widgets/premium-vscroll.php:939
 msgid "Active"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1608
-#: widgets/premium-carousel.php:316
+#: modules/woocommerce/widgets/woo-products.php:1646
+#: widgets/premium-carousel.php:339
 msgid "Arrows"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1698
-#: widgets/premium-blog.php:970 widgets/premium-carousel.php:244
-#: widgets/premium-progressbar.php:152 widgets/premium-vscroll.php:725
+#: modules/woocommerce/widgets/woo-products.php:1736
+#: widgets/premium-blog.php:970 widgets/premium-carousel.php:267
+#: widgets/premium-progressbar.php:152 widgets/premium-vscroll.php:747
 msgid "Dots"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1727
-#: widgets/premium-blog.php:2862 widgets/premium-carousel.php:1034
+#: modules/woocommerce/widgets/woo-products.php:1765
+#: widgets/premium-blog.php:2862 widgets/premium-carousel.php:1078
 msgid "Active Color"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1902
+#: modules/woocommerce/widgets/woo-products.php:1940
 msgid "All Products"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1903
+#: modules/woocommerce/widgets/woo-products.php:1941
 msgid "Custom Query"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1904
+#: modules/woocommerce/widgets/woo-products.php:1942
 msgid "Main Query"
 msgstr ""
 
-#: modules/woocommerce/widgets/woo-products.php:1908
+#: modules/woocommerce/widgets/woo-products.php:1946
 msgid "Related Products"
 msgstr ""
 
@@ -3990,7 +4101,7 @@ msgstr ""
 #: widgets/premium-lottie.php:393 widgets/premium-pricing-table.php:643
 #: widgets/premium-testimonials.php:283 widgets/premium-testimonials.php:292
 #: widgets/premium-title.php:573 widgets/premium-title.php:598
-#: widgets/premium-videobox.php:166 widgets/premium-videobox.php:363
+#: widgets/premium-videobox.php:169 widgets/premium-videobox.php:366
 msgid "Link"
 msgstr ""
 
@@ -4085,18 +4196,8 @@ msgstr ""
 #: widgets/premium-banner.php:296 widgets/premium-blog.php:603
 #: widgets/premium-button.php:213 widgets/premium-grid.php:1035
 #: widgets/premium-icon-list.php:948 widgets/premium-image-button.php:214
-#: widgets/premium-person.php:261 widgets/premium-videobox.php:987
+#: widgets/premium-person.php:261 widgets/premium-videobox.php:1034
 msgid "Hover Effect"
-msgstr ""
-
-#: widgets/premium-banner.php:315 widgets/premium-blog.php:646
-#: widgets/premium-blog.php:1759 widgets/premium-contactform.php:209
-#: widgets/premium-contactform.php:292 widgets/premium-fancytext.php:865
-#: widgets/premium-grid.php:200 widgets/premium-grid.php:384
-#: widgets/premium-grid.php:638 widgets/premium-grid.php:1014
-#: widgets/premium-image-separator.php:281 widgets/premium-maps.php:398
-#: widgets/premium-progressbar.php:595 widgets/premium-progressbar.php:1002
-msgid "Height"
 msgstr ""
 
 #: widgets/premium-banner.php:328
@@ -4107,7 +4208,7 @@ msgstr ""
 msgid "Vertical Align"
 msgstr ""
 
-#: widgets/premium-banner.php:349 widgets/premium-vscroll.php:389
+#: widgets/premium-banner.php:349 widgets/premium-vscroll.php:411
 msgid "Middle"
 msgstr ""
 
@@ -4119,15 +4220,13 @@ msgstr ""
 msgid "Enable Mouse Tilt"
 msgstr ""
 
-#: widgets/premium-banner.php:384 widgets/premium-carousel.php:453
+#: widgets/premium-banner.php:384 widgets/premium-carousel.php:480
 msgid "Extra Class"
 msgstr ""
 
-#: widgets/premium-banner.php:395 widgets/premium-carousel.php:197
-#: widgets/premium-modalbox.php:165 widgets/premium-modalbox.php:309
-#: widgets/premium-modalbox.php:331 widgets/premium-person.php:1556
-#: widgets/premium-testimonials.php:311 widgets/premium-testimonials.php:536
-#: widgets/premium-vscroll.php:162
+#: widgets/premium-banner.php:395 widgets/premium-modalbox.php:165
+#: widgets/premium-person.php:1556 widgets/premium-testimonials.php:311
+#: widgets/premium-testimonials.php:536 widgets/premium-vscroll.php:162
 msgid "Content"
 msgstr ""
 
@@ -4165,7 +4264,7 @@ msgstr ""
 #: widgets/premium-image-scroll.php:243 widgets/premium-image-separator.php:378
 #: widgets/premium-image-separator.php:407 widgets/premium-lottie.php:379
 #: widgets/premium-pricing-table.php:632 widgets/premium-title.php:584
-#: widgets/premium-videobox.php:460
+#: widgets/premium-videobox.php:467
 msgid "URL"
 msgstr ""
 
@@ -4223,7 +4322,7 @@ msgstr ""
 
 #: widgets/premium-banner.php:763 widgets/premium-blog.php:1701
 #: widgets/premium-grid.php:1450 widgets/premium-image-separator.php:592
-#: widgets/premium-modalbox.php:883 widgets/premium-person.php:1175
+#: widgets/premium-modalbox.php:904 widgets/premium-person.php:1175
 msgid "Hover CSS Filters"
 msgstr ""
 
@@ -4280,14 +4379,14 @@ msgstr ""
 #: widgets/premium-dual-header.php:985 widgets/premium-grid.php:1430
 #: widgets/premium-grid.php:1590 widgets/premium-grid.php:1741
 #: widgets/premium-grid.php:1832 widgets/premium-maps.php:774
-#: widgets/premium-modalbox.php:1052 widgets/premium-modalbox.php:1131
+#: widgets/premium-modalbox.php:1073 widgets/premium-modalbox.php:1152
 #: widgets/premium-pricing-table.php:2015
 #: widgets/premium-pricing-table.php:2093
 #: widgets/premium-pricing-table.php:2297
 #: widgets/premium-pricing-table.php:2402 widgets/premium-title.php:1099
-#: widgets/premium-videobox.php:1459 widgets/premium-videobox.php:1735
-#: widgets/premium-vscroll.php:821 widgets/premium-vscroll.php:906
-#: widgets/premium-vscroll.php:966
+#: widgets/premium-videobox.php:1593 widgets/premium-videobox.php:1869
+#: widgets/premium-vscroll.php:843 widgets/premium-vscroll.php:928
+#: widgets/premium-vscroll.php:988
 msgid "Shadow"
 msgstr ""
 
@@ -4302,7 +4401,7 @@ msgstr ""
 #: widgets/premium-pricing-table.php:1495
 #: widgets/premium-pricing-table.php:1660
 #: widgets/premium-pricing-table.php:1877 widgets/premium-testimonials.php:668
-#: widgets/premium-vscroll.php:788
+#: widgets/premium-vscroll.php:810
 msgid "Container"
 msgstr ""
 
@@ -4444,7 +4543,7 @@ msgstr ""
 msgid "Order By"
 msgstr ""
 
-#: widgets/premium-blog.php:506 widgets/premium-videobox.php:170
+#: widgets/premium-blog.php:506 widgets/premium-videobox.php:173
 msgid "ID"
 msgstr ""
 
@@ -4504,7 +4603,7 @@ msgid "Squares"
 msgstr ""
 
 #: widgets/premium-blog.php:605 widgets/premium-grid.php:1037
-#: widgets/premium-videobox.php:989
+#: widgets/premium-videobox.php:1036
 msgid "Choose a hover effect for the image"
 msgstr ""
 
@@ -4514,25 +4613,6 @@ msgstr ""
 
 #: widgets/premium-blog.php:669
 msgid "Thumbnail Fit"
-msgstr ""
-
-#: widgets/premium-blog.php:672 widgets/premium-grid.php:231
-#: widgets/premium-image-scroll.php:315 widgets/premium-image-scroll.php:488
-#: widgets/premium-image-separator.php:309
-#: widgets/premium-image-separator.php:482 widgets/premium-videobox.php:1040
-msgid "Cover"
-msgstr ""
-
-#: widgets/premium-blog.php:673 widgets/premium-grid.php:230
-#: widgets/premium-image-scroll.php:487 widgets/premium-image-separator.php:310
-#: widgets/premium-progressbar.php:666
-msgid "Fill"
-msgstr ""
-
-#: widgets/premium-blog.php:674 widgets/premium-image-scroll.php:314
-#: widgets/premium-image-separator.php:311
-#: widgets/premium-image-separator.php:481 widgets/premium-videobox.php:1039
-msgid "Contain"
 msgstr ""
 
 #: widgets/premium-blog.php:687 widgets/premium-blog.php:1709
@@ -4612,7 +4692,7 @@ msgstr ""
 msgid "Zigzag"
 msgstr ""
 
-#: widgets/premium-blog.php:730 widgets/premium-videobox.php:317
+#: widgets/premium-blog.php:730 widgets/premium-videobox.php:320
 msgid "Title HTML Tag"
 msgstr ""
 
@@ -4726,7 +4806,8 @@ msgstr ""
 msgid "Display or hide post tags"
 msgstr ""
 
-#: widgets/premium-blog.php:1059 widgets/premium-image-scroll.php:463
+#: widgets/premium-blog.php:1059 widgets/premium-carousel.php:491
+#: widgets/premium-image-scroll.php:463
 msgid "Advanced Settings"
 msgstr ""
 
@@ -4768,8 +4849,8 @@ msgstr ""
 msgid "Enable Carousel"
 msgstr ""
 
-#: widgets/premium-blog.php:1200 widgets/premium-carousel.php:387
-#: widgets/premium-vscroll.php:488
+#: widgets/premium-blog.php:1200 widgets/premium-carousel.php:410
+#: widgets/premium-vscroll.php:510
 msgid "Fade"
 msgstr ""
 
@@ -4781,31 +4862,31 @@ msgstr ""
 msgid "Slides To Scroll"
 msgstr ""
 
-#: widgets/premium-blog.php:1238 widgets/premium-carousel.php:432
+#: widgets/premium-blog.php:1238 widgets/premium-carousel.php:459
 #: widgets/premium-person.php:1043
 msgid ""
 "Autoplay Speed means at which time the next slide should come. Set a value "
 "in milliseconds (ms)"
 msgstr ""
 
-#: widgets/premium-blog.php:1252 widgets/premium-carousel.php:521
+#: widgets/premium-blog.php:1252 widgets/premium-carousel.php:557
 msgid "Center Mode"
 msgstr ""
 
-#: widgets/premium-blog.php:1264 widgets/premium-carousel.php:530
+#: widgets/premium-blog.php:1264 widgets/premium-carousel.php:566
 msgid "Slides' Spacing"
 msgstr ""
 
-#: widgets/premium-blog.php:1265 widgets/premium-carousel.php:531
+#: widgets/premium-blog.php:1265 widgets/premium-carousel.php:567
 msgid "Set a spacing value in pixels (px)"
 msgstr ""
 
-#: widgets/premium-blog.php:1278 widgets/premium-carousel.php:944
-#: widgets/premium-vscroll.php:358 widgets/premium-vscroll.php:583
+#: widgets/premium-blog.php:1278 widgets/premium-carousel.php:988
+#: widgets/premium-vscroll.php:380 widgets/premium-vscroll.php:605
 msgid "Navigation Dots"
 msgstr ""
 
-#: widgets/premium-blog.php:1290 widgets/premium-carousel.php:598
+#: widgets/premium-blog.php:1290 widgets/premium-carousel.php:642
 msgid "Navigation Arrows"
 msgstr ""
 
@@ -4846,7 +4927,7 @@ msgstr ""
 #: widgets/premium-blog.php:1737 widgets/premium-contactform.php:149
 #: widgets/premium-contactform.php:270 widgets/premium-dual-header.php:407
 #: widgets/premium-fancytext.php:690 widgets/premium-grid.php:616
-#: widgets/premium-modalbox.php:1372 widgets/premium-modalbox.php:1572
+#: widgets/premium-modalbox.php:1393 widgets/premium-modalbox.php:1593
 #: widgets/premium-person.php:207 widgets/premium-pricing-table.php:1770
 #: widgets/premium-title.php:652
 msgid "Width"
@@ -4892,10 +4973,10 @@ msgstr ""
 #: widgets/premium-grid.php:1983 widgets/premium-grid.php:2061
 #: widgets/premium-grid.php:2202 widgets/premium-icon-list.php:390
 #: widgets/premium-icon-list.php:1408 widgets/premium-image-button.php:717
-#: widgets/premium-image-button.php:894 widgets/premium-modalbox.php:1536
+#: widgets/premium-image-button.php:894 widgets/premium-modalbox.php:1557
 #: widgets/premium-pricing-table.php:506 widgets/premium-pricing-table.php:2150
-#: widgets/premium-videobox.php:1670 widgets/premium-videobox.php:1959
-#: widgets/premium-vscroll.php:864 widgets/premium-vscroll.php:924
+#: widgets/premium-videobox.php:1804 widgets/premium-videobox.php:2093
+#: widgets/premium-vscroll.php:886 widgets/premium-vscroll.php:946
 msgid "Text Color"
 msgstr ""
 
@@ -5046,15 +5127,15 @@ msgstr ""
 
 #: widgets/premium-button.php:328 widgets/premium-button.php:343
 #: widgets/premium-button.php:358 widgets/premium-button.php:425
-#: widgets/premium-button.php:439 widgets/premium-carousel.php:955
+#: widgets/premium-button.php:439 widgets/premium-carousel.php:999
 #: widgets/premium-counter.php:278 widgets/premium-counter.php:291
 #: widgets/premium-counter.php:509 widgets/premium-icon-list.php:196
 #: widgets/premium-icon-list.php:210 widgets/premium-image-button.php:321
 #: widgets/premium-image-button.php:336 widgets/premium-image-button.php:351
 #: widgets/premium-image-button.php:418 widgets/premium-image-button.php:432
 #: widgets/premium-image-scroll.php:543 widgets/premium-image-separator.php:159
-#: widgets/premium-modalbox.php:188 widgets/premium-modalbox.php:479
-#: widgets/premium-modalbox.php:491 widgets/premium-pricing-table.php:152
+#: widgets/premium-modalbox.php:188 widgets/premium-modalbox.php:500
+#: widgets/premium-modalbox.php:512 widgets/premium-pricing-table.php:152
 #: widgets/premium-pricing-table.php:165 widgets/premium-pricing-table.php:390
 #: widgets/premium-pricing-table.php:401 widgets/premium-pricing-table.php:882
 #: widgets/premium-pricing-table.php:945 widgets/premium-pricing-table.php:1592
@@ -5065,7 +5146,7 @@ msgid "Icon"
 msgstr ""
 
 #: widgets/premium-button.php:330 widgets/premium-image-button.php:323
-#: widgets/premium-modalbox.php:484
+#: widgets/premium-modalbox.php:505
 msgid "Enable or disable button icon"
 msgstr ""
 
@@ -5081,7 +5162,7 @@ msgstr ""
 #: widgets/premium-counter.php:293 widgets/premium-icon-list.php:198
 #: widgets/premium-image-button.php:337 widgets/premium-image-button.php:419
 #: widgets/premium-image-separator.php:161 widgets/premium-modalbox.php:190
-#: widgets/premium-modalbox.php:454 widgets/premium-pricing-table.php:166
+#: widgets/premium-modalbox.php:475 widgets/premium-pricing-table.php:166
 #: widgets/premium-pricing-table.php:391 widgets/premium-progressbar.php:289
 #: widgets/premium-title.php:205
 msgid "Lottie Animation"
@@ -5091,26 +5172,26 @@ msgstr ""
 #: widgets/premium-counter.php:337 widgets/premium-icon-list.php:256
 #: widgets/premium-image-button.php:370 widgets/premium-image-button.php:450
 #: widgets/premium-image-separator.php:202 widgets/premium-lottie.php:154
-#: widgets/premium-modalbox.php:234 widgets/premium-modalbox.php:676
+#: widgets/premium-modalbox.php:234 widgets/premium-modalbox.php:697
 #: widgets/premium-pricing-table.php:192 widgets/premium-pricing-table.php:417
 #: widgets/premium-progressbar.php:328 widgets/premium-title.php:250
 msgid "Animation JSON URL"
 msgstr ""
 
 #: widgets/premium-button.php:499 widgets/premium-counter.php:379
-#: widgets/premium-image-button.php:492 widgets/premium-modalbox.php:509
+#: widgets/premium-image-button.php:492 widgets/premium-modalbox.php:530
 #: widgets/premium-title.php:292
 msgid "Icon Position"
 msgstr ""
 
 #: widgets/premium-button.php:503 widgets/premium-icon-list.php:769
-#: widgets/premium-image-button.php:496 widgets/premium-modalbox.php:513
+#: widgets/premium-image-button.php:496 widgets/premium-modalbox.php:534
 #: widgets/premium-title.php:295
 msgid "Before"
 msgstr ""
 
 #: widgets/premium-button.php:504 widgets/premium-icon-list.php:771
-#: widgets/premium-image-button.php:497 widgets/premium-modalbox.php:514
+#: widgets/premium-image-button.php:497 widgets/premium-modalbox.php:535
 #: widgets/premium-title.php:296
 msgid "After"
 msgstr ""
@@ -5118,36 +5199,36 @@ msgstr ""
 #: widgets/premium-button.php:517 widgets/premium-button.php:533
 #: widgets/premium-image-button.php:510 widgets/premium-image-button.php:526
 #: widgets/premium-image-scroll.php:551 widgets/premium-modalbox.php:276
-#: widgets/premium-modalbox.php:527 widgets/premium-progressbar.php:370
+#: widgets/premium-modalbox.php:548 widgets/premium-progressbar.php:370
 msgid "Icon Size"
 msgstr ""
 
 #: widgets/premium-button.php:552 widgets/premium-button.php:572
 #: widgets/premium-button.php:592 widgets/premium-button.php:614
 #: widgets/premium-image-button.php:545 widgets/premium-image-button.php:565
-#: widgets/premium-modalbox.php:544 widgets/premium-modalbox.php:564
-#: widgets/premium-modalbox.php:586 widgets/premium-modalbox.php:606
+#: widgets/premium-modalbox.php:565 widgets/premium-modalbox.php:585
+#: widgets/premium-modalbox.php:607 widgets/premium-modalbox.php:627
 msgid "Icon Spacing"
 msgstr ""
 
 #: widgets/premium-button.php:640 widgets/premium-image-button.php:589
-#: widgets/premium-modalbox.php:630
+#: widgets/premium-modalbox.php:651
 msgid "Small"
 msgstr ""
 
 #: widgets/premium-button.php:641 widgets/premium-image-button.php:590
-#: widgets/premium-modalbox.php:631
+#: widgets/premium-modalbox.php:652
 msgid "Medium"
 msgstr ""
 
 #: widgets/premium-button.php:642 widgets/premium-image-button.php:591
-#: widgets/premium-modalbox.php:632
+#: widgets/premium-modalbox.php:653
 msgid "Large"
 msgstr ""
 
 #: widgets/premium-button.php:643 widgets/premium-countdown.php:163
 #: widgets/premium-dual-header.php:207 widgets/premium-icon-list.php:723
-#: widgets/premium-image-button.php:592 widgets/premium-modalbox.php:633
+#: widgets/premium-image-button.php:592 widgets/premium-modalbox.php:654
 #: widgets/premium-testimonials.php:211
 msgid "Block"
 msgstr ""
@@ -5175,7 +5256,7 @@ msgstr ""
 #: widgets/premium-button.php:782 widgets/premium-button.php:945
 #: widgets/premium-button.php:965 widgets/premium-image-button.php:731
 #: widgets/premium-image-button.php:911 widgets/premium-image-button.php:931
-#: widgets/premium-image-scroll.php:616 widgets/premium-modalbox.php:928
+#: widgets/premium-image-scroll.php:616 widgets/premium-modalbox.php:949
 #: widgets/premium-pricing-table.php:491
 msgid "Icon Color"
 msgstr ""
@@ -5189,7 +5270,7 @@ msgstr ""
 
 #: widgets/premium-button.php:877 widgets/premium-button.php:1111
 #: widgets/premium-fancytext.php:581 widgets/premium-image-button.php:831
-#: widgets/premium-image-button.php:1094 widgets/premium-videobox.php:2080
+#: widgets/premium-image-button.php:1094 widgets/premium-videobox.php:2214
 msgid "Text Shadow"
 msgstr ""
 
@@ -5228,258 +5309,281 @@ msgid ""
 "Each template will be a slider content"
 msgstr ""
 
-#: widgets/premium-carousel.php:207
+#: widgets/premium-carousel.php:197 widgets/premium-modalbox.php:324
+#: widgets/premium-vscroll.php:195
+msgid "Template Title"
+msgstr ""
+
+#: widgets/premium-carousel.php:210 widgets/premium-modalbox.php:340
+#: widgets/premium-vscroll.php:208
+msgid "Create / Edit Template"
+msgstr ""
+
+#: widgets/premium-carousel.php:218 widgets/premium-modalbox.php:351
+#: widgets/premium-vscroll.php:216
+msgid "OR Select Existing Template"
+msgstr ""
+
+#: widgets/premium-carousel.php:230
 msgid "Custom Navigation Element Selector"
 msgstr ""
 
-#: widgets/premium-carousel.php:210
+#: widgets/premium-carousel.php:233
 msgid ""
 "Use this to add an element selector to be used to navigate to this slide. "
 "For example #slide-1"
 msgstr ""
 
-#: widgets/premium-carousel.php:231
+#: widgets/premium-carousel.php:254
 msgid "Set a navigation type"
 msgstr ""
 
-#: widgets/premium-carousel.php:234 widgets/premium-fancytext.php:644
+#: widgets/premium-carousel.php:257 widgets/premium-fancytext.php:644
 #: widgets/premium-image-button.php:294 widgets/premium-image-scroll.php:402
-#: widgets/premium-image-scroll.php:474 widgets/premium-videobox.php:1127
+#: widgets/premium-image-scroll.php:474 widgets/premium-videobox.php:1174
 msgid "Horizontal"
 msgstr ""
 
-#: widgets/premium-carousel.php:235 widgets/premium-fancytext.php:663
+#: widgets/premium-carousel.php:258 widgets/premium-fancytext.php:663
 #: widgets/premium-image-button.php:295 widgets/premium-image-scroll.php:421
-#: widgets/premium-image-scroll.php:475 widgets/premium-videobox.php:1146
+#: widgets/premium-image-scroll.php:475 widgets/premium-videobox.php:1193
 msgid "Vertical"
 msgstr ""
 
-#: widgets/premium-carousel.php:245
+#: widgets/premium-carousel.php:268
 msgid "Enable or disable navigation dots"
 msgstr ""
 
-#: widgets/premium-carousel.php:259
+#: widgets/premium-carousel.php:282
 msgid "Below Slides"
 msgstr ""
 
-#: widgets/premium-carousel.php:260
+#: widgets/premium-carousel.php:283
 msgid "On Slides"
 msgstr ""
 
-#: widgets/premium-carousel.php:303
+#: widgets/premium-carousel.php:326
 msgid "Ripple Effect"
 msgstr ""
 
-#: widgets/premium-carousel.php:304
+#: widgets/premium-carousel.php:327
 msgid "Enable a ripple effect when the active dot is hovered/clicked"
 msgstr ""
 
-#: widgets/premium-carousel.php:317
+#: widgets/premium-carousel.php:340
 msgid "Enable or disable navigation arrows"
 msgstr ""
 
-#: widgets/premium-carousel.php:327
+#: widgets/premium-carousel.php:350
 msgid "Appearance"
 msgstr ""
 
-#: widgets/premium-carousel.php:332
+#: widgets/premium-carousel.php:355
 msgid "All visible"
 msgstr ""
 
-#: widgets/premium-carousel.php:333
+#: widgets/premium-carousel.php:356
 msgid "One at a time"
 msgstr ""
 
-#: widgets/premium-carousel.php:341
+#: widgets/premium-carousel.php:364
 msgid "Desktop Slides"
 msgstr ""
 
-#: widgets/premium-carousel.php:350
+#: widgets/premium-carousel.php:373
 msgid "Tabs Slides"
 msgstr ""
 
-#: widgets/premium-carousel.php:359
+#: widgets/premium-carousel.php:382
 msgid "Mobile Slides"
 msgstr ""
 
-#: widgets/premium-carousel.php:370
+#: widgets/premium-carousel.php:393
 msgid "Slides Settings"
 msgstr ""
 
-#: widgets/premium-carousel.php:379
+#: widgets/premium-carousel.php:402
 msgid "Restart the slider automatically as it passes the last slide"
 msgstr ""
 
-#: widgets/premium-carousel.php:389
+#: widgets/premium-carousel.php:412
 msgid "Enable fade transition between slides"
 msgstr ""
 
-#: widgets/premium-carousel.php:399
+#: widgets/premium-carousel.php:422
 msgid "Zoom Effect"
 msgstr ""
 
-#: widgets/premium-carousel.php:411
-msgid "Transition Speed"
+#: widgets/premium-carousel.php:434
+msgid "Transition Speed (ms)"
 msgstr ""
 
-#: widgets/premium-carousel.php:412
+#: widgets/premium-carousel.php:435
 msgid ""
 "Set a navigation speed value. The value will be counted in milliseconds (ms)"
 msgstr ""
 
-#: widgets/premium-carousel.php:421
+#: widgets/premium-carousel.php:448
 msgid "Autoplay Slides‏"
 msgstr ""
 
-#: widgets/premium-carousel.php:422
+#: widgets/premium-carousel.php:449
 msgid "Slide will start automatically"
 msgstr ""
 
-#: widgets/premium-carousel.php:444 widgets/premium-counter.php:398
+#: widgets/premium-carousel.php:471 widgets/premium-counter.php:398
 #: widgets/premium-fancytext.php:267
 msgid "Animations"
 msgstr ""
 
-#: widgets/premium-carousel.php:455
+#: widgets/premium-carousel.php:482
 msgid ""
 "Add extra class name that will be applied to the carousel, and you can use "
 "this class for your customizations."
 msgstr ""
 
-#: widgets/premium-carousel.php:464 widgets/premium-fancytext.php:241
-msgid "Additional Settings"
-msgstr ""
-
-#: widgets/premium-carousel.php:471
+#: widgets/premium-carousel.php:498
 msgid "Draggable Effect"
 msgstr ""
 
-#: widgets/premium-carousel.php:472
+#: widgets/premium-carousel.php:499
 msgid "Allow the slides to be dragged by mouse click"
 msgstr ""
 
-#: widgets/premium-carousel.php:481
+#: widgets/premium-carousel.php:508
 msgid "Touch Move"
 msgstr ""
 
-#: widgets/premium-carousel.php:482
+#: widgets/premium-carousel.php:509
 msgid "Enable slide moving with touch"
 msgstr ""
 
-#: widgets/premium-carousel.php:491 widgets/premium-grid.php:1105
+#: widgets/premium-carousel.php:518 widgets/premium-grid.php:1105
 msgid "RTL Mode"
 msgstr ""
 
-#: widgets/premium-carousel.php:492
+#: widgets/premium-carousel.php:519
 msgid "Turn on RTL mode if your language starts from right to left"
 msgstr ""
 
-#: widgets/premium-carousel.php:503
+#: widgets/premium-carousel.php:530
+msgid "Variable Width"
+msgstr ""
+
+#: widgets/premium-carousel.php:531
+msgid "Allows each slide to have a different width."
+msgstr ""
+
+#: widgets/premium-carousel.php:539
 msgid "Adaptive Height"
 msgstr ""
 
-#: widgets/premium-carousel.php:504
+#: widgets/premium-carousel.php:540
 msgid ""
 "Adaptive height setting gives each slide a fixed height to avoid huge white "
 "space gaps"
 msgstr ""
 
-#: widgets/premium-carousel.php:513
+#: widgets/premium-carousel.php:549
 msgid "Pause the slider when mouse hover"
 msgstr ""
 
-#: widgets/premium-carousel.php:522
+#: widgets/premium-carousel.php:558
 msgid ""
 "Center mode enables a centered view with partial next/previous slides. "
 "Animations and all visible scroll type doesn't work with this mode"
 msgstr ""
 
-#: widgets/premium-carousel.php:540
+#: widgets/premium-carousel.php:576
 msgid "Tablet Breakpoint"
 msgstr ""
 
-#: widgets/premium-carousel.php:541
+#: widgets/premium-carousel.php:577
 msgid ""
 "Sets the breakpoint between desktop and tablet devices. Below this "
 "breakpoint tablet layout will appear (Default: 1025px)."
 msgstr ""
 
-#: widgets/premium-carousel.php:550
+#: widgets/premium-carousel.php:586
 msgid "Mobile Breakpoint"
 msgstr ""
 
-#: widgets/premium-carousel.php:551
+#: widgets/premium-carousel.php:587
 msgid ""
 "Sets the breakpoint between tablet and mobile devices. Below this breakpoint "
 "mobile layout will appear (Default: 768px)."
 msgstr ""
 
-#: widgets/premium-carousel.php:568
+#: widgets/premium-carousel.php:596
+msgid "Linear Easing"
+msgstr ""
+
+#: widgets/premium-carousel.php:612
 msgid "Issue: I can see the first slide only »"
 msgstr ""
 
-#: widgets/premium-carousel.php:569
+#: widgets/premium-carousel.php:613
 msgid "How to create an Elementor template to be used in Carousel widget »"
 msgstr ""
 
-#: widgets/premium-carousel.php:570 widgets/premium-person.php:1105
+#: widgets/premium-carousel.php:614 widgets/premium-person.php:1105
 #: widgets/premium-testimonials.php:336
 msgid "I'm not able to see Font Awesome icons in the widget »"
 msgstr ""
 
-#: widgets/premium-carousel.php:571
+#: widgets/premium-carousel.php:615
 msgid ""
 "How to add entrance animations to the elements inside Premium Carousel "
 "Widget »"
 msgstr ""
 
-#: widgets/premium-carousel.php:572
+#: widgets/premium-carousel.php:616
 msgid ""
 "How To Use Elementor Widgets To Navigate Through Carousel Widget Slides »"
 msgstr ""
 
-#: widgets/premium-carousel.php:609
+#: widgets/premium-carousel.php:653
 msgid "Custom Previous Icon"
 msgstr ""
 
-#: widgets/premium-carousel.php:617 widgets/premium-carousel.php:705
-#: widgets/premium-carousel.php:990 widgets/premium-modalbox.php:203
+#: widgets/premium-carousel.php:661 widgets/premium-carousel.php:749
+#: widgets/premium-carousel.php:1034 widgets/premium-modalbox.php:203
 msgid "Select Icon"
 msgstr ""
 
-#: widgets/premium-carousel.php:634
+#: widgets/premium-carousel.php:678
 msgid "Top Icon"
 msgstr ""
 
-#: widgets/premium-carousel.php:665
+#: widgets/premium-carousel.php:709
 msgid "Left Icon"
 msgstr ""
 
-#: widgets/premium-carousel.php:696
+#: widgets/premium-carousel.php:740
 msgid "Custom Next Icon"
 msgstr ""
 
-#: widgets/premium-carousel.php:722
+#: widgets/premium-carousel.php:766
 msgid "Right Icon"
 msgstr ""
 
-#: widgets/premium-carousel.php:753
+#: widgets/premium-carousel.php:797
 msgid "Bottom Icon"
 msgstr ""
 
-#: widgets/premium-carousel.php:808
+#: widgets/premium-carousel.php:852
 msgid "Position (PX)"
 msgstr ""
 
-#: widgets/premium-carousel.php:982 widgets/premium-maps.php:254
+#: widgets/premium-carousel.php:1026 widgets/premium-maps.php:254
 msgid "Custom Icon"
 msgstr ""
 
-#: widgets/premium-carousel.php:1049
+#: widgets/premium-carousel.php:1093
 msgid "Active Ripple Color"
 msgstr ""
 
-#: widgets/premium-carousel.php:1063
+#: widgets/premium-carousel.php:1107
 msgid "Inactive Ripple Color"
 msgstr ""
 
@@ -5621,11 +5725,11 @@ msgstr ""
 msgid "Years"
 msgstr ""
 
-#: widgets/premium-countdown.php:311 widgets/premium-videobox.php:276
+#: widgets/premium-countdown.php:311 widgets/premium-videobox.php:279
 msgid "Month"
 msgstr ""
 
-#: widgets/premium-countdown.php:312 widgets/premium-videobox.php:275
+#: widgets/premium-countdown.php:312 widgets/premium-videobox.php:278
 msgid "Week"
 msgstr ""
 
@@ -5950,7 +6054,8 @@ msgstr ""
 msgid "Awesome Title"
 msgstr ""
 
-#: widgets/premium-dual-header.php:410 widgets/premium-title.php:655
+#: widgets/premium-dual-header.php:410 widgets/premium-modalbox.php:1643
+#: widgets/premium-title.php:655
 msgid "Auto"
 msgstr ""
 
@@ -6075,6 +6180,10 @@ msgstr ""
 msgid "Text after Fancy text"
 msgstr ""
 
+#: widgets/premium-fancytext.php:241
+msgid "Additional Settings"
+msgstr ""
+
 #: widgets/premium-fancytext.php:251
 msgid "Typing"
 msgstr ""
@@ -6104,8 +6213,8 @@ msgstr ""
 msgid "Set animation speed in milliseconds. Default value is 1000"
 msgstr ""
 
-#: widgets/premium-fancytext.php:309 widgets/premium-modalbox.php:424
-#: widgets/premium-videobox.php:735
+#: widgets/premium-fancytext.php:309 widgets/premium-modalbox.php:445
+#: widgets/premium-videobox.php:743
 msgid "Animation Delay"
 msgstr ""
 
@@ -6227,7 +6336,7 @@ msgstr ""
 msgid "Requires number of images larger than 6"
 msgstr ""
 
-#: widgets/premium-grid.php:291 widgets/premium-modalbox.php:465
+#: widgets/premium-grid.php:291 widgets/premium-modalbox.php:486
 msgid "Button Text"
 msgstr ""
 
@@ -6324,11 +6433,11 @@ msgstr ""
 msgid "YouTube"
 msgstr ""
 
-#: widgets/premium-grid.php:673 widgets/premium-videobox.php:156
+#: widgets/premium-grid.php:673 widgets/premium-videobox.php:158
 msgid "Vimeo"
 msgstr ""
 
-#: widgets/premium-grid.php:674 widgets/premium-videobox.php:157
+#: widgets/premium-grid.php:674 widgets/premium-videobox.php:160
 msgid "Self Hosted"
 msgstr ""
 
@@ -6340,7 +6449,7 @@ msgstr ""
 msgid "Select Video"
 msgstr ""
 
-#: widgets/premium-grid.php:727 widgets/premium-videobox.php:478
+#: widgets/premium-grid.php:727 widgets/premium-videobox.php:485
 msgid "Remote Video URL"
 msgstr ""
 
@@ -6348,7 +6457,7 @@ msgstr ""
 msgid "Controls"
 msgstr ""
 
-#: widgets/premium-grid.php:756 widgets/premium-videobox.php:523
+#: widgets/premium-grid.php:756 widgets/premium-videobox.php:530
 msgid "Mute"
 msgstr ""
 
@@ -6380,19 +6489,19 @@ msgstr ""
 msgid "Youtube Videos Thumbnail Size"
 msgstr ""
 
-#: widgets/premium-grid.php:942 widgets/premium-videobox.php:953
+#: widgets/premium-grid.php:942 widgets/premium-videobox.php:1000
 msgid "Maximum Resolution"
 msgstr ""
 
-#: widgets/premium-grid.php:943 widgets/premium-videobox.php:954
+#: widgets/premium-grid.php:943 widgets/premium-videobox.php:1001
 msgid "High Quality"
 msgstr ""
 
-#: widgets/premium-grid.php:944 widgets/premium-videobox.php:955
+#: widgets/premium-grid.php:944 widgets/premium-videobox.php:1002
 msgid "Medium Quality"
 msgstr ""
 
-#: widgets/premium-grid.php:945 widgets/premium-videobox.php:956
+#: widgets/premium-grid.php:945 widgets/premium-videobox.php:1003
 msgid "Standard Quality"
 msgstr ""
 
@@ -6449,15 +6558,16 @@ msgid "Content Alignment"
 msgstr ""
 
 #: widgets/premium-grid.php:1144 widgets/premium-grid.php:1151
-#: widgets/premium-grid.php:2398
+#: widgets/premium-grid.php:2398 widgets/premium-videobox.php:1236
+#: widgets/premium-videobox.php:2278
 msgid "Lightbox"
 msgstr ""
 
-#: widgets/premium-grid.php:1161
+#: widgets/premium-grid.php:1161 widgets/premium-videobox.php:1250
 msgid "Lightbox Style"
 msgstr ""
 
-#: widgets/premium-grid.php:1165
+#: widgets/premium-grid.php:1165 widgets/premium-videobox.php:1256
 msgid "PrettyPhoto"
 msgstr ""
 
@@ -6473,28 +6583,28 @@ msgstr ""
 msgid "Show Image Title"
 msgstr ""
 
-#: widgets/premium-grid.php:1191
+#: widgets/premium-grid.php:1191 widgets/premium-videobox.php:1271
 msgid "Lightbox Theme"
 msgstr ""
 
-#: widgets/premium-grid.php:1195
+#: widgets/premium-grid.php:1195 widgets/premium-videobox.php:1275
 msgid "Light Rounded"
 msgstr ""
 
-#: widgets/premium-grid.php:1196
+#: widgets/premium-grid.php:1196 widgets/premium-videobox.php:1276
 msgid "Dark Rounded"
 msgstr ""
 
-#: widgets/premium-grid.php:1197
+#: widgets/premium-grid.php:1197 widgets/premium-videobox.php:1277
 msgid "Light Square"
 msgstr ""
 
-#: widgets/premium-grid.php:1198
+#: widgets/premium-grid.php:1198 widgets/premium-videobox.php:1278
 msgid "Dark Square"
 msgstr ""
 
 #: widgets/premium-grid.php:1199 widgets/premium-person.php:506
-#: widgets/premium-person.php:787
+#: widgets/premium-person.php:787 widgets/premium-videobox.php:1279
 msgid "Facebook"
 msgstr ""
 
@@ -6540,16 +6650,16 @@ msgstr ""
 msgid "Icons"
 msgstr ""
 
-#: widgets/premium-grid.php:2309 widgets/premium-vscroll.php:878
-#: widgets/premium-vscroll.php:938
+#: widgets/premium-grid.php:2309 widgets/premium-vscroll.php:900
+#: widgets/premium-vscroll.php:960
 msgid "Text Hover Color"
 msgstr ""
 
-#: widgets/premium-grid.php:2420
+#: widgets/premium-grid.php:2420 widgets/premium-videobox.php:2301
 msgid "UI Color"
 msgstr ""
 
-#: widgets/premium-grid.php:2431
+#: widgets/premium-grid.php:2431 widgets/premium-videobox.php:2312
 msgid "UI Hover Color"
 msgstr ""
 
@@ -6612,11 +6722,11 @@ msgstr ""
 msgid "List Overflow"
 msgstr ""
 
-#: widgets/premium-icon-list.php:696
+#: widgets/premium-icon-list.php:696 widgets/premium-modalbox.php:1644
 msgid "Visible"
 msgstr ""
 
-#: widgets/premium-icon-list.php:697
+#: widgets/premium-icon-list.php:697 widgets/premium-modalbox.php:1645
 msgid "Hidden"
 msgstr ""
 
@@ -6650,23 +6760,24 @@ msgstr ""
 msgid "Animation"
 msgstr ""
 
-#: widgets/premium-icon-list.php:900 widgets/premium-modalbox.php:394
-#: widgets/premium-videobox.php:695 widgets/premium-vscroll.php:444
+#: widgets/premium-icon-list.php:900 widgets/premium-modalbox.php:415
+#: widgets/premium-videobox.php:703 widgets/premium-videobox.php:2362
+#: widgets/premium-vscroll.php:466
 msgid "Entrance Animation"
 msgstr ""
 
-#: widgets/premium-icon-list.php:915 widgets/premium-modalbox.php:407
-#: widgets/premium-videobox.php:707 widgets/premium-vscroll.php:457
+#: widgets/premium-icon-list.php:915 widgets/premium-modalbox.php:428
+#: widgets/premium-videobox.php:715 widgets/premium-vscroll.php:479
 msgid "Animation Duration"
 msgstr ""
 
-#: widgets/premium-icon-list.php:919 widgets/premium-modalbox.php:411
-#: widgets/premium-videobox.php:711 widgets/premium-vscroll.php:461
+#: widgets/premium-icon-list.php:919 widgets/premium-modalbox.php:432
+#: widgets/premium-videobox.php:719 widgets/premium-vscroll.php:483
 msgid "Slow"
 msgstr ""
 
-#: widgets/premium-icon-list.php:921 widgets/premium-modalbox.php:413
-#: widgets/premium-videobox.php:713 widgets/premium-vscroll.php:463
+#: widgets/premium-icon-list.php:921 widgets/premium-modalbox.php:434
+#: widgets/premium-videobox.php:721 widgets/premium-vscroll.php:485
 msgid "Fast"
 msgstr ""
 
@@ -6836,7 +6947,7 @@ msgid "Mask Image Shape"
 msgstr ""
 
 #: widgets/premium-image-scroll.php:293 widgets/premium-image-separator.php:462
-#: widgets/premium-videobox.php:1018
+#: widgets/premium-videobox.php:1065
 msgid "Mask Image"
 msgstr ""
 
@@ -6845,65 +6956,65 @@ msgid "Use PNG image with the shape you want to mask around feature image."
 msgstr ""
 
 #: widgets/premium-image-scroll.php:311 widgets/premium-image-separator.php:478
-#: widgets/premium-videobox.php:1036
+#: widgets/premium-videobox.php:1083
 msgid "Mask Size"
 msgstr ""
 
 #: widgets/premium-image-scroll.php:330 widgets/premium-image-scroll.php:357
 #: widgets/premium-image-separator.php:498
-#: widgets/premium-image-separator.php:526 widgets/premium-videobox.php:1055
-#: widgets/premium-videobox.php:1082
+#: widgets/premium-image-separator.php:526 widgets/premium-videobox.php:1102
+#: widgets/premium-videobox.php:1129
 msgid "Mask Position"
 msgstr ""
 
 #: widgets/premium-image-scroll.php:333 widgets/premium-image-scroll.php:360
 #: widgets/premium-image-separator.php:501
-#: widgets/premium-image-separator.php:529 widgets/premium-videobox.php:1058
-#: widgets/premium-videobox.php:1085
+#: widgets/premium-image-separator.php:529 widgets/premium-videobox.php:1105
+#: widgets/premium-videobox.php:1132
 msgid "Center Center"
 msgstr ""
 
 #: widgets/premium-image-scroll.php:334 widgets/premium-image-separator.php:502
-#: widgets/premium-videobox.php:1059
+#: widgets/premium-videobox.php:1106
 msgid "Center Left"
 msgstr ""
 
 #: widgets/premium-image-scroll.php:335 widgets/premium-image-separator.php:503
-#: widgets/premium-videobox.php:1060
+#: widgets/premium-videobox.php:1107
 msgid "Center Right"
 msgstr ""
 
 #: widgets/premium-image-scroll.php:336 widgets/premium-image-scroll.php:361
 #: widgets/premium-image-separator.php:504
-#: widgets/premium-image-separator.php:530 widgets/premium-videobox.php:1061
-#: widgets/premium-videobox.php:1086
+#: widgets/premium-image-separator.php:530 widgets/premium-videobox.php:1108
+#: widgets/premium-videobox.php:1133
 msgid "Top Center"
 msgstr ""
 
 #: widgets/premium-image-scroll.php:337 widgets/premium-image-separator.php:505
-#: widgets/premium-videobox.php:1062
+#: widgets/premium-videobox.php:1109
 msgid "Top Left"
 msgstr ""
 
 #: widgets/premium-image-scroll.php:338 widgets/premium-image-separator.php:506
-#: widgets/premium-videobox.php:1063
+#: widgets/premium-videobox.php:1110
 msgid "Top Right"
 msgstr ""
 
 #: widgets/premium-image-scroll.php:339 widgets/premium-image-scroll.php:362
 #: widgets/premium-image-separator.php:507
-#: widgets/premium-image-separator.php:531 widgets/premium-videobox.php:1064
-#: widgets/premium-videobox.php:1087
+#: widgets/premium-image-separator.php:531 widgets/premium-videobox.php:1111
+#: widgets/premium-videobox.php:1134
 msgid "Bottom Center"
 msgstr ""
 
 #: widgets/premium-image-scroll.php:340 widgets/premium-image-separator.php:508
-#: widgets/premium-videobox.php:1065
+#: widgets/premium-videobox.php:1112
 msgid "Bottom Left"
 msgstr ""
 
 #: widgets/premium-image-scroll.php:341 widgets/premium-image-separator.php:509
-#: widgets/premium-videobox.php:1066
+#: widgets/premium-videobox.php:1113
 msgid "Bottom Right"
 msgstr ""
 
@@ -6915,16 +7026,12 @@ msgstr ""
 msgid "Select Scroll Direction"
 msgstr ""
 
-#: widgets/premium-image-scroll.php:484 widgets/premium-image-separator.php:306
-msgid "Image Fit"
-msgstr ""
-
 #: widgets/premium-image-scroll.php:503
 msgid "Reverse Direction"
 msgstr ""
 
 #: widgets/premium-image-scroll.php:514 widgets/premium-lottie.php:212
-#: widgets/premium-modalbox.php:447 widgets/premium-modalbox.php:860
+#: widgets/premium-modalbox.php:468 widgets/premium-modalbox.php:881
 msgid "Trigger"
 msgstr ""
 
@@ -6940,15 +7047,17 @@ msgstr ""
 msgid "Set the scroll speed value. The value will be counted in seconds (s)"
 msgstr ""
 
-#: widgets/premium-image-scroll.php:577 widgets/premium-videobox.php:292
-#: widgets/premium-videobox.php:860 widgets/premium-videobox.php:874
-#: widgets/premium-videobox.php:888
+#: widgets/premium-image-scroll.php:577 widgets/premium-videobox.php:295
+#: widgets/premium-videobox.php:868 widgets/premium-videobox.php:882
+#: widgets/premium-videobox.php:896 widgets/premium-videobox.php:912
+#: widgets/premium-videobox.php:925
 msgid "Show"
 msgstr ""
 
-#: widgets/premium-image-scroll.php:578 widgets/premium-videobox.php:293
-#: widgets/premium-videobox.php:861 widgets/premium-videobox.php:875
-#: widgets/premium-videobox.php:889
+#: widgets/premium-image-scroll.php:578 widgets/premium-videobox.php:296
+#: widgets/premium-videobox.php:869 widgets/premium-videobox.php:883
+#: widgets/premium-videobox.php:897 widgets/premium-videobox.php:913
+#: widgets/premium-videobox.php:926
 msgid "Hide"
 msgstr ""
 
@@ -6960,7 +7069,7 @@ msgstr ""
 msgid "Choose the separator image"
 msgstr ""
 
-#: widgets/premium-image-separator.php:241 widgets/premium-modalbox.php:715
+#: widgets/premium-image-separator.php:241 widgets/premium-modalbox.php:736
 msgid "Only Play on Hover"
 msgstr ""
 
@@ -7002,7 +7111,7 @@ msgstr ""
 msgid "Viewport"
 msgstr ""
 
-#: widgets/premium-lottie.php:218
+#: widgets/premium-lottie.php:218 widgets/premium-modalbox.php:1646
 msgid "Scroll"
 msgstr ""
 
@@ -7195,7 +7304,7 @@ msgstr ""
 msgid "Map"
 msgstr ""
 
-#: widgets/premium-modalbox.php:172 widgets/premium-modalbox.php:1149
+#: widgets/premium-modalbox.php:172 widgets/premium-modalbox.php:1170
 msgid "Header"
 msgstr ""
 
@@ -7207,77 +7316,77 @@ msgstr ""
 msgid "Add a title for the modal box"
 msgstr ""
 
-#: widgets/premium-modalbox.php:317
+#: widgets/premium-modalbox.php:309
 msgid "Content to Show"
 msgstr ""
 
-#: widgets/premium-modalbox.php:320
+#: widgets/premium-modalbox.php:312
 msgid "Text Editor"
 msgstr ""
 
-#: widgets/premium-modalbox.php:321 widgets/premium-vscroll.php:195
+#: widgets/premium-modalbox.php:313
 msgid "Elementor Template"
 msgstr ""
 
-#: widgets/premium-modalbox.php:332
-msgid "Modal content is a template which you can choose from Elementor library"
-msgstr ""
-
-#: widgets/premium-modalbox.php:359 widgets/premium-modalbox.php:1204
+#: widgets/premium-modalbox.php:379 widgets/premium-modalbox.php:1225
 msgid "Upper Close Button"
 msgstr ""
 
-#: widgets/premium-modalbox.php:371 widgets/premium-modalbox.php:1350
+#: widgets/premium-modalbox.php:392 widgets/premium-modalbox.php:1371
 msgid "Lower Close Button"
 msgstr ""
 
-#: widgets/premium-modalbox.php:440
+#: widgets/premium-modalbox.php:461
 msgid "Trigger Options"
 msgstr ""
 
-#: widgets/premium-modalbox.php:449
+#: widgets/premium-modalbox.php:470
 msgid "Choose where would you like the modal box appear on"
 msgstr ""
 
-#: widgets/premium-modalbox.php:455
+#: widgets/premium-modalbox.php:476
 msgid "On Page Load"
 msgstr ""
 
-#: widgets/premium-modalbox.php:627
+#: widgets/premium-modalbox.php:648
 msgid "Button Size"
 msgstr ""
 
-#: widgets/premium-modalbox.php:752
+#: widgets/premium-modalbox.php:773
 msgid "Delay in Popup Display (Sec)"
 msgstr ""
 
-#: widgets/premium-modalbox.php:754
+#: widgets/premium-modalbox.php:775
 msgid ""
 "When should the popup appear during page load? The value are counted in "
 "seconds"
 msgstr ""
 
-#: widgets/premium-modalbox.php:833
+#: widgets/premium-modalbox.php:854
 msgid "How to create an Elementor template to be used in Modal Box widget »"
 msgstr ""
 
-#: widgets/premium-modalbox.php:834
+#: widgets/premium-modalbox.php:855
 msgid "How Can I Insert a Video Box inside Premium Modal Box Widget »"
 msgstr ""
 
-#: widgets/premium-modalbox.php:946
+#: widgets/premium-modalbox.php:967
 msgid "Icon Hover Color"
 msgstr ""
 
-#: widgets/premium-modalbox.php:1561
+#: widgets/premium-modalbox.php:1582
 msgid "Content Background Color"
 msgstr ""
 
-#: widgets/premium-modalbox.php:1596
+#: widgets/premium-modalbox.php:1617
 msgid "Max Height"
 msgstr ""
 
-#: widgets/premium-modalbox.php:1628
+#: widgets/premium-modalbox.php:1640
+msgid "Overflow"
+msgstr ""
+
+#: widgets/premium-modalbox.php:1667
 msgid "Footer Background Color"
 msgstr ""
 
@@ -7521,7 +7630,7 @@ msgstr ""
 msgid "Vertical Spacing"
 msgstr ""
 
-#: widgets/premium-pricing-table.php:1734 widgets/premium-vscroll.php:596
+#: widgets/premium-pricing-table.php:1734 widgets/premium-vscroll.php:618
 msgid "Tooltips"
 msgstr ""
 
@@ -7843,336 +7952,360 @@ msgstr ""
 msgid "Animation Duration (s)"
 msgstr ""
 
-#: widgets/premium-videobox.php:151
+#: widgets/premium-videobox.php:153
 msgid "Video Type"
 msgstr ""
 
-#: widgets/premium-videobox.php:155
+#: widgets/premium-videobox.php:157
 msgid "Youtube"
 msgstr ""
 
-#: widgets/premium-videobox.php:171 widgets/premium-videobox.php:195
+#: widgets/premium-videobox.php:159
+msgid "Dailymotion"
+msgstr ""
+
+#: widgets/premium-videobox.php:174 widgets/premium-videobox.php:198
 msgid "Embed URL"
 msgstr ""
 
-#: widgets/premium-videobox.php:182
+#: widgets/premium-videobox.php:185
 msgid "Video ID"
 msgstr ""
 
-#: widgets/premium-videobox.php:183
+#: widgets/premium-videobox.php:186
 msgid ""
 "Enter the numbers and letters after the equal sign which located in your "
 "YouTube video link or after the slash sign in your Vimeo video link. For "
 "example, z1hQgVpfTKU"
 msgstr ""
 
-#: widgets/premium-videobox.php:196
+#: widgets/premium-videobox.php:199
 msgid ""
 "Enter your YouTube/Vimeo video link. For example, https://www.youtube.com/"
 "embed/z1hQgVpfTKU"
 msgstr ""
 
-#: widgets/premium-videobox.php:208
+#: widgets/premium-videobox.php:211
 msgid "Get Videos From Channel/Playlist"
 msgstr ""
 
-#: widgets/premium-videobox.php:222
+#: widgets/premium-videobox.php:225
 msgid "Playlist"
 msgstr ""
 
-#: widgets/premium-videobox.php:223
+#: widgets/premium-videobox.php:226
 msgid "Channel"
 msgstr ""
 
-#: widgets/premium-videobox.php:236
+#: widgets/premium-videobox.php:239
 msgid "Playlist ID"
 msgstr ""
 
-#: widgets/premium-videobox.php:253
+#: widgets/premium-videobox.php:256
 msgid "Channel ID"
 msgstr ""
 
-#: widgets/premium-videobox.php:270
+#: widgets/premium-videobox.php:273
 msgid "Reload Video Once Every"
 msgstr ""
 
-#: widgets/premium-videobox.php:273
+#: widgets/premium-videobox.php:276
 msgid "Hour"
 msgstr ""
 
-#: widgets/premium-videobox.php:277
+#: widgets/premium-videobox.php:280
 msgid "Year"
 msgstr ""
 
-#: widgets/premium-videobox.php:290
+#: widgets/premium-videobox.php:293
 msgid "Show Video Title"
 msgstr ""
 
-#: widgets/premium-videobox.php:304
+#: widgets/premium-videobox.php:307
 msgid "Link Title To Videos"
 msgstr ""
 
-#: widgets/premium-videobox.php:342
+#: widgets/premium-videobox.php:345
 msgid "Title Position"
 msgstr ""
 
-#: widgets/premium-videobox.php:402
+#: widgets/premium-videobox.php:409
 msgid "Videos/Row"
 msgstr ""
 
-#: widgets/premium-videobox.php:430
+#: widgets/premium-videobox.php:437
 msgid "Number of Videos"
 msgstr ""
 
-#: widgets/premium-videobox.php:434
+#: widgets/premium-videobox.php:441
 msgid "Set a number of videos to retrieve"
 msgstr ""
 
-#: widgets/premium-videobox.php:445
-msgid "Featured The First Video"
+#: widgets/premium-videobox.php:452
+msgid "Feature The First Video"
 msgstr ""
 
-#: widgets/premium-videobox.php:508
+#: widgets/premium-videobox.php:515
 msgid "Player Controls"
 msgstr ""
 
-#: widgets/premium-videobox.php:510
+#: widgets/premium-videobox.php:517
 msgid "Show/hide player controls"
 msgstr ""
 
-#: widgets/premium-videobox.php:525
+#: widgets/premium-videobox.php:532
 msgid "This will play the video muted"
 msgstr ""
 
-#: widgets/premium-videobox.php:532
+#: widgets/premium-videobox.php:539
 msgid "Privacy Mode"
 msgstr ""
 
-#: widgets/premium-videobox.php:534
+#: widgets/premium-videobox.php:541
 msgid ""
 "When turned on, YouTube won't store information about visitors on your "
 "website unless they play the video."
 msgstr ""
 
-#: widgets/premium-videobox.php:544
+#: widgets/premium-videobox.php:551
 msgid "Autoplay"
 msgstr ""
 
-#: widgets/premium-videobox.php:557
+#: widgets/premium-videobox.php:565
 msgid "Autoplay On Viewport"
 msgstr ""
 
-#: widgets/premium-videobox.php:574
+#: widgets/premium-videobox.php:582
 msgid ""
 "Please note that autoplay option works only when Overlay option is disabled"
 msgstr ""
 
-#: widgets/premium-videobox.php:603
+#: widgets/premium-videobox.php:611
 msgid "Download Button"
 msgstr ""
 
-#: widgets/premium-videobox.php:614
+#: widgets/premium-videobox.php:622
 msgid "Sticky"
 msgstr ""
 
-#: widgets/premium-videobox.php:639
+#: widgets/premium-videobox.php:647
 msgid "Sticky Only After Played"
 msgstr ""
 
-#: widgets/premium-videobox.php:660 widgets/premium-videobox.php:661
+#: widgets/premium-videobox.php:668 widgets/premium-videobox.php:669
 #, php-format
 msgid "Top %s"
 msgstr ""
 
-#: widgets/premium-videobox.php:662 widgets/premium-videobox.php:663
+#: widgets/premium-videobox.php:670 widgets/premium-videobox.php:671
 #, php-format
 msgid "Bottom %s"
 msgstr ""
 
-#: widgets/premium-videobox.php:664 widgets/premium-videobox.php:665
+#: widgets/premium-videobox.php:672 widgets/premium-videobox.php:673
 #, php-format
 msgid "Center %s"
 msgstr ""
 
-#: widgets/premium-videobox.php:677
+#: widgets/premium-videobox.php:685
 msgid "Disable Sticky On"
 msgstr ""
 
-#: widgets/premium-videobox.php:760 widgets/premium-videobox.php:1947
+#: widgets/premium-videobox.php:768 widgets/premium-videobox.php:2081
 msgid "Info Section"
 msgstr ""
 
-#: widgets/premium-videobox.php:771
+#: widgets/premium-videobox.php:779
 msgid "Watching: Sticky Video"
 msgstr ""
 
-#: widgets/premium-videobox.php:796
+#: widgets/premium-videobox.php:804
 msgid "Start Time"
 msgstr ""
 
-#: widgets/premium-videobox.php:802
+#: widgets/premium-videobox.php:810
 msgid "Specify a start time (in seconds)"
 msgstr ""
 
-#: widgets/premium-videobox.php:812
+#: widgets/premium-videobox.php:820
 msgid "End Time"
 msgstr ""
 
-#: widgets/premium-videobox.php:814
+#: widgets/premium-videobox.php:822
 msgid "Specify an end time (in seconds)"
 msgstr ""
 
-#: widgets/premium-videobox.php:828
+#: widgets/premium-videobox.php:836
 msgid "Suggested Videos From"
 msgstr ""
 
-#: widgets/premium-videobox.php:831
+#: widgets/premium-videobox.php:839
 msgid "Current Channel"
 msgstr ""
 
-#: widgets/premium-videobox.php:832
+#: widgets/premium-videobox.php:840
 msgid "Any Channel"
 msgstr ""
 
-#: widgets/premium-videobox.php:843
+#: widgets/premium-videobox.php:851 widgets/premium-videobox.php:936
 msgid "Controls Color"
 msgstr ""
 
-#: widgets/premium-videobox.php:858
+#: widgets/premium-videobox.php:866
 msgid "Intro Title"
 msgstr ""
 
-#: widgets/premium-videobox.php:872
+#: widgets/premium-videobox.php:880
 msgid "Intro Portrait"
 msgstr ""
 
-#: widgets/premium-videobox.php:886
+#: widgets/premium-videobox.php:894
 msgid "Intro Byline"
 msgstr ""
 
-#: widgets/premium-videobox.php:900
+#: widgets/premium-videobox.php:910
+msgid "Show Logo"
+msgstr ""
+
+#: widgets/premium-videobox.php:923
+msgid "Video Info"
+msgstr ""
+
+#: widgets/premium-videobox.php:947
 msgid "Aspect Ratio"
 msgstr ""
 
-#: widgets/premium-videobox.php:919
+#: widgets/premium-videobox.php:966
 msgid "Video Height (%)"
 msgstr ""
 
-#: widgets/premium-videobox.php:950
+#: widgets/premium-videobox.php:997
 msgid "Thumbnail Size"
 msgstr ""
 
-#: widgets/premium-videobox.php:1009
+#: widgets/premium-videobox.php:1056
 msgid "Mask Video Shape"
 msgstr ""
 
-#: widgets/premium-videobox.php:1023
+#: widgets/premium-videobox.php:1070
 msgid "Use PNG image with the shape you want to mask around feature video."
 msgstr ""
 
-#: widgets/premium-videobox.php:1103
+#: widgets/premium-videobox.php:1150
 msgid "Mask Shadow"
 msgstr ""
 
-#: widgets/premium-videobox.php:1208
+#: widgets/premium-videobox.php:1255
+msgid "Elementor Lightbox"
+msgstr ""
+
+#: widgets/premium-videobox.php:1342
 msgid "Choose an image for the video box"
 msgstr ""
 
-#: widgets/premium-videobox.php:1223 widgets/premium-videobox.php:1230
-#: widgets/premium-videobox.php:1531 widgets/premium-videobox.php:1832
+#: widgets/premium-videobox.php:1357 widgets/premium-videobox.php:1364
+#: widgets/premium-videobox.php:1665 widgets/premium-videobox.php:1966
 msgid "Play Icon"
 msgstr ""
 
-#: widgets/premium-videobox.php:1239 widgets/premium-videobox.php:1335
-#: widgets/premium-vscroll.php:369
+#: widgets/premium-videobox.php:1373 widgets/premium-videobox.php:1469
+#: widgets/premium-vscroll.php:391
 msgid "Horizontal Position"
 msgstr ""
 
-#: widgets/premium-videobox.php:1269 widgets/premium-videobox.php:1365
-#: widgets/premium-vscroll.php:385
+#: widgets/premium-videobox.php:1403 widgets/premium-videobox.php:1499
+#: widgets/premium-vscroll.php:407
 msgid "Vertical Position"
 msgstr ""
 
-#: widgets/premium-videobox.php:1313 widgets/premium-videobox.php:1652
+#: widgets/premium-videobox.php:1447 widgets/premium-videobox.php:1786
 msgid "Video Text"
 msgstr ""
 
-#: widgets/premium-videobox.php:1323
+#: widgets/premium-videobox.php:1457
 msgid "Play Video"
 msgstr ""
 
-#: widgets/premium-videobox.php:1403
+#: widgets/premium-videobox.php:1537
 msgid "How to Enable Youtube Data API for Premium Video Box Widget »"
 msgstr ""
 
-#: widgets/premium-videobox.php:1404
+#: widgets/premium-videobox.php:1538
 msgid "How to Find Youtube Channel/Playlist ID »"
 msgstr ""
 
-#: widgets/premium-videobox.php:1468
+#: widgets/premium-videobox.php:1602
 msgid ""
 "Please note that in case Sticky and Mask Shape options are both enabled, "
 "image shadow will be applied only on sticky overlay image"
 msgstr ""
 
-#: widgets/premium-videobox.php:1638
+#: widgets/premium-videobox.php:1772
 msgid "Hover Padding"
 msgstr ""
 
-#: widgets/premium-videobox.php:1746
+#: widgets/premium-videobox.php:1880
 msgid "Sticky Options"
 msgstr ""
 
-#: widgets/premium-videobox.php:1755
+#: widgets/premium-videobox.php:1889
 msgid "Video Size"
 msgstr ""
 
-#: widgets/premium-videobox.php:1792
+#: widgets/premium-videobox.php:1926
 msgid "Spaces Around"
 msgstr ""
 
-#: widgets/premium-videobox.php:1820
+#: widgets/premium-videobox.php:1954
 msgid "Shadow Color"
 msgstr ""
 
-#: widgets/premium-videobox.php:1881
+#: widgets/premium-videobox.php:2015
 msgid "Video Text Size"
 msgstr ""
 
-#: widgets/premium-videobox.php:1896
+#: widgets/premium-videobox.php:2030
 msgid "Close Icon"
 msgstr ""
 
-#: widgets/premium-videobox.php:2007
+#: widgets/premium-videobox.php:2141
 msgid "Video Title"
 msgstr ""
 
-#: widgets/premium-videobox.php:2089
+#: widgets/premium-videobox.php:2223
 msgid "Box Shadow"
 msgstr ""
 
-#: widgets/premium-videobox.php:2623
+#: widgets/premium-videobox.php:2324
+msgid "Content Width"
+msgstr ""
+
+#: widgets/premium-videobox.php:2343
+msgid "Content Position"
+msgstr ""
+
+#: widgets/premium-videobox.php:2965
 msgid "from "
 msgstr ""
 
-#: widgets/premium-videobox.php:2838
+#: widgets/premium-videobox.php:3246
 msgid "Please make sure to set your Youtube API key in "
 msgstr ""
 
-#: widgets/premium-videobox.php:2840
+#: widgets/premium-videobox.php:3248
 msgid ""
 " tab. For further information about getting an API key, please check this "
 msgstr ""
 
-#: widgets/premium-videobox.php:2841
+#: widgets/premium-videobox.php:3249
 msgid "article"
 msgstr ""
 
-#: widgets/premium-videobox.php:2852
+#: widgets/premium-videobox.php:3260
 msgid "Please Enter a Valid API Key & Channel/Playlist ID"
 msgstr ""
 
-#: widgets/premium-videobox.php:2894
+#: widgets/premium-videobox.php:3302
 msgid ""
 "Something went wrong. It seems like the playlist you selected does not have "
 "any videos"
@@ -8186,139 +8319,139 @@ msgstr ""
 msgid "Elementor Templates"
 msgstr ""
 
-#: widgets/premium-vscroll.php:183 widgets/premium-vscroll.php:206
-#: widgets/premium-vscroll.php:231
+#: widgets/premium-vscroll.php:183 widgets/premium-vscroll.php:228
+#: widgets/premium-vscroll.php:253
 msgid "Section ID"
 msgstr ""
 
-#: widgets/premium-vscroll.php:208
+#: widgets/premium-vscroll.php:230
 msgid "Use this option to add unique ID to your template section"
 msgstr ""
 
-#: widgets/premium-vscroll.php:255
+#: widgets/premium-vscroll.php:277
 msgid "Navigation"
 msgstr ""
 
-#: widgets/premium-vscroll.php:262 widgets/premium-vscroll.php:836
+#: widgets/premium-vscroll.php:284 widgets/premium-vscroll.php:858
 msgid "Navigation Menu"
 msgstr ""
 
-#: widgets/premium-vscroll.php:264
+#: widgets/premium-vscroll.php:286
 msgid "This option works only on the frontend"
 msgstr ""
 
-#: widgets/premium-vscroll.php:287
+#: widgets/premium-vscroll.php:309
 msgid "Offset Top"
 msgstr ""
 
-#: widgets/premium-vscroll.php:302
+#: widgets/premium-vscroll.php:324
 msgid "Offset Left"
 msgstr ""
 
-#: widgets/premium-vscroll.php:318
+#: widgets/premium-vscroll.php:340
 msgid "Offset Right"
 msgstr ""
 
-#: widgets/premium-vscroll.php:336
+#: widgets/premium-vscroll.php:358
 msgid "List Item"
 msgstr ""
 
-#: widgets/premium-vscroll.php:345
+#: widgets/premium-vscroll.php:367
 msgid "Menu Items"
 msgstr ""
 
-#: widgets/premium-vscroll.php:402
+#: widgets/premium-vscroll.php:424
 msgid "Shape"
 msgstr ""
 
-#: widgets/premium-vscroll.php:405
+#: widgets/premium-vscroll.php:427
 msgid "Circles"
 msgstr ""
 
-#: widgets/premium-vscroll.php:406
+#: widgets/premium-vscroll.php:428
 msgid "Lines"
 msgstr ""
 
-#: widgets/premium-vscroll.php:418
+#: widgets/premium-vscroll.php:440
 msgid "Tooltips Text"
 msgstr ""
 
-#: widgets/premium-vscroll.php:430
+#: widgets/premium-vscroll.php:452
 msgid "Dots Tooltips Text"
 msgstr ""
 
-#: widgets/premium-vscroll.php:433
+#: widgets/premium-vscroll.php:455
 msgid "Add text for each navigation dot separated by ','"
 msgstr ""
 
-#: widgets/premium-vscroll.php:477
+#: widgets/premium-vscroll.php:499
 msgid "Scroll Settings"
 msgstr ""
 
-#: widgets/premium-vscroll.php:484
+#: widgets/premium-vscroll.php:506
 msgid "Scroll Effect"
 msgstr ""
 
-#: widgets/premium-vscroll.php:498
+#: widgets/premium-vscroll.php:520
 msgid "Scroll Speed"
 msgstr ""
 
-#: widgets/premium-vscroll.php:500
+#: widgets/premium-vscroll.php:522
 msgid "Set scolling speed in seconds, default: 0.7"
 msgstr ""
 
-#: widgets/premium-vscroll.php:507
+#: widgets/premium-vscroll.php:529
 msgid "Scroll Offset"
 msgstr ""
 
-#: widgets/premium-vscroll.php:515
+#: widgets/premium-vscroll.php:537
 msgid "Full Section Scroll"
 msgstr ""
 
-#: widgets/premium-vscroll.php:524
+#: widgets/premium-vscroll.php:546
 msgid "Save to Browser History"
 msgstr ""
 
-#: widgets/premium-vscroll.php:526
+#: widgets/premium-vscroll.php:548
 msgid ""
 "Enabling this option will save the current section ID to the browser history"
 msgstr ""
 
-#: widgets/premium-vscroll.php:534
+#: widgets/premium-vscroll.php:556
 msgid "Enable Full Section Scroll on Touch Devices"
 msgstr ""
 
-#: widgets/premium-vscroll.php:545
+#: widgets/premium-vscroll.php:567
 msgid "Check Content Overflow"
 msgstr ""
 
-#: widgets/premium-vscroll.php:547
+#: widgets/premium-vscroll.php:569
 msgid ""
 "Enable this option to check if sections height is larger than screen height "
 "and add a scroll bar for the content"
 msgstr ""
 
-#: widgets/premium-vscroll.php:567
+#: widgets/premium-vscroll.php:589
 msgid ""
 "How to create an Elementor template to be used in Premium Vertical Scroll »"
 msgstr ""
 
-#: widgets/premium-vscroll.php:606
+#: widgets/premium-vscroll.php:628
 msgid "Tooltips Text Color"
 msgstr ""
 
-#: widgets/premium-vscroll.php:637
+#: widgets/premium-vscroll.php:659
 msgid "Tooltips Background"
 msgstr ""
 
-#: widgets/premium-vscroll.php:732
+#: widgets/premium-vscroll.php:754
 msgid "Dots Color"
 msgstr ""
 
-#: widgets/premium-vscroll.php:746
+#: widgets/premium-vscroll.php:768
 msgid "Active Dot Color"
 msgstr ""
 
-#: widgets/premium-vscroll.php:760
+#: widgets/premium-vscroll.php:782
 msgid "Dots Border Color"
 msgstr ""

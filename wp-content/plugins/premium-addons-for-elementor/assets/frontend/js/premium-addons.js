@@ -38,7 +38,7 @@
                     step: function (counter) {
                         var rotate = (counter * 3.6);
 
-                        $progressbarElem.find(".premium-progressbar-right-label span").text(Math.ceil(counter) + "%");
+                        $progressbarElem.find(".premium-progressbar-right-label").text(Math.ceil(counter) + "%");
 
                         $progressbarElem.find(".premium-progressbar-circle-left").css('transform', "rotate(" + rotate + "deg)");
                         if (rotate > 180) {
@@ -160,74 +160,97 @@
                 thumbnail = $videoBoxElement.data("thumbnail"),
                 sticky = $videoBoxElement.data('sticky'),
                 stickyOnPlay = $videoBoxElement.data('sticky-play'),
-                hoverEffect = $videoBoxElement.data("hover"),
+                hoverEffect = $videoBoxElement.data('hover'),
+                $lighboxContainer = $videoListElement.length ? $videoListElement : $videoBoxElement,
+                lightBox = $lighboxContainer.data('lightbox') ? $lighboxContainer.data('lightbox') : false,
                 video, vidSrc;
 
-            // Youtube playlist option
-            if ($videoListElement.length) {
+            if (lightBox) {
 
-                //Make sure that video were pulled from the API.
-                if (!$videoContainer.length)
-                    return;
+                if ('prettyphoto' === lightBox.type) {
+                    $lighboxContainer.find(".premium-vid-lightbox-container[data-rel^='prettyPhoto']").prettyPhoto(getPrettyPhotoSettings(lightBox.theme));
+                }
 
-                $videoContainer.each(function (index, item) {
+                $lighboxContainer.find('.premium-video-box-image-container, .premium-video-box-play-icon-container').on('click', function (e) {
+                    triggerLightbox($lighboxContainer, lightBox.type);
+                });
 
-                    var vidSrc,
-                        $videoContainer = $(item),
-                        $videoBoxElement = $videoContainer.closest(".premium-video-box-container"),
-                        $trigger = $videoContainer.closest(".premium-video-box-trigger");
+            } else {
+                // Youtube playlist option.
+                if ($videoListElement.length) {
 
-                    vidSrc = $videoContainer.data("src");
-                    vidSrc = vidSrc + "&autoplay=1";
+                    //Make sure that video were pulled from the API.
+                    if (!$videoContainer.length)
+                        return;
 
-                    $trigger.on("click", function () {
+                    $videoContainer.each(function (index, item) {
 
-                        var $iframe = $("<iframe/>");
+                        var vidSrc,
+                            $videoContainer = $(item),
+                            $videoBoxElement = $videoContainer.closest(".premium-video-box-container"),
+                            $trigger = $videoContainer.closest(".premium-video-box-trigger");
 
-                        $iframe.attr({
-                            "src": vidSrc,
-                            "frameborder": "0",
-                            "allowfullscreen": "1",
-                            "allow": "autoplay;encrypted-media;"
+                        vidSrc = $videoContainer.data("src");
+                        vidSrc = vidSrc + "&autoplay=1";
+
+                        $trigger.on("click", function () {
+
+                            var $iframe = $("<iframe/>");
+
+                            $iframe.attr({
+                                "src": vidSrc,
+                                "frameborder": "0",
+                                "allowfullscreen": "1",
+                                "allow": "autoplay;encrypted-media;"
+                            });
+                            $videoContainer.css("background", "#000");
+                            $videoContainer.html($iframe);
+
+                            $videoBoxElement.find(
+                                ".premium-video-box-image-container, .premium-video-box-play-icon-container"
+                            ).remove();
+
                         });
-                        $videoContainer.css("background", "#000");
-                        $videoContainer.html($iframe);
-
-                        $videoBoxElement.find(
-                            ".premium-video-box-image-container, .premium-video-box-play-icon-container"
-                        ).remove();
 
                     });
 
-                });
-
-                return;
-            }
-
-            if ("self" === type) {
-
-                video = $videoContainer.find("video");
-                vidSrc = video.attr("src");
-
-            } else {
-
-                vidSrc = $videoContainer.data("src");
-
-                if (!thumbnail || -1 !== vidSrc.indexOf("autoplay=1")) {
-
-                    //Check if Autoplay on viewport option is enabled
-                    if ($videoBoxElement.data("play-viewport")) {
-                        elementorFrontend.waypoint($videoBoxElement, function () {
-                            playVideo();
-                        });
-                    } else {
-                        playVideo();
-                    }
-
-                } else {
-                    vidSrc = vidSrc + "&autoplay=1";
+                    return;
                 }
 
+                if ("self" === type) {
+
+                    video = $videoContainer.find("video");
+                    vidSrc = video.attr("src");
+
+                } else {
+
+                    vidSrc = $videoContainer.data("src");
+
+                    if (!thumbnail || -1 !== vidSrc.indexOf("autoplay=1")) {
+
+                        //Check if Autoplay on viewport option is enabled
+                        if ($videoBoxElement.data("play-viewport")) {
+                            elementorFrontend.waypoint($videoBoxElement, function () {
+                                playVideo();
+                            });
+                        } else {
+                            playVideo();
+                        }
+
+                    } else {
+                        vidSrc = vidSrc + "&autoplay=1";
+                    }
+
+                }
+
+                $videoBoxElement.on("click", function () {
+                    playVideo();
+                });
+
+                if ("yes" !== sticky || "yes" === stickyOnPlay)
+                    return;
+
+                stickyOption();
             }
 
             function playVideo() {
@@ -270,15 +293,13 @@
                     $videoBoxElement.find(".premium-video-box-vimeo-wrap").remove();
             }
 
-            $videoBoxElement.on("click", function () {
-                playVideo();
-            });
-
-
-            if ("yes" !== sticky || "yes" === stickyOnPlay)
-                return;
-
-            stickyOption();
+            function triggerLightbox($container, type) {
+                if ('elementor' === type) {
+                    $container.find('.premium-video-box-video-container').click();
+                } else {
+                    $container.find(".premium-vid-lightbox-container[data-rel^='prettyPhoto']").click();
+                }
+            }
 
             function stickyOption() {
 
@@ -461,6 +482,20 @@
 
             }
 
+            function getPrettyPhotoSettings(theme) {
+                return {
+                    theme: theme,
+                    hook: "data-rel",
+                    opacity: 0.7,
+                    show_title: false,
+                    deeplinking: false,
+                    overlay_gallery: true,
+                    custom_markup: "",
+                    default_width: 900,
+                    default_height: 506,
+                    social_tools: ""
+                };
+            }
         };
 
         /****** Premium Media Grid Handler ******/
@@ -849,19 +884,35 @@
         /****** Premium Counter Handler ******/
         var PremiumCounterHandler = function ($scope, $) {
 
-            var $counterElement = $scope.find(".premium-counter");
+            var $counterElement = $scope.find(".premium-counter"),
+                isHScrollWidget = $counterElement.closest(".premium-hscroll-temp"),
+                counterSettings = $counterElement.data(),
+                incrementElement = $counterElement.find(".premium-counter-init"),
+                iconElement = $counterElement.find(".icon");
 
-            elementorFrontend.waypoint($counterElement, function () {
+            if (!isHScrollWidget.length) {
+                elementorFrontend.waypoint($counterElement, function () {
 
-                var counterSettings = $counterElement.data(),
-                    incrementElement = $counterElement.find(".premium-counter-init"),
-                    iconElement = $counterElement.find(".icon");
 
-                $(incrementElement).numerator(counterSettings);
 
-                $(iconElement).addClass("animated " + iconElement.data("animation"));
+                    $(incrementElement).numerator(counterSettings);
 
-            });
+                    $(iconElement).addClass("animated " + iconElement.data("animation"));
+
+                });
+            } else {
+
+                $(window).on("scroll", function () {
+
+                    if ($(window).scrollTop() >= isHScrollWidget.data("scroll-offset")) {
+                        $(incrementElement).numerator(counterSettings);
+
+                        $(iconElement).addClass("animated " + iconElement.data("animation"));
+                    }
+
+                });
+
+            }
 
         };
 
@@ -876,7 +927,7 @@
 
             function escapeHtml(unsafe) {
                 return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(
-                    /"/g, "&quot;").replace(/'/g, "&#039;");
+                    /"/g, "&quot;");
             }
 
             if ("typing" === settings.effect) {
@@ -887,7 +938,8 @@
                     fancyStrings.push(escapeHtml(item));
                 });
 
-                $elem.find(".premium-fancy-text").typed({
+                var fancyTextID = '#' + $elem.find('.premium-fancy-text').attr('id');
+                new Typed(fancyTextID, {
                     strings: fancyStrings,
                     typeSpeed: settings.typeSpeed,
                     backSpeed: settings.backSpeed,
@@ -1168,7 +1220,7 @@
 
                     var templateID = $(slide).data("template");
 
-                    if (undefined !== templateID) {
+                    if (undefined !== templateID && '' !== templateID) {
                         $.ajax({
                             type: "GET",
                             url: PremiumSettings.ajaxurl,
@@ -1255,6 +1307,11 @@
                     return customDot;
                 }
             });
+
+            $scope.find(".premium-carousel-hidden").removeClass("premium-carousel-hidden");
+            $carouselElem.find(".premium-carousel-nav-arrow-prev").remove();
+            $carouselElem.find(".premium-carousel-nav-arrow-next").remove();
+            $carouselElem.find(".premium-carousel-nav-dot").remove();
 
             if (settings.variableWidth) {
                 $carouselElem.find(".elementor-container").css("flex-wrap", "nowrap");
@@ -1455,7 +1512,7 @@
                 if ($bannerElement.hasClass("premium-banner-tilt-yes")) {
 
                     var reverse = $bannerElement.hasClass("premium-banner-tilt-rev-yes");
-                    console.log(reverse);
+
                     UniversalTilt.init({
                         elements: $bannerElement.closest(".elementor-widget"),
                         settings: {
@@ -2016,8 +2073,8 @@
                     selectors: {
                         multiplePersons: '.multiple-persons',
                         person: '.premium-person-container',
-                        imgContainer: '.premium-person-image-container',
-                        imgWrap: '.premium-person-image-wrap'
+                        personCarousel: '.premium-person-container.slick-active',
+                        personImg: '.premium-person-image-container img',
 
                     }
                 }
@@ -2030,7 +2087,7 @@
                 return {
                     $multiplePersons: this.$element.find(selectors.multiplePersons),
                     $persons: this.$element.find(selectors.person),
-                    $imgWrap: this.$element.find(selectors.imgWrap),
+                    $personImg: this.$element.find(selectors.personImg),
                 }
 
             },
@@ -2076,15 +2133,20 @@
             runEqualHeight: function () {
 
                 var $persons = this.elements.$persons,
-                    $imgWrap = this.elements.$imgWrap;
+                    $personImg = this.elements.$personImg;
 
                 var selectors = this.getSettings('selectors'),
+                    carousel = this.getElementSettings('carousel'),
                     heights = new Array();
+
+                if (carousel) {
+                    $persons = this.$element.find(selectors.personCarousel);
+                }
 
                 $persons.each(function (index, person) {
                     $(person).imagesLoaded(function () { }).done(function () {
 
-                        var imageHeight = $(person).find(selectors.imgContainer).outerHeight();
+                        var imageHeight = $(person).find(selectors.personImg).outerHeight();
 
                         heights.push(imageHeight);
                     });
@@ -2092,14 +2154,15 @@
 
                 $persons.imagesLoaded(function () { }).done(function () {
                     var maxHeight = Math.max.apply(null, heights);
-                    $imgWrap.css("height", maxHeight + "px");
+                    $personImg.css("height", maxHeight + "px");
                 });
 
             },
 
             run: function () {
 
-                var $multiplePersons = this.elements.$multiplePersons;
+                var $multiplePersons = this.elements.$multiplePersons,
+                    _this = this;
 
                 if (!$multiplePersons.length) return;
 
@@ -2108,11 +2171,17 @@
                 if (carousel)
                     $multiplePersons.slick(this.getSlickSettings());
 
-                if ($multiplePersons.hasClass("premium-person-style1")) return;
+                // if ($multiplePersons.hasClass("premium-person-style1")) return;
 
                 if ("yes" !== $multiplePersons.data("persons-equal")) return;
 
                 this.runEqualHeight();
+
+                if (carousel) {
+                    $multiplePersons.on('afterChange', function () {
+                        _this.runEqualHeight();
+                    })
+                }
 
             }
 

@@ -76,6 +76,10 @@ class Module {
 	 */
 	public function enqueue_scripts() {
 
+		if ( ! wp_script_is( 'elementor-waypoints', 'enqueued' ) ) {
+			wp_enqueue_script( 'elementor-waypoints' );
+		}
+
 		if ( ! wp_script_is( 'pa-anime', 'enqueued' ) ) {
 			wp_enqueue_script( 'pa-anime' );
 		}
@@ -915,6 +919,19 @@ class Module {
 				'condition' => array(
 					'premium_fe_switcher' => 'yes',
 					'premium_fe_easing'   => 'steps',
+				),
+			)
+		);
+
+		$element->add_control(
+			'premium_fe_disable_safari',
+			array(
+				'label'        => __( 'Disable Floating Effects On Safari', 'premium-addons-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'prefix_class' => 'premium-disable-fe-',
+				'separator'    => 'before',
+				'condition'    => array(
+					'premium_fe_switcher' => 'yes',
 				),
 			)
 		);

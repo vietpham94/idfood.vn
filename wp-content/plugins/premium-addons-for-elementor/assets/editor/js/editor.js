@@ -4,13 +4,34 @@
     var selectOptions = elementor.modules.controls.Select2.extend({
 
         onBeforeRender: function () {
-            console.log(this.container.type);
+
             if (this.container && ("section" === this.container.type || "container" === this.container.type)) {
                 var widgetObj = elementor.widgetsCache || elementor.config.widgets,
                     optionsToUpdate = {};
 
+                var _this = this;
                 this.container.children.forEach(function (child) {
 
+                    if ("container" === _this.container.type) {
+
+                        if (child.view.$childViewContainer) {
+                            getInnerWidgets(child);
+                        } else {
+                            //Get Flex Container widgets when no columns are added.
+                            var name = child.view.$el.data("widget_type").split('.')[0];
+
+                            if ('undefined' !== typeof widgetObj[name]) {
+                                optionsToUpdate[".elementor-widget-" + widgetObj[name].widget_type + " .elementor-widget-container"] = widgetObj[name].title;
+                            }
+                        }
+
+                    } else if ("section" === _this.container.type) {
+                        getInnerWidgets(child);
+                    }
+
+                });
+
+                function getInnerWidgets(child) {
                     child.view.$childViewContainer.children("[data-widget_type]").each(function (index, widget) {
                         var name = $(widget).data("widget_type").split('.')[0];
 
@@ -18,7 +39,8 @@
                             optionsToUpdate[".elementor-widget-" + widgetObj[name].widget_type + " .elementor-widget-container"] = widgetObj[name].title;
                         }
                     });
-                });
+
+                }
 
                 this.model.set("options", optionsToUpdate);
             }

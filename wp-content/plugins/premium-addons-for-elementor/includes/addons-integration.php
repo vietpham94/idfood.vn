@@ -1,4 +1,7 @@
 <?php
+/**
+ * Addons Integration.
+ */
 
 namespace PremiumAddons\Includes;
 
@@ -8,6 +11,8 @@ use PremiumAddons\Modules\Premium_Equal_Height\Module as Equal_Height;
 use PremiumAddons\Modules\PA_Display_Conditions\Module as Display_Conditions;
 use PremiumAddons\Modules\PremiumSectionFloatingEffects\Module as Floating_Effects;
 use PremiumAddons\Modules\Woocommerce\Module as Woocommerce;
+use PremiumAddons\Includes\Assets_Manager;
+use PremiumAddons\Includes\Premium_Template_Tags;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
@@ -71,6 +76,16 @@ class Addons_Integration {
 
 		add_action( 'elementor/widgets/widgets_registered', array( $this, 'widgets_area' ) );
 
+		add_action( 'elementor/editor/after_enqueue_styles', array( $this, 'load_live_editor_modal' ) );
+
+		add_action( 'elementor/editor/after_enqueue_scripts', array( $this, 'live_editor_enqueue' ) );
+
+		add_action( 'wp_ajax_handle_live_editor', array( $this, 'handle_live_editor' ) );
+
+		add_action( 'wp_ajax_check_temp_validity', array( $this, 'check_temp_validity' ) );
+
+		add_action( 'wp_ajax_update_template_title', array( $this, 'update_template_title' ) );
+
 		add_action( 'elementor/editor/before_enqueue_scripts', array( $this, 'enqueue_editor_scripts' ) );
 
 		add_action( 'elementor/preview/enqueue_styles', array( $this, 'enqueue_preview_styles' ) );
@@ -87,8 +102,9 @@ class Addons_Integration {
 
 			add_action( 'elementor/editor/after_enqueue_scripts', array( $this, 'after_enqueue_scripts' ) );
 
-			$this->load_pa_extensions();
 		}
+
+		$this->load_pa_extensions();
 
 		$cross_enabled = isset( self::$modules['premium-cross-domain'] ) ? self::$modules['premium-cross-domain'] : 1;
 
@@ -101,6 +117,167 @@ class Addons_Integration {
 		}
 
 	}
+
+	/**
+	 * Live Editor Enqueue.
+	 *
+	 * @access public
+	 * @since 4.8.10
+	 */
+	public function live_editor_enqueue() {
+
+		wp_enqueue_script(
+			'live-editor-js',
+			PREMIUM_ADDONS_URL . 'assets/editor/js/live-editor.js',
+			array( 'elementor-editor', 'jquery' ),
+			PREMIUM_ADDONS_VERSION,
+			true
+		);
+
+		$live_editor_data = array(
+			'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),
+			'nonce'   => wp_create_nonce( 'pa-live-editor' ),
+		);
+
+		wp_localize_script( 'live-editor-js', 'liveEditor', $live_editor_data );
+
+	}
+
+	/**
+	 * Update Template Title.
+	 *
+	 * @access public
+	 * @since 4.8.10
+	 */
+	public function update_template_title() {
+		check_ajax_referer( 'pa-live-editor', 'security' );
+
+		if ( ! isset( $_POST['title'] ) || ! isset( $_POST['id'] ) ) {
+			wp_send_json_error();
+		}
+
+		$res = wp_update_post(
+			array(
+				'ID'         => sanitize_text_field( wp_unslash( $_POST['id'] ) ),
+				'post_title' => sanitize_text_field( wp_unslash( $_POST['title'] ) ),
+			)
+		);
+
+		wp_send_json_success( $res );
+	}
+
+	/**
+	 * Check Temp Validity.
+	 * Checks if the template is valid ( has content) or not,
+	 * And DELETE the post if it's invalid.
+	 *
+	 * @access public
+	 * @since 4.9.1
+	 */
+	public function check_temp_validity() {
+
+		check_ajax_referer( 'pa-live-editor', 'security' );
+
+		if ( ! isset( $_POST['templateID'] ) ) {
+			wp_send_json_error( 'template ID is not set' );
+		}
+
+		$temp_id = sanitize_text_field( wp_unslash( $_POST['templateID'] ) );
+
+		$template_content = $this->template_instance->get_template_content( $temp_id, true );
+
+		if ( empty( $template_content ) || ! isset( $template_content ) ) {
+
+			$res = wp_delete_post( $temp_id, true );
+
+			if ( ! is_wp_error( $res ) ) {
+				$res = 'Template Deleted.';
+			}
+		} else {
+			$res = 'Template Has Content.';
+		}
+
+		wp_send_json_success( $res );
+	}
+
+	/**
+	 * Handle Live Editor Modal.
+	 *
+	 * @access public
+	 * @since 4.8.10
+	 */
+	public function handle_live_editor() {
+
+		check_ajax_referer( 'pa-live-editor', 'security' );
+
+		if ( ! isset( $_POST['key'] ) ) {
+			wp_send_json_error();
+		}
+
+		$post_name  = 'pa-dynamic-temp-' . sanitize_text_field( wp_unslash( $_POST['key'] ) );
+		$post_title = '';
+		$args       = array(
+			'post_type'              => 'elementor_library',
+			'name'                   => $post_name,
+			'post_status'            => 'publish',
+			'update_post_term_cache' => false,
+			'update_post_meta_cache' => false,
+			'posts_per_page'         => 1,
+		);
+
+		$post = get_posts( $args );
+
+		if ( empty( $post ) ) { // create a new one.
+
+			$key        = sanitize_text_field( wp_unslash( $_POST['key'] ) );
+			$post_title = 'PA Template | #' . substr( md5( $key ), 0, 4 );
+
+			$params = array(
+				'post_content' => '',
+				'post_type'    => 'elementor_library',
+				'post_title'   => $post_title,
+				'post_name'    => $post_name,
+				'post_status'  => 'publish',
+				'meta_input'   => array(
+					'_elementor_edit_mode'     => 'builder',
+					'_elementor_template_type' => 'page',
+					'_wp_page_template'        => 'elementor_canvas',
+				),
+			);
+
+			$post_id = wp_insert_post( $params );
+
+		} else { // edit post.
+			$post_id    = $post[0]->ID;
+			$post_title = $post[0]->post_title;
+		}
+
+		$edit_url = get_admin_url() . '/post.php?post=' . $post_id . '&action=elementor';
+
+		$result = array(
+			'url'   => $edit_url,
+			'id'    => $post_id,
+			'title' => $post_title,
+		);
+
+		wp_send_json_success( $result );
+	}
+
+	/**
+	 * Load Live Editor Modal.
+	 * Puts live editor popup html into the editor.
+	 *
+	 * @access public
+	 * @since 4.8.10
+	 */
+	public function load_live_editor_modal() {
+		ob_start();
+		include_once PREMIUM_ADDONS_PATH . 'includes/live-editor-modal.php';
+		$output = ob_get_contents();
+		ob_end_clean();
+		echo $output;
+	}
+
 
 	/**
 	 * After Enquque Scripts
@@ -224,98 +401,53 @@ class Addons_Integration {
 			'all'
 		);
 
+		$assets_gen_enabled = self::$modules['premium-assets-generator'] ? true : false;
+
+		$type = get_post_type();
+
+		if ( $assets_gen_enabled && ( 'page' === $type || 'post' === $type ) ) {
+
+			$css_path = '/pa-frontend' . $is_rtl . '-' . Assets_Manager::$post_id . $suffix . '.css';
+
+			if ( Assets_Manager::$is_updated && file_exists( PREMIUM_ASSETS_PATH . $css_path ) ) {
+				wp_enqueue_style(
+					'pa-frontend',
+					PREMIUM_ASSETS_URL . $css_path,
+					array(),
+					time(),
+					'all'
+				);
+			}
+		}
+
+		// If the assets are not ready, or file does not exist for any reson.
+		if ( ! wp_style_is( 'pa-frontend', 'enqueued' ) ) {
+			$this->register_old_styles( $dir, $is_rtl, $suffix );
+		}
+
+	}
+
+	/**
+	 * Register Old Styles
+	 *
+	 * @since 4.9.0
+	 * @access public
+	 *
+	 * @param string $directory style directory.
+	 * @param string $is_rtl page direction.
+	 * @param string $suffix file suffix.
+	 */
+	public function register_old_styles( $directory, $is_rtl, $suffix ) {
+
 		wp_register_style(
 			'premium-addons',
-			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/premium-addons' . $is_rtl . $suffix . '.css',
+			PREMIUM_ADDONS_URL . 'assets/frontend/' . $directory . '/premium-addons' . $is_rtl . $suffix . '.css',
 			array(),
 			PREMIUM_ADDONS_VERSION,
 			'all'
 		);
 
 	}
-
-	/**
-	 * Enqueue Preview CSS files
-	 *
-	 * @since 2.9.0
-	 * @access public
-	 */
-	public function enqueue_preview_styles() {
-
-		wp_enqueue_style( 'pa-prettyphoto' );
-
-		wp_enqueue_style( 'premium-addons' );
-
-		wp_enqueue_style( 'pa-slick' );
-
-	}
-
-	/**
-	 * Load widgets require function
-	 *
-	 * @since 1.0.0
-	 * @access public
-	 */
-	public function widgets_area() {
-		$this->widgets_register();
-	}
-
-	/**
-	 * Requires widgets files
-	 *
-	 * @since 1.0.0
-	 * @access private
-	 */
-	private function widgets_register() {
-
-		$enabled_elements = self::$modules;
-
-		foreach ( glob( PREMIUM_ADDONS_PATH . 'widgets/*.php' ) as $file ) {
-
-			$slug = basename( $file, '.php' );
-
-			// Fixes the conflict between Lottie widget/addon keys.
-			if ( 'premium-lottie' === $slug ) {
-
-				// Check if Lottie widget switcher value was saved before.
-				$saved_options = get_option( 'pa_save_settings' );
-
-				$slug = 'premium-lottie-widget';
-
-			}
-
-			$enabled = isset( $enabled_elements[ $slug ] ) ? $enabled_elements[ $slug ] : '';
-
-			if ( filter_var( $enabled, FILTER_VALIDATE_BOOLEAN ) || ! $enabled_elements ) {
-				$this->register_addon( $file );
-			}
-		}
-
-	}
-
-	/**
-	 * Register Woocommerce Widgets
-	 *
-	 * @since 4.0.0
-	 * @access private
-	 */
-	private function woo_widgets_register() {
-
-		$enabled_elements = self::$modules;
-
-		foreach ( glob( PREMIUM_ADDONS_PATH . 'modules/woocommerce/widgets/*.php' ) as $file ) {
-
-			$slug = basename( $file, '.php' );
-
-			$enabled = isset( $enabled_elements[ $slug ] ) ? $enabled_elements[ $slug ] : '';
-
-			if ( filter_var( $enabled, FILTER_VALIDATE_BOOLEAN ) || ! $enabled_elements ) {
-
-				$this->register_addon( $file );
-			}
-		}
-	}
-
 
 	/**
 	 * Registers required JS files
@@ -330,15 +462,60 @@ class Addons_Integration {
 		$dir    = Helper_Functions::get_scripts_dir();
 		$suffix = Helper_Functions::get_assets_suffix();
 
-		$locale = isset( $maps_settings['premium-map-locale'] ) ? $maps_settings['premium-map-locale'] : 'en';
+		$locale             = isset( $maps_settings['premium-map-locale'] ) ? $maps_settings['premium-map-locale'] : 'en';
+		$assets_gen_enabled = self::$modules['premium-assets-generator'] ? true : false;
 
-		wp_register_script(
-			'premium-addons',
-			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/premium-addons' . $suffix . '.js',
-			array( 'jquery' ),
-			PREMIUM_ADDONS_VERSION,
-			true
-		);
+		$type = get_post_type();
+
+		if ( $assets_gen_enabled && ( 'page' === $type || 'post' === $type ) ) {
+
+			// If the elemens are cached and ready to generate.
+			if ( Assets_Manager::$is_updated ) {
+				Assets_Manager::generate_asset_file( 'js' );
+				Assets_Manager::generate_asset_file( 'css' );
+			}
+
+			$js_path = '/pa-frontend-' . Assets_Manager::$post_id . $suffix . '.js';
+
+			if ( file_exists( PREMIUM_ASSETS_PATH . $js_path ) ) {
+
+				wp_enqueue_script(
+					'pa-frontend',
+					PREMIUM_ASSETS_URL . $js_path,
+					array( 'jquery' ),
+					time(),
+					true
+				);
+
+				wp_localize_script(
+					'pa-frontend',
+					'PremiumSettings',
+					array(
+						'ajaxurl' => esc_url( admin_url( 'admin-ajax.php' ) ),
+						'nonce'   => wp_create_nonce( 'pa-blog-widget-nonce' ),
+					)
+				);
+
+				if ( class_exists( 'woocommerce' ) ) {
+					wp_localize_script(
+						'pa-frontend',
+						'PremiumWooSettings',
+						array(
+							'ajaxurl'        => esc_url( admin_url( 'admin-ajax.php' ) ),
+							'products_nonce' => wp_create_nonce( 'pa-woo-products-nonce' ),
+							'qv_nonce'       => wp_create_nonce( 'pa-woo-qv-nonce' ),
+							'cta_nonce'      => wp_create_nonce( 'pa-woo-cta-nonce' ),
+							'woo_cart_url'   => get_permalink( wc_get_page_id( 'cart' ) ),
+						)
+					);
+				}
+			}
+		}
+
+		// If the assets are not ready, or file does not exist for any reson.
+		if ( ! wp_script_is( 'pa-frontend', 'enqueued' ) ) {
+			$this->register_old_scripts( $dir, $suffix );
+		}
 
 		wp_register_script(
 			'prettyPhoto-js',
@@ -431,7 +608,10 @@ class Addons_Integration {
 		wp_register_script(
 			'lottie-js',
 			PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/lottie' . $suffix . '.js',
-			array( 'jquery' ),
+			array(
+				'jquery',
+				'elementor-waypoints',
+			),
 			PREMIUM_ADDONS_VERSION,
 			true
 		);
@@ -443,16 +623,6 @@ class Addons_Integration {
 			PREMIUM_ADDONS_VERSION,
 			true
 		);
-
-		if ( class_exists( 'woocommerce' ) ) {
-			wp_register_script(
-				'premium-woocommerce',
-				PREMIUM_ADDONS_URL . 'assets/frontend/' . $dir . '/premium-woocommerce' . $suffix . '.js',
-				array( 'jquery' ),
-				PREMIUM_ADDONS_VERSION,
-				true
-			);
-		}
 
 		if ( $maps_settings['premium-map-cluster'] ) {
 			wp_register_script(
@@ -517,7 +687,48 @@ class Addons_Integration {
 			true
 		);
 
+		// Localize jQuery with required data for Global Add-ons.
+		if ( self::$modules['premium-floating-effects'] ) {
+			wp_localize_script(
+				'pa-feffects',
+				'PremiumFESettings',
+				array(
+					'papro_installed' => Helper_Functions::check_papro_version(),
+				)
+			);
+		}
+
+	}
+
+	/**
+	 * Register Old Scripts
+	 *
+	 * @since 4.9.0
+	 * @access public
+	 *
+	 * @param string $directory script directory.
+	 * @param string $suffix file suffix.
+	 */
+	public function register_old_scripts( $directory, $suffix ) {
+
+		wp_register_script(
+			'premium-addons',
+			PREMIUM_ADDONS_URL . 'assets/frontend/' . $directory . '/premium-addons' . $suffix . '.js',
+			array( 'jquery' ),
+			PREMIUM_ADDONS_VERSION,
+			true
+		);
+
+		// We need to make sure premium-woocommerce.js will not be loaded twice if assets are generated.
 		if ( class_exists( 'woocommerce' ) ) {
+			wp_register_script(
+				'premium-woocommerce',
+				PREMIUM_ADDONS_URL . 'assets/frontend/' . $directory . '/premium-woo-products' . $suffix . '.js',
+				array( 'jquery' ),
+				PREMIUM_ADDONS_VERSION,
+				true
+			);
+
 			wp_localize_script(
 				'premium-woocommerce',
 				'PremiumWooSettings',
@@ -531,17 +742,88 @@ class Addons_Integration {
 			);
 		}
 
-		// Localize jQuery with required data for Global Add-ons.
-		if ( self::$modules['premium-floating-effects'] ) {
-			wp_localize_script(
-				'pa-feffects',
-				'PremiumFESettings',
-				array(
-					'papro_installed' => Helper_Functions::check_papro_version(),
-				)
-			);
+	}
+
+	/**
+	 * Enqueue Preview CSS files
+	 *
+	 * @since 2.9.0
+	 * @access public
+	 */
+	public function enqueue_preview_styles() {
+
+		wp_enqueue_style( 'pa-prettyphoto' );
+
+		wp_enqueue_style( 'premium-addons' );
+
+		wp_enqueue_style( 'pa-slick' );
+
+	}
+
+	/**
+	 * Load widgets require function
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 */
+	public function widgets_area() {
+		$this->widgets_register();
+	}
+
+	/**
+	 * Requires widgets files
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 */
+	private function widgets_register() {
+
+		$enabled_elements = self::$modules;
+
+		foreach ( glob( PREMIUM_ADDONS_PATH . 'widgets/*.php' ) as $file ) {
+
+			$slug = basename( $file, '.php' );
+
+			// Fixes the conflict between Lottie widget/addon keys.
+			if ( 'premium-lottie' === $slug ) {
+
+				// Check if Lottie widget switcher value was saved before.
+				$saved_options = get_option( 'pa_save_settings' );
+
+				$slug = 'premium-lottie-widget';
+
+			}
+
+			$enabled = isset( $enabled_elements[ $slug ] ) ? $enabled_elements[ $slug ] : '';
+
+			if ( filter_var( $enabled, FILTER_VALIDATE_BOOLEAN ) || ! $enabled_elements ) {
+				$this->register_addon( $file );
+			}
 		}
 
+	}
+
+	/**
+	 * Register Woocommerce Widgets.
+	 *
+	 * @since 4.0.0
+	 * @access private
+	 */
+	private function woo_widgets_register() {
+
+		$enabled_elements = self::$modules;
+
+		foreach ( glob( PREMIUM_ADDONS_PATH . 'modules/woocommerce/widgets/*.php' ) as $file ) {
+
+			$slug = basename( $file, '.php' );
+
+			$enabled = isset( $enabled_elements[ $slug ] ) ? $enabled_elements[ $slug ] : '';
+
+			if ( filter_var( $enabled, FILTER_VALIDATE_BOOLEAN ) || ! $enabled_elements ) {
+
+				$this->register_addon( $file );
+			}
+		}
 	}
 
 	/**
@@ -641,13 +923,13 @@ class Addons_Integration {
 		$template = isset( $_GET['templateID'] ) ? sanitize_text_field( wp_unslash( $_GET['templateID'] ) ) : '';
 
 		if ( empty( $template ) ) {
-			return;
+			wp_send_json_error( '' );
 		}
 
 		$template_content = $this->template_instance->get_template_content( $template );
 
 		if ( empty( $template_content ) || ! isset( $template_content ) ) {
-			wp_send_json_error();
+			wp_send_json_error( '' );
 		}
 
 		$data = array(
@@ -655,7 +937,6 @@ class Addons_Integration {
 		);
 
 		wp_send_json_success( $data );
-
 	}
 
 	/**
@@ -706,34 +987,66 @@ class Addons_Integration {
 
 		$control_manager = \Elementor\Plugin::instance();
 
-		// TODO: NEEDS TO BE DYNAMIC.
-		if ( self::$modules['premium-equal-height'] ) {
+		if ( version_compare( ELEMENTOR_VERSION, '3.6.0', '>=' ) ) {
 
-			require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-select.php';
-			$premium_select = __NAMESPACE__ . '\Controls\Premium_Select';
-			$control_manager->controls_manager->register_control( $premium_select::TYPE, new $premium_select() );
+			// TODO: NEEDS TO BE DYNAMIC.
+			if ( self::$modules['premium-equal-height'] ) {
 
-		}
+				require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-select.php';
+				$premium_select = __NAMESPACE__ . '\Controls\Premium_Select';
+				$control_manager->controls_manager->register( new $premium_select() );
 
-		if ( self::$modules['premium-blog'] ) {
+			}
 
-			require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-post-filter.php';
-			require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-tax-filter.php';
+			if ( self::$modules['premium-blog'] ) {
 
-			$premium_post_filter = __NAMESPACE__ . '\Controls\Premium_Post_Filter';
-			$premium_tax_filter  = __NAMESPACE__ . '\Controls\Premium_Tax_Filter';
+				require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-post-filter.php';
+				require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-tax-filter.php';
 
-			$control_manager->controls_manager->register_control( $premium_post_filter::TYPE, new $premium_post_filter() );
-			$control_manager->controls_manager->register_control( $premium_tax_filter::TYPE, new $premium_tax_filter() );
+				$premium_post_filter = __NAMESPACE__ . '\Controls\Premium_Post_Filter';
+				$premium_tax_filter  = __NAMESPACE__ . '\Controls\Premium_Tax_Filter';
 
-		}
+				$control_manager->controls_manager->register( new $premium_post_filter() );
+				$control_manager->controls_manager->register( new $premium_tax_filter() );
 
-		if ( self::$modules['pa-display-conditions'] ) {
+			}
 
-			require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-acf-selector.php';
-			$premium_acf_selector = __NAMESPACE__ . '\Controls\Premium_Acf_Selector';
-			$control_manager->controls_manager->register_control( $premium_acf_selector::TYPE, new $premium_acf_selector() );
+			if ( self::$modules['pa-display-conditions'] ) {
 
+				require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-acf-selector.php';
+				$premium_acf_selector = __NAMESPACE__ . '\Controls\Premium_Acf_Selector';
+				$control_manager->controls_manager->register( new $premium_acf_selector() );
+
+			}
+		} else {
+			if ( self::$modules['premium-equal-height'] ) {
+
+				require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-select.php';
+				$premium_select = __NAMESPACE__ . '\Controls\Premium_Select';
+				$control_manager->controls_manager->register_control( $premium_select::TYPE, new $premium_select() );
+
+			}
+
+			if ( self::$modules['premium-blog'] ) {
+
+				require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-post-filter.php';
+				require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-tax-filter.php';
+
+				$premium_post_filter = __NAMESPACE__ . '\Controls\Premium_Post_Filter';
+				$premium_tax_filter  = __NAMESPACE__ . '\Controls\Premium_Tax_Filter';
+
+				$control_manager->controls_manager->register_control( $premium_post_filter::TYPE, new $premium_post_filter() );
+				$control_manager->controls_manager->register_control( $premium_tax_filter::TYPE, new $premium_tax_filter() );
+
+			}
+
+			if ( self::$modules['pa-display-conditions'] ) {
+
+				require_once PREMIUM_ADDONS_PATH . 'includes/controls/premium-acf-selector.php';
+				$premium_acf_selector = __NAMESPACE__ . '\Controls\Premium_Acf_Selector';
+				$control_manager->controls_manager->register_control( $premium_acf_selector::TYPE, new $premium_acf_selector() );
+
+			}
 		}
 
 	}
@@ -751,6 +1064,7 @@ class Addons_Integration {
 		}
 
 		if ( self::$modules['pa-display-conditions'] ) {
+			require_once PREMIUM_ADDONS_PATH . 'widgets/dep/urlopen.php';
 			Display_Conditions::get_instance();
 		}
 

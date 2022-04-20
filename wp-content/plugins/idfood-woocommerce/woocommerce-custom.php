@@ -30,34 +30,16 @@ function woocommerce_thankyou_change_order_status($order_id)
         update_field('handler_user_id', $handler_user_id, $order_id);
     }
 
+
     if (empty($handler_user_id)) {
         $handler_user_id = find_handler_user_id($order_id);
         update_field('handler_user_id', $handler_user_id, $order_id);
     }
 
+    // Update status to 'mới nhận' with cod payment method
     if ($order->get_status() == 'processing' && $order->get_payment_method() == 'cod') {
         $order->update_status('pending');
-        push_notification($handler_user_id, $order_id);
-    }
-
-    if ($order->get_customer_id() == 0) {
-        global $wpdb;
-        $table_customer = $wpdb->prefix . 'wc_customer_lookup';
-
-        // Clear garbage data
-        $sql = "DELETE FROM `$table_customer` WHERE user_id = null AND provider_id = null";
-        $wpdb->query($sql);
-
-        $dataCustomer = array(
-            'first_name' => $order->get_billing_first_name(),
-            'last_name' => $order->get_billing_last_name(),
-            'email' => $order->get_billing_email(),
-            'address' => $order->get_shipping_address_1() . ' ' . $order->get_shipping_address_2() . ' ' . $order->get_shipping_city() . ' ' . $order->get_shipping_state(),
-            'phone' => $order->get_billing_phone(),
-            'provider_id' => $handler_user_id
-        );
-
-        $wpdb->insert($table_customer, $dataCustomer);
+        push_order_notification($handler_user_id, $order_id);
     }
 }
 
@@ -69,7 +51,7 @@ function action_woocommerce_order_status_changed($order_id, $this_status_transit
     $handler_user_id = get_field('handler_user_id', $order_id);
 
     if ($this_status_transition_from == 'on-hold' && $this_status_transition_to == 'pending') {
-        push_notification($handler_user_id, $order_id);
+        push_order_notification($handler_user_id, $order_id);
     }
 }
 
@@ -84,38 +66,32 @@ function find_handler_user_id(int $order_id): int
 {
     $order = wc_get_order($order_id);
     if (empty($order)) {
-        return 0;
         write_log(__FILE__ . ':90 Order id ' . $order_id . ' not exists');
+        return 0;
     }
 
-    if ($order->get_customer_id() == get_current_user_id()) {
-        write_log(__FILE__ . ':94 Customer is current user');
-    }
-
-    global $wpdb;
-    $capabilities_table_name = $wpdb->prefix . 'capabilities';
-
-    $sql = "SELECT $wpdb->users.ID FROM $wpdb->users INNER JOIN $wpdb->usermeta ";
-    $sql .= "ON $wpdb->users.ID = $wpdb->usermeta.user_id ";
-    $sql .= "WHERE $wpdb->usermeta.meta_key='$capabilities_table_name' ";
-    $sql .= "AND $wpdb->usermeta.meta_value LIKE '%nha_cung_cap%'";
-
-    write_log(__FILE__ . ':107 ' . $sql);
-
-    $authors = $wpdb->get_results($sql, "ARRAY_A");
     $fullStrAddress = $order->get_shipping_address_1() . ' ' . $order->get_shipping_address_2() . ' ' . $order->get_shipping_city() . ' ' . $order->get_shipping_state();
-    $arrChars = explode(' ', $fullStrAddress);
+    $arrChars = explode(';', $fullStrAddress);
+
+    $user_ids = find_supplier();
+    $customers = WC_API_Customers::get_customers(null, array('include' => $user_ids));
+
+    write_log(__FILE__ . ': 79');
+    write_log($customers);
+
     $result = [];
-    foreach ($authors as $user) {
-        $customer = new WC_Customer($user['ID']);
+    foreach ($customers as $customer) {
         $matchCount = 0;
         foreach ($arrChars as $char) {
             if (strpos($customer->get_billing_address_1(), $char)) {
                 $matchCount += 1;
             }
         }
-        $result[] = array('matchCount' => $matchCount, 'ID' => $user['ID']);
+        $result[] = array('matchCount' => $matchCount, 'ID' => $customer->ID);
     }
+
+    write_log(__FILE__ . ': 93');
+    write_log($result);
 
     if (!empty($result)) {
         usort($result, 'cmp');
@@ -136,4 +112,20 @@ function find_handler_user_id(int $order_id): int
 function cmp($a, $b)
 {
     return strcmp($b['matchCount'], $a['matchCount']);
+}
+
+function find_supplier()
+{
+    $args = array(
+        'role' => 'supplier',
+        'order' => 'ASC'
+    );
+
+    $users = get_users($args);
+    $user_ids = array();
+    foreach ($users as $user) {
+        $user_ids[] = $user->ID;
+    }
+
+    return $user_ids;
 }

@@ -31,7 +31,7 @@ $sale_ribbon     = self::$settings['sale'];
 $featured_ribbon = self::$settings['featured'];
 $quick_view      = $this->get_option_value( 'quick_view' );
 $out_of_stock    = 'outofstock' === get_post_meta( $product_id, '_stock_status', true ) && 'yes' === self::$settings['sold_out'];
-$image_size = $settings['featured_image_size'];
+$image_size      = $settings['featured_image_size'];
 ?>
 <li class=" <?php echo esc_attr( $wc_classes ); ?>">
 	<div class="premium-woo-product-wrapper">
@@ -42,7 +42,7 @@ $image_size = $settings['featured_image_size'];
 		if ( $out_of_stock ) {
 			echo '<span class="pa-out-of-stock">' . esc_html( self::$settings['sold_out_string'] ) . '</span>';
 		} else {
-			if ( 'yes' === $sale_ribbon || 'yes' === $featured_ribbon ) {
+			if ( $product->is_on_sale() || $product->is_featured() ) {
 
 				echo '<div class="premium-woo-ribbon-container">';
 
@@ -61,7 +61,8 @@ $image_size = $settings['featured_image_size'];
 		woocommerce_template_loop_product_link_open();
 
 		if ( 'yes' === $this->get_option_value( 'product_image' ) ) {
-			echo '<img src="' . esc_url( get_the_post_thumbnail_url( $product_id, $image_size ) ) . '">';
+			$product_thumb = has_post_thumbnail( $product_id ) ? get_the_post_thumbnail_url( $product_id, $image_size ) : wc_placeholder_img_src( $image_size );
+			echo '<img src="' . esc_url( $product_thumb ) . '">';
 		}
 
 		if ( 'swap' === $settings['hover_style'] ) {
@@ -75,7 +76,7 @@ $image_size = $settings['featured_image_size'];
 			$qv_type = $this->get_option_value( 'quick_view_type' );
 			if ( 'button' === $qv_type ) {
 				echo '<div class="premium-woo-qv-btn premium-woo-qv-btn-translate" data-product-id="' . esc_attr( $product_id ) . '">';
-					echo '<span class="premium-woo-qv-text">' . esc_html( __( 'Quick View', 'premium-addons-for-elementor' ) ) . '</span>';
+				esc_html_e( __( 'Quick View', 'premium-addons-for-elementor' ) );
 					echo '<i class="premium-woo-qv-icon fa fa-eye"></i>';
 				echo '</div>';
 

@@ -10,7 +10,7 @@ use Elementor\Controls_Manager;
 
 // PA Classes.
 use PremiumAddons\Includes\Helper_Functions;
-use PremiumAddons\Includes\Premium_Template_Tags as Blog_Helper;
+use PremiumAddons\Includes\Premium_Template_Tags;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -30,7 +30,7 @@ class Post extends Condition {
 	 * @return array|void  controls options
 	 */
 	public function get_control_options() {
-		$posts = Blog_Helper::get_default_posts_list( 'post' );
+		$posts = Premium_Template_Tags::get_default_posts_list( 'post' );
 
 		return array(
 			'label'       => __( 'Value', 'premium-addons-for-elementor' ),

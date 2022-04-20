@@ -125,6 +125,12 @@ if ( ! class_exists( 'PA_Core' ) ) {
 
 			\PremiumAddons\Admin\Includes\Admin_Helper::get_instance();
 
+			$enabled_elements = \PremiumAddons\Admin\Includes\Admin_Helper::get_enabled_elements();
+
+			if ( $enabled_elements['premium-assets-generator'] ) {
+				\PremiumAddons\Includes\Assets_Manager::get_instance();
+			}
+
 		}
 
 		/**

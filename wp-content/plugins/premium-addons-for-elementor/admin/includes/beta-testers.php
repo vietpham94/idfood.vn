@@ -43,7 +43,7 @@ class Beta_Testers {
 
 		$this->transient_key = md5( 'premium_addons_beta_response_key' );
 
-        add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'compare_version' ) );
+		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'compare_version' ) );
 
 	}
 
@@ -68,7 +68,7 @@ class Beta_Testers {
 			if ( ! is_wp_error( $response ) && ! empty( $response['body'] ) ) {
 				preg_match( '/Beta tag: (.*)/i', $response['body'], $matches );
 				if ( isset( $matches[1] ) ) {
-					$beta_version = $matches[1];
+					$beta_version = trim( $matches[1] );
 				}
 			}
 

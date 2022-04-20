@@ -304,14 +304,6 @@ class Premium_Modalbox extends Widget_Base {
 		);
 
 		$this->add_control(
-			'premium_modal_box_content_heading',
-			array(
-				'label' => __( 'Content', 'premium-addons-for-elementor' ),
-				'type'  => Controls_Manager::HEADING,
-			)
-		);
-
-		$this->add_control(
 			'premium_modal_box_content_type',
 			array(
 				'label'       => __( 'Content to Show', 'premium-addons-for-elementor' ),
@@ -321,17 +313,45 @@ class Premium_Modalbox extends Widget_Base {
 					'template' => __( 'Elementor Template', 'premium-addons-for-elementor' ),
 				),
 				'default'     => 'editor',
+				'separator'   => 'before',
 				'label_block' => true,
+			)
+		);
+
+		$this->add_control(
+			'live_temp_content',
+			array(
+				'label'       => __( 'Template Title', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'classes'     => 'premium-live-temp-title control-hidden',
+				'label_block' => true,
+				'condition'   => array(
+					'premium_modal_box_content_type' => 'template',
+				),
+			)
+		);
+
+		$this->add_control(
+			'modal_temp_live_btn',
+			array(
+				'type'        => Controls_Manager::BUTTON,
+				'label_block' => true,
+				'button_type' => 'default papro-btn-block',
+				'text'        => __( 'Create / Edit Template', 'premium-addons-for-elementor' ),
+				'event'       => 'createLiveTemp',
+				'condition'   => array(
+					'premium_modal_box_content_type' => 'template',
+				),
 			)
 		);
 
 		$this->add_control(
 			'premium_modal_box_content_temp',
 			array(
-				'label'       => __( 'Content', 'premium-addons-for-elementor' ),
-				'description' => __( 'Modal content is a template which you can choose from Elementor library', 'premium-addons-for-elementor' ),
+				'label'       => __( 'OR Select Existing Template', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SELECT2,
 				'label_block' => true,
+				'classes'     => 'premium-live-temp-label',
 				'options'     => $this->getTemplateInstance()->get_elementor_page_list(),
 				'condition'   => array(
 					'premium_modal_box_content_type' => 'template',
@@ -358,6 +378,7 @@ class Premium_Modalbox extends Widget_Base {
 			array(
 				'label'     => __( 'Upper Close Button', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SWITCHER,
+				'separator' => 'before',
 				'default'   => 'yes',
 				'condition' => array(
 					'premium_modal_box_header_switcher' => 'yes',
@@ -1613,6 +1634,24 @@ class Premium_Modalbox extends Widget_Base {
 			)
 		);
 
+		$this->add_responsive_control(
+			'content_overflow',
+			array(
+				'label'     => __( 'Overflow', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SELECT,
+				'options'   => array(
+					'auto'    => __( 'Auto', 'premium-addons-for-elementor' ),
+					'visible' => __( 'Visible', 'premium-addons-for-elementor' ),
+					'hidden'  => __( 'Hidden', 'premium-addons-for-elementor' ),
+					'scroll'  => __( 'Scroll', 'premium-addons-for-elementor' ),
+				),
+				'default'   => 'auto',
+				'selectors' => array(
+					'{{WRAPPER}} .premium-modal-box-modal-dialog'   => 'overflow: {{VALUE}}',
+				),
+			)
+		);
+
 		$this->add_group_control(
 			Group_Control_Background::get_type(),
 			array(
@@ -1819,7 +1858,7 @@ class Premium_Modalbox extends Widget_Base {
 		}
 
 		if ( 'template' === $settings['premium_modal_box_content_type'] ) {
-			$template = $settings['premium_modal_box_content_temp'];
+			$template = empty( $settings['premium_modal_box_content_temp'] ) ? $settings['live_temp_content'] : $settings['premium_modal_box_content_temp'];
 		}
 
 		if ( 'yes' === $settings['premium_modal_box_header_switcher'] ) {
@@ -1869,7 +1908,7 @@ class Premium_Modalbox extends Widget_Base {
 		$this->add_render_attribute(
 			'modal',
 			array(
-				'class'         => array( 'container', 'premium-modal-box-container' ),
+				'class'         => 'premium-modal-box-container',
 				'data-settings' => wp_json_encode( $modal_settings ),
 			)
 		);

@@ -54,6 +54,7 @@ if ( $product->is_in_stock() ) {
 			break;
 
 		case 'variable':
+		case 'variation':
 			$cta_string = __( 'Select Options', 'elementor' );
 			break;
 	}
@@ -72,7 +73,7 @@ $out_of_stock = 'outofstock' === get_post_meta( $product_id, '_stock_status', tr
 		if ( $out_of_stock ) {
 			echo '<span class="pa-out-of-stock">' . esc_html( self::$settings['sold_out_string'] ) . '</span>';
 		} else {
-			if ( 'yes' === $sale_ribbon || 'yes' === $featured_ribbon ) {
+			if ( $product->is_on_sale() || $product->is_featured() ) {
 
 				echo '<div class="premium-woo-ribbon-container">';
 
@@ -91,7 +92,8 @@ $out_of_stock = 'outofstock' === get_post_meta( $product_id, '_stock_status', tr
 			woocommerce_template_loop_product_link_open();
 
 		if ( 'yes' === $this->get_option_value( 'product_image' ) ) {
-			echo '<img src="' . esc_url( get_the_post_thumbnail_url( $product_id, $image_size ) ) . '">';
+			$product_thumb = has_post_thumbnail( $product_id ) ? get_the_post_thumbnail_url( $product_id, $image_size ) : wc_placeholder_img_src( $image_size );
+			echo '<img src="' . esc_url( $product_thumb ) . '">';
 		}
 
 		if ( 'swap' === $settings['hover_style'] ) {

@@ -28,11 +28,13 @@
                 return;
             }
 
+            self.genButtonDisplay();
+
             self.initNavTabs($tabs);
 
             self.initElementsTabs($elementsTabs);
 
-            if ( settings.isTrackerAllowed ) {
+            if (settings.isTrackerAllowed) {
                 self.getUnusedWidget();
             }
 
@@ -51,7 +53,7 @@
         // Handle settings form submission
         self.handleSettingsSave = function () {
 
-            $("#pa-features .pa-section-info-cta input, #pa-modules .pa-switcher input").on(
+            $("#pa-features .pa-section-info-cta input, #pa-modules .pa-switcher input, #pa-modules .pa-section-info-cta input").on(
                 'change',
                 function () {
                     self.saveElementsSettings('elements');
@@ -75,8 +77,8 @@
 
         //get unused widgets.
         self.getUnusedWidget = function () {
-        
-            if ( $(".pa-btn-group .pa-btn-disable").hasClass("active") ) {
+
+            if ($(".pa-btn-group .pa-btn-disable").hasClass("active")) {
                 $(".pa-btn-group .pa-btn-unused").addClass("dimmed");
             }
 
@@ -184,6 +186,40 @@
                     $("input[name='" + id + "']").prop('checked', isChecked);
                 }
             )
+
+            //Disable unused widgets.
+            $(".pa-section-info-cta").on(
+                "click",
+                '.pa-btn-regenerate',
+                function () {
+
+                    var _this = $(this);
+                    _this.addClass("loading");
+
+                    $.ajax(
+                        {
+                            url: settings.ajaxurl,
+                            type: 'POST',
+                            data: {
+                                action: 'pa_clear_cached_assets',
+                                security: settings.generate_nonce,
+                            },
+                            success: function (response) {
+
+                                swal.fire({
+                                    title: 'Generated Assets Cleared!',
+                                    text: 'Click OK to continue',
+                                    type: 'success',
+                                    timer: 1500
+                                });
+
+                                _this.removeClass("loading");
+
+                            },
+                        }
+                    );
+                }
+            );
 
         };
 
@@ -314,7 +350,7 @@
                 $form = $('form#pa-settings, form#pa-features');
                 action = 'pa_elements_settings';
             } else {
-                $form = $('formpa-ver-control, form#pa-integrations');
+                $form = $('form#pa-ver-control, form#pa-integrations');
                 action = 'pa_additional_settings';
             }
 
@@ -328,18 +364,28 @@
                         fields: $form.serialize(),
                     },
                     success: function (response) {
+                        console.log('settings saved');
 
-                        console.log("settings saved");
+                        self.genButtonDisplay();
                     },
                     error: function (err) {
-
                         console.log(err);
-
                     }
                 }
             );
-
         }
+
+        self.genButtonDisplay = function () {
+            var $form = $('form#pa-settings'),
+                searchTerm = 'premium-assets-generator=on',
+                indexOfFirst = $form.serialize().indexOf(searchTerm);
+
+            if (indexOfFirst !== -1) {
+                $('.pa-btn-generate').show();
+            } else {
+                $('.pa-btn-generate').hide();
+            }
+        };
 
         self.handlePaproActions = function () {
 
@@ -457,7 +503,7 @@
 
             })
 
-        }
+        };
 
         function checkEmail(emailAddress) {
             var pattern = new RegExp(/^(("[\w-+\s]+")|([\w-+]+(?:\.[\w-+]+)*)|("[\w-+\s]+")([\w-+]+(?:\.[\w-+]+)*))(@((?:[\w-+]+\.)*\w[\w-+]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][\d]\.|1[\d]{2}\.|[\d]{1,2}\.))((25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\.){2}(25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\]?$)/i);

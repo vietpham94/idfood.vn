@@ -517,6 +517,16 @@ class Helper_Functions {
 
 			$thumbnail_src = $vimeo['src'];
 
+		} elseif ( 'dailymotion' === $type ) {
+			$video_data = rplg_urlopen( 'https://api.dailymotion.com/video/' . $video_id . '?fields=thumbnail_url' );
+
+			if ( isset( $video_data['code'] ) ) {
+				if ( 404 === $video_data['code'] ) {
+					return $thumbnail_src;
+				}
+			}
+
+			$thumbnail_src = rplg_json_decode( $video_data['data'] )->thumbnail_url;
 		}
 
 		return $thumbnail_src;
@@ -799,7 +809,6 @@ class Helper_Functions {
 
 	}
 
-
 	/**
 	 * Get WordPress language prefixes.
 	 *
@@ -880,4 +889,51 @@ class Helper_Functions {
 		return $is_enabled;
 
 	}
+
+	/**
+	 * Is Edit Mode.
+	 *
+	 * @access public
+	 * @since 4.6.1
+	 *
+	 * @return boolean
+	 */
+	public static function is_edit_mode() {
+		return isset( $_REQUEST['elementor-preview'] ) && ! empty( $_REQUEST['elementor-preview'] ); // phpcs:ignore WordPress.Security.NonceVerification
+	}
+
+	/**
+	 * Generate Unique ID
+	 *
+	 * Generates a unique ID for the current page.
+	 *
+	 * @since 4.6.9
+	 * @access public
+	 *
+	 * @param string $id page ID.
+	 *
+	 * @return string unique ID.
+	 */
+	public static function generate_unique_id( $id ) {
+		return substr( md5( $id ), 0, 9 );
+	}
+
+	/**
+	 * Get Safe Path
+	 *
+	 * @since 4.6.9
+	 * @access public
+	 *
+	 * @param string $file_path unsafe file path.
+	 *
+	 * @return string safe file path.
+	 */
+	public static function get_safe_path( $file_path ) {
+
+		$path = str_replace( array( '//', '\\\\' ), array( '/', '\\' ), $file_path );
+
+		return str_replace( array( '/', '\\' ), DIRECTORY_SEPARATOR, $path );
+
+	}
+
 }

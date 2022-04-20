@@ -59,6 +59,10 @@ class Woo_Product_Price extends Condition {
 
 		$product_id = get_queried_object_id();
 
+		if ( ! $product_id ) {
+			return true;
+		}
+
 		$type = get_post_type();
 
 		if ( 'product' !== $type ) {

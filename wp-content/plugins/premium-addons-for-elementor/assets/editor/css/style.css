@@ -346,7 +346,7 @@
 }
 
 .premium-promotion-dialog .dialog-button {
-    font-size: 11px !important;
+    font-size: 10px !important;
     letter-spacing: 0.3px;
     width: calc(50% - 5px) !important;
 }
@@ -386,4 +386,140 @@ html:not([dir="rtl"]) .premium-promotion-pro-btn {
 /* Fix floating effect slider control number overlap issue */
 .elementor-slider .noUi-base .noUi-handle-upper .noUi-tooltip {
     top: -100%;
+}
+
+
+.papro-btn-block {
+    width: 100% !important;
+    margin: -10px 0 10px;
+
+}
+
+.elementor-template-pa-live-editor-modal-container {
+    display: flex;
+}
+
+.premium-live-editor-iframe-modal {
+    display: none;
+}
+
+.premium-dynamic-content-modal {
+    -js-display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.premium-live-editor-iframe-modal .elementor-templates-modal__header__logo__title {
+    margin-right: 35px;
+}
+
+.premium-live-editor-iframe-modal .dialog-lightbox-header {
+    background-color: #f1f3f5;
+}
+
+.premium-live-editor-iframe-modal .dialog-message {
+    position: relative;
+}
+
+.premium-live-editor-iframe-modal iframe {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* .premium-live-editor-iframe-modal .dialog-widget-content {
+    margin-top: 10px;
+} */
+
+.premium-dynamic-content-modal .dialog-widget-content {
+    position: static !important;
+    max-width: 90% !important;
+    border-radius: 0;
+    /* margin-top: 20px !important;
+    margin-bottom: 20px !important; */
+}
+
+.elementor-device-desktop #elementor-preview-responsive-wrapper {
+    min-width: auto !important;
+}
+
+.premium-dynamic-content-modal .dialog-message {
+    overflow: unset !important;
+}
+
+.premium-live-editor-iframe-modal {
+    display: none;
+}
+
+.premium-live-editor-iframe-modal .elementor-templates-modal__header__close {
+    margin-left: 15px;
+}
+
+/* .premium-live-editor-iframe-modal .dialog-widget-content {
+    position: static !important;
+    margin-top: 10px;
+} */
+
+#pa-live-editor-logo .premium-template-modal-header-logo-icon img {
+    width: 30px;
+    height: 30px;
+}
+
+#premium-live-temp-title {
+    width: 400px;
+    border-radius: 3px 0 0 3px;
+}
+
+.premium-live-temp-notice {
+    margin: 0 10px;
+    font-style: italic;
+    font-weight: normal;
+    text-transform: none;
+}
+
+#pa-insert-live-temp {
+    white-space: nowrap;
+    border-radius: 0 3px 3px 0;
+}
+
+#pa-insert-live-temp,
+#premium-live-temp-title {
+    padding: 8px 10px;
+}
+
+.premium-live-editor-title {
+    display: none;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.premium-modal-expanded .dialog-lightbox-widget-content {
+    max-width: 100% !important;
+    margin: 0 !important;
+}
+
+.premium-modal-expanded .dialog-lightbox-message {
+    max-height: 100vh;
+}
+
+.premium-modal-expanded #pa-live-editor-control-iframe {
+    height: calc(100vh - 50px);
+}
+
+.premium-live-temp-title.control-hidden {
+    display: none;
+}
+
+.premium-live-temp-label label {
+    font-weight: 900;
 }

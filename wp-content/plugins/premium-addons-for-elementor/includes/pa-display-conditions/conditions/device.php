@@ -61,9 +61,9 @@ class Device extends Condition {
 	 */
 	public function compare_value( $settings, $operator, $value, $compare_val, $tz ) {
 
-		$devic = wp_is_mobile() ? 'small' : 'desktop';
+		$device = wp_is_mobile() ? 'small' : 'desktop';
 
-		$condition_result = ! empty( $value ) && ( $devic === $value ) ? true : false;
+		$condition_result = ! empty( $value ) && ( $device === $value ) ? true : false;
 
 		return Helper_Functions::get_final_result( $condition_result, $operator );
 

@@ -285,7 +285,7 @@ abstract class Premium_Templates_Source_Base {
 					// wp_die();
 					$element_data['settings'][ $control['name'] ] = $control_class->{$method}( $element->get_settings( $control['name'] ), $control );
 				} elseif ( 'repeater' === $control['type'] ) {
-						$element_data['settings'][ $control['name'] ] = $this->on_import_repeater( $element->get_settings( $control['name'] ), $control, $with_media );
+						$element_data['settings'][ $control['name'] ] = $this->on_import_repeater( $element->get_settings( $control['name'] ), $with_media, $control );
 						// $element_data['settings'][ $control['name'] ]['url'] = Utils::get_placeholder_image_src();
 				} else {
 					if ( ! empty( $element_data['settings'][ $control['name'] ]['url'] ) ) {
@@ -326,7 +326,7 @@ abstract class Premium_Templates_Source_Base {
 		return $settings;
 	}
 
-	public function on_import_repeater( $settings, $control_data = array(), $media ) {
+	public function on_import_repeater( $settings, $media, $control_data = array() ) {
 		if ( empty( $settings ) || empty( $control_data['fields'] ) ) {
 			return $settings;
 		}

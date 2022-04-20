@@ -362,7 +362,7 @@ class Premium_Banner extends Widget_Base {
 			array(
 				'label'        => __( 'Enable Mouse Tilt', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
-                'prefix_class' => 'premium-banner-tilt-',
+				'prefix_class' => 'premium-banner-tilt-',
 			)
 		);
 
@@ -371,7 +371,7 @@ class Premium_Banner extends Widget_Base {
 			array(
 				'label'        => __( 'Reverse', 'premium-addons-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
-                'prefix_class' => 'premium-banner-tilt-rev-',
+				'prefix_class' => 'premium-banner-tilt-rev-',
 				'condition'    => array(
 					'mouse_tilt' => 'yes',
 				),
@@ -676,7 +676,7 @@ class Premium_Banner extends Widget_Base {
 				),
 				'separator' => 'after',
 				'selectors' => array(
-					'{{WRAPPER}} .premium-banner-ib img.active' => 'opacity: {{SIZE}};',
+					'{{WRAPPER}}:hover .premium-banner-ib img' => 'opacity: {{SIZE}};',
 				),
 			)
 		);
@@ -761,7 +761,7 @@ class Premium_Banner extends Widget_Base {
 			array(
 				'name'     => 'hover_css_filters',
 				'label'    => __( 'Hover CSS Filters', 'premium-addons-for-elementor' ),
-				'selector' => '{{WRAPPER}} .premium-banner-ib img.active',
+				'selector' => '{{WRAPPER}}:hover .premium-banner-ib img',
 			)
 		);
 

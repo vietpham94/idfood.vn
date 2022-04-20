@@ -59,7 +59,16 @@ class Woo_Product_Cat extends Condition {
 	 */
 	public function compare_value( $settings, $operator, $value, $compare_val, $tz ) {
 
+		if ( class_exists( 'Hide_Categories_Products_WC' ) ) {
+			global $Hide_Categories_Products_WC;
+			remove_filter( 'get_the_terms', array( $Hide_Categories_Products_WC, 'hide_hidden_categories_single_product' ), 11 );
+		}
+
 		$product_id = get_queried_object_id();
+
+		if ( ! $product_id ) {
+			return true;
+		}
 
 		$type = get_post_type();
 

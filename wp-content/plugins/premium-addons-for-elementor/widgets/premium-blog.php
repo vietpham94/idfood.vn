@@ -1499,7 +1499,7 @@ class Premium_Blog extends Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-blog-filters-container li a.category span' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .premium-blog-filters-container li a.category' => 'color: {{VALUE}};',
 				),
 			)
 		);
@@ -1557,7 +1557,7 @@ class Premium_Blog extends Widget_Base {
 					'default' => Global_Colors::COLOR_PRIMARY,
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-blog-filters-container li a.active span' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .premium-blog-filters-container li a.active' => 'color: {{VALUE}};',
 				),
 			)
 		);
@@ -3044,7 +3044,7 @@ class Premium_Blog extends Widget_Base {
 				<?php if ( ! empty( $settings['premium_blog_tab_label'] ) ) : ?>
 					<li>
 						<a href="javascript:;" class="category active" data-filter="*">
-							<span><?php echo esc_html( $settings['premium_blog_tab_label'] ); ?></span>
+							<?php echo esc_html( $settings['premium_blog_tab_label'] ); ?>
 						</a>
 					</li>
 				<?php endif; ?>
@@ -3060,7 +3060,7 @@ class Premium_Blog extends Widget_Base {
 					?>
 						<li>
 							<a href="javascript:;" <?php echo wp_kses_post( $this->get_render_attribute_string( $key ) ); ?> data-filter="<?php echo esc_attr( $filter->slug ); ?>">
-								<span><?php echo wp_kses_post( $filter->name ); ?></span>
+								<?php echo wp_kses_post( $filter->name ); ?>
 							</a>
 						</li>
 				<?php } ?>
@@ -3134,7 +3134,7 @@ class Premium_Blog extends Widget_Base {
 		}
 
 		?>
-	<div class="premium-blog">
+
 		<?php if ( 'yes' === $settings['premium_blog_cat_tabs'] && 'yes' !== $settings['premium_blog_carousel'] ) : ?>
 			<?php $this->get_filter_tabs_markup(); ?>
 		<?php endif; ?>
@@ -3144,7 +3144,7 @@ class Premium_Blog extends Widget_Base {
 				$blog_helper->render_posts();
 			?>
 		</div>
-	</div>
+
 		<?php if ( 'yes' === $settings['premium_blog_paging'] && $total_pages > 1 ) : ?>
 		<div class="premium-blog-footer">
 			<?php $blog_helper->render_pagination(); ?>

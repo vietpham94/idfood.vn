@@ -115,27 +115,28 @@ if ( ! class_exists( 'Addons_Cross_CP' ) ) {
 		 * @param Controls_Stack $element element to import.
 		 */
 		protected static function cross_cp_import_element( Controls_Stack $element ) {
-			$element_instance = $element->get_data();
-			$method           = 'on_import';
+			$element_data = $element->get_data();
+			$method       = 'on_import';
 
 			if ( method_exists( $element, $method ) ) {
-				$element_instance = $element->{$method}( $element_instance );
+				// TODO: Use the internal element data without parameters.
+				$element_data = $element->{$method}( $element_data );
 			}
 
-			foreach ( $element->get_controls() as $get_control ) {
-				$control_type = \Elementor\Plugin::instance()->controls_manager->get_control( $get_control['type'] );
-				$control_name = $get_control['name'];
+			foreach ( $element->get_controls() as $control ) {
+				$control_class = \Elementor\Plugin::instance()->controls_manager->get_control( $control['type'] );
 
-				if ( ! $control_type ) {
-					return $element_instance;
+				// If the control isn't exist, like a plugin that creates the control but deactivated.
+				if ( ! $control_class ) {
+					return $element_data;
 				}
 
-				if ( method_exists( $control_type, $method ) ) {
-					$element_instance['settings'][ $control_name ] = $control_type->{$method}( $element->get_settings( $control_name ), $get_control );
+				if ( method_exists( $control_class, $method ) ) {
+					$element_data['settings'][ $control['name'] ] = $control_class->{$method}( $element->get_settings( $control['name'] ), $control );
 				}
 			}
 
-			return $element_instance;
+			return $element_data;
 		}
 
 		/**

@@ -810,19 +810,19 @@ class Premium_Icon_List extends Widget_Base {
 		$this->add_responsive_control(
 			'inline_icon_align',
 			array(
-				'label'     => __( 'Bullet Alignment', 'premium-addons-pro' ),
+				'label'     => __( 'Bullet Alignment', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::CHOOSE,
 				'options'   => array(
 					'flex-start' => array(
-						'title' => __( 'Top', 'premium-addons-pro' ),
+						'title' => __( 'Top', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-arrow-up',
 					),
 					'center'     => array(
-						'title' => __( 'Center', 'premium-addons-pro' ),
+						'title' => __( 'Center', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-text-align-justify',
 					),
 					'flex-end'   => array(
-						'title' => __( 'Bottom', 'premium-addons-pro' ),
+						'title' => __( 'Bottom', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-arrow-down',
 					),
 				),
@@ -1910,13 +1910,13 @@ class Premium_Icon_List extends Widget_Base {
 
 					$wrapper_class = 'premium-bullet-list-wrapper';
 
-					$this->add_render_attribute( 'wrapper', 'class', $wrapper_class );
+					$this->add_render_attribute( 'wrapper-' . $index, 'class', $wrapper_class );
 
 					if ( 'column' === $settings['icon_postion'] ) {
 
 						$wrapper_top_class = 'premium-bullet-list-wrapper-top ';
 
-						$this->add_render_attribute( 'wrapper', 'class', $wrapper_top_class );
+						$this->add_render_attribute( 'wrapper-' . $index, 'class', $wrapper_top_class );
 
 					}
 
@@ -1925,7 +1925,7 @@ class Premium_Icon_List extends Widget_Base {
 					}
 
 					?>
-				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'wrapper' ) ); ?>>
+				<div <?php echo wp_kses_post( $this->get_render_attribute_string( 'wrapper-' . $index ) ); ?>>
 					<?php if ( 'yes' === $settings['show_connector'] && 'column' === $settings['layout_type'] && 'column' !== $settings['icon_postion'] && 'grow' !== $settings['hover_effect_type'] && 'visible' === $settings['list_overflow'] ) { ?>
 						<div class="premium-bullet-list-connector">
 							<div class="premium-icon-connector-content"></div>

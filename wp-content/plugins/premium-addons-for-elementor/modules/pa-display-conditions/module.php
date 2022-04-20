@@ -102,6 +102,7 @@ class Module {
 							'woo_category'      => __( 'Purchased/In Cart Categories', 'premium-addons-for-elementor' ),
 							'woo_last_purchase' => __( 'Last Purchase In Cart', 'premium-addons-for-elementor' ),
 							'woo_total_price'   => __( 'Amount In Cart', 'premium-addons-for-elementor' ),
+							'woo_cart_products' => __( 'Products In Cart', 'premium-addons-for-elementor' ),
 						),
 					),
 				)
@@ -184,7 +185,9 @@ class Module {
 		$options_conditions = apply_filters(
 			'pa_pro_display_conditions',
 			array(
+				'url_string',
 				'url_referer',
+				'shortcode',
 				'woo_orders',
 				'woo_cat_page',
 				'woo_category',
@@ -193,6 +196,7 @@ class Module {
 				'woo_product_cat',
 				'woo_last_purchase',
 				'woo_total_price',
+				'woo_cart_products',
 				'acf_choice',
 				'acf_text',
 				'acf_boolean',
@@ -264,7 +268,7 @@ class Module {
 						'pa_condition_browser'  => 'chrome',
 					),
 				),
-				'title_field' => '<# print( pa_condition_key.replace(/_/i, " ").split(" ").map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(" ")) #>',
+				'title_field' => '<# print( pa_condition_key.replace(/_/g, " ").split(" ").map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(" ")) #>',
 				'condition'   => array(
 					'pa_display_conditions_switcher' => 'yes',
 				),

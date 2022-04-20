@@ -774,18 +774,18 @@ class Premium_Grid extends Widget_Base {
 			)
 		);
 
-		// $img_repeater->add_control(
-		// 'privacy_mode',
-		// array(
-		// 'label'       => __( 'Privacy Mode', 'premium-addons-for-elementor' ),
-		// 'type'        => Controls_Manager::SWITCHER,
-		// 'description' => __( 'When turned on, YouTube won\'t store information about visitors on your website unless they play the video.', 'premium-addons-for-elementor' ),
-		// 'condition'   => array(
-		// 'premium_gallery_video'      => 'true',
-		// 'premium_gallery_video_type' => 'youtube',
-		// ),
-		// )
-		// );
+		$img_repeater->add_control(
+			'privacy_mode',
+			array(
+				'label'       => __( 'Privacy Mode', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'description' => __( 'When turned on, YouTube won\'t store information about visitors on your website unless they play the video.', 'premium-addons-for-elementor' ),
+				'condition'   => array(
+					'premium_gallery_video'      => 'true',
+					'premium_gallery_video_type' => 'youtube',
+				),
+			)
+		);
 
 		$img_repeater->add_control(
 			'premmium_gallery_img_info',
@@ -1905,7 +1905,7 @@ class Premium_Grid extends Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-gallery-cats-container li a.category span' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .premium-gallery-cats-container li a.category' => 'color: {{VALUE}};',
 				),
 			)
 		);
@@ -1983,7 +1983,7 @@ class Premium_Grid extends Widget_Base {
 				'label'     => __( 'Text Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
-					'{{WRAPPER}} .premium-gallery-cats-container li a:hover span' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .premium-gallery-cats-container li a:hover' => 'color: {{VALUE}};',
 				),
 			)
 		);
@@ -2064,7 +2064,7 @@ class Premium_Grid extends Widget_Base {
 					'default' => Global_Colors::COLOR_PRIMARY,
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-gallery-cats-container li a.active span' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .premium-gallery-cats-container li a.active' => 'color: {{VALUE}};',
 				),
 			)
 		);
@@ -2494,7 +2494,7 @@ class Premium_Grid extends Widget_Base {
 				<?php if ( 'yes' === $settings['premium_gallery_first_cat_switcher'] ) : ?>
 					<li>
 						<a href="javascript:;" class="category <?php echo esc_attr( $first ); ?>" data-filter="*">
-							<span><?php echo wp_kses_post( $settings['premium_gallery_first_cat_label'] ); ?></span>
+							<?php echo wp_kses_post( $settings['premium_gallery_first_cat_label'] ); ?>
 						</a>
 					</li>
 					<?php
@@ -2524,7 +2524,7 @@ class Premium_Grid extends Widget_Base {
 						?>
 						<li>
 							<a href="javascript:;" <?php echo wp_kses_post( $this->get_render_attribute_string( $key ) ); ?>>
-								<span><?php echo wp_kses_post( $category['premium_gallery_img_cat'] ); ?></span>
+								<?php echo wp_kses_post( $category['premium_gallery_img_cat'] ); ?>
 							</a>
 						</li>
 						<?php
@@ -2861,7 +2861,7 @@ class Premium_Grid extends Widget_Base {
 		<?php if ( 'yes' === $settings['premium_gallery_load_more'] ) : ?>
 			<div class="premium-gallery-load-more premium-gallery-btn-hidden">
 				<button class="premium-gallery-load-more-btn">
-					<span><?php echo wp_kses_post( $settings['premium_gallery_load_more_text'] ); ?></span>
+					<?php echo wp_kses_post( $settings['premium_gallery_load_more_text'] ); ?>
 					<div class="premium-loader"></div>
 				</button>
 			</div>
@@ -2909,13 +2909,14 @@ class Premium_Grid extends Widget_Base {
 		$image_src = $item['premium_gallery_img']['url'];
 		$image_id  = attachment_url_to_postid( $image_src );
 
-		$settings['image_data'] = Helper_Functions::get_image_data( $image_id, $item['premium_gallery_img']['url'], $settings['thumbnail_size'] );
-
 		$is_video = $item['premium_gallery_video'];
 
 		$key = 'image_' . $index;
 
-		$image_html = Group_Control_Image_Size::get_attachment_image_html( $settings, 'thumbnail', 'image_data' );
+		if ( ! empty( $item['premium_gallery_img']['url'] ) ) {
+			$settings['image_data'] = Helper_Functions::get_image_data( $image_id, $item['premium_gallery_img']['url'], $settings['thumbnail_size'] );
+			$image_html             = Group_Control_Image_Size::get_attachment_image_html( $settings, 'thumbnail', 'image_data' );
+		}
 
 		if ( $is_video ) {
 
@@ -2925,9 +2926,9 @@ class Premium_Grid extends Widget_Base {
 				$embed_params = $this->get_embed_params( $item );
 				$link         = Embed::get_embed_url( $item['premium_gallery_video_url'], $embed_params );
 
-				// if ( 'youtube' === $type && 'yes' === $item['privacy_mode'] ) {
-				// $link = str_replace( '.com', '-nocookie.com', $link );
-				// }
+				if ( 'youtube' === $type && 'yes' === $item['privacy_mode'] ) {
+					$link = str_replace( '.com', '-nocookie.com', $link );
+				}
 
 				if ( empty( $image_html ) ) {
 
@@ -3261,6 +3262,8 @@ class Premium_Grid extends Widget_Base {
 		if ( $item['premium_gallery_video_loop'] ) {
 			$video_params['loop'] = '';
 		}
+
+		$video_params['preload'] = 'none';
 
 		return $video_params;
 	}

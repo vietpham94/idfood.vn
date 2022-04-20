@@ -15048,8 +15048,11 @@
                 });
             }
 
-            instance = new premiumLottieAnimations($item);
-            instance.init();
+            elementorFrontend.waypoint($item, function () {
+                instance = new premiumLottieAnimations($item);
+                instance.init();
+            });
+
         });
     };
 
@@ -15071,7 +15074,9 @@
             return false;
         }
 
-        generateLottieAnimation();
+        elementorFrontend.waypoint($scope, function () {
+            generateLottieAnimation();
+        });
 
         if (isEditor) {
 

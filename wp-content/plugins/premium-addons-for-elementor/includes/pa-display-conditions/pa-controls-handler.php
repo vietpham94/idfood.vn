@@ -127,7 +127,15 @@ class PA_Controls_Handler {
 			'urlparams' => array(
 				'label'   => __( 'URL (PRO)', 'premium-addons-for-elementor' ),
 				'options' => array(
+					'url_string'  => __( 'String in URL', 'premium-addons-for-elementor' ),
 					'url_referer' => __( 'URL Parameters', 'premium-addons-for-elementor' ),
+				),
+			),
+
+			'misc'      => array(
+				'label'   => __( 'Misc (PRO)', 'premium-addons-for-elementor' ),
+				'options' => array(
+					'shortcode' => __( 'Shortcode', 'premium-addons-for-elementor' ),
 				),
 			),
 
@@ -208,7 +216,7 @@ class PA_Controls_Handler {
 	 */
 	public function add_repeater_source_controls( $repeater ) {
 
-		$additional_ids = array( 'pa_condition_acf_text', 'pa_condition_acf_boolean', 'pa_condition_acf_choice', 'pa_condition_woo_orders', 'pa_condition_woo_category', 'pa_condition_woo_total_price', 'pa_condition_time_range' );
+		$additional_ids = array( 'pa_condition_shortcode', 'pa_condition_acf_text', 'pa_condition_acf_boolean', 'pa_condition_acf_choice', 'pa_condition_woo_orders', 'pa_condition_woo_category', 'pa_condition_woo_total_price', 'pa_condition_time_range' );
 
 		foreach ( static::$conditions_classes as $condition_class_name => $condition_obj ) {
 
@@ -301,7 +309,11 @@ class PA_Controls_Handler {
 			$item_key = 'pa_condition_' . $list['pa_condition_key'];
 			$value    = isset( $list[ $item_key ] ) ? $list[ $item_key ] : '';
 
-			$compare_val = isset( $list[ 'pa_condition_val' . $list['pa_condition_key'] ] ) ? esc_html( $list[ 'pa_condition_val' . $list['pa_condition_key'] ] ) : '';
+			$compare_val = isset( $list[ 'pa_condition_val' . $list['pa_condition_key'] ] ) ? $list[ 'pa_condition_val' . $list['pa_condition_key'] ] : '';
+
+			if ( 'shortcode' !== $list['pa_condition_key'] ) {
+				$compare_val = esc_html( $compare_val );
+			}
 
 			$id        = $item_key . '_' . $list['_id'];
 			$time_zone = in_array( $list['pa_condition_key'], array( 'date_range', 'time_range', 'date', 'day' ), true ) ? $list['pa_condition_timezone'] : false;

@@ -192,11 +192,34 @@ class Premium_Carousel extends Widget_Base {
 		$repeater = new REPEATER();
 
 		$repeater->add_control(
+			'live_temp_content',
+			array(
+				'label'       => __( 'Template Title', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::TEXT,
+				'classes'     => 'premium-live-temp-title control-hidden',
+				'label_block' => true,
+			)
+		);
+
+		$repeater->add_control(
+			'premium_carousel_repeater_item_live',
+			array(
+				'type'        => Controls_Manager::BUTTON,
+				'label_block' => true,
+				'button_type' => 'default papro-btn-block',
+				'text'        => __( 'Create / Edit Template', 'premium-addons-for-elementor' ),
+				'event'       => 'createLiveTemp',
+			)
+		);
+
+		$repeater->add_control(
 			'premium_carousel_repeater_item',
 			array(
-				'label'       => __( 'Content', 'premium-addons-for-elementor' ),
+				'label'       => __( 'OR Select Existing Template', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SELECT2,
+				'classes'     => 'premium-live-temp-label',
 				'label_block' => true,
+				'separator'   => 'after',
 				'options'     => $this->getTemplateInstance()->get_elementor_page_list(),
 			)
 		);
@@ -220,7 +243,7 @@ class Premium_Carousel extends Widget_Base {
 				'condition'   => array(
 					'premium_carousel_content_type' => 'repeater',
 				),
-				'title_field' => 'Template: {{{ premium_carousel_repeater_item }}}',
+				'title_field' => 'Template: {{{  "" !== premium_carousel_repeater_item ? premium_carousel_repeater_item : "Live Template" }}}',
 			)
 		);
 
@@ -408,10 +431,14 @@ class Premium_Carousel extends Widget_Base {
 		$this->add_control(
 			'premium_carousel_speed',
 			array(
-				'label'       => __( 'Transition Speed', 'premium-addons-for-elementor' ),
+				'label'       => __( 'Transition Speed (ms)', 'premium-addons-for-elementor' ),
 				'description' => __( 'Set a navigation speed value. The value will be counted in milliseconds (ms)', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::NUMBER,
 				'default'     => 300,
+				'render_type' => 'template',
+				'selectors'   => array(
+					'{{WRAPPER}} .premium-carousel-scale .slick-slide' => 'transition: all {{VALUE}}ms !important',
+				),
 			)
 		);
 
@@ -1112,9 +1139,12 @@ class Premium_Carousel extends Widget_Base {
 			$templates = $settings['premium_carousel_slider_content'];
 		} else {
 			$custom_navigation = array();
+			$temp_id           = '';
 
 			foreach ( $settings['premium_carousel_templates_repeater'] as $template ) {
-				array_push( $templates, $template['premium_carousel_repeater_item'] );
+				$temp_id = empty( $template['premium_carousel_repeater_item'] ) ? $template['live_temp_content'] : $template['premium_carousel_repeater_item'];
+
+				array_push( $templates, $temp_id );
 				array_push( $custom_navigation, $template['custom_navigation'] );
 			}
 		}
@@ -1338,6 +1368,7 @@ class Premium_Carousel extends Widget_Base {
 			'class',
 			array(
 				'premium-carousel-wrapper',
+				'premium-carousel-hidden',
 				'carousel-wrapper-' . esc_attr( $this->get_id() ),
 				$extra_class,
 				$dir,
@@ -1614,10 +1645,13 @@ class Premium_Carousel extends Widget_Base {
 
 			} else {
 
-				var customNavigation = [];
-				_.each( settings.premium_carousel_templates_repeater, function( template ) {
+				var customNavigation = [],
+					tempId = '';
 
-					templates.push( template.premium_carousel_repeater_item );
+				_.each( settings.premium_carousel_templates_repeater, function( template ) {
+					tempId = '' === template.premium_carousel_repeater_item || null === template.premium_carousel_repeater_item ? template.live_temp_content : template.premium_carousel_repeater_item;
+
+					templates.push( tempId );
 					customNavigation.push( template.custom_navigation );
 
 				} );
@@ -1658,6 +1692,7 @@ class Premium_Carousel extends Widget_Base {
 
 			view.addRenderAttribute( 'carousel', 'class', [
 				'premium-carousel-wrapper',
+				'premium-carousel-hidden',
 				'carousel-wrapper-' + view.getID(),
 				extraClass,
 				dir

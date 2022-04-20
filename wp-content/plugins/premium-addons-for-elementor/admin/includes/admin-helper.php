@@ -91,24 +91,38 @@ class Admin_Helper {
 		add_action( 'wp_ajax_pa_additional_settings', array( $this, 'save_additional_settings' ) );
 		add_action( 'wp_ajax_pa_get_unused_widgets', array( $this, 'get_unused_widgets' ) );
 
+		// Register AJAX Hooks for regenerate assets
+		add_action( 'wp_ajax_pa_clear_cached_assets', array( $this, 'clear_cached_assets' ) );
+
+		// Register AJAX Hooks for Newsletter.
 		add_action( 'wp_ajax_subscribe_newsletter', array( $this, 'subscribe_newsletter' ) );
 
+		// Add action for PA dashboard tab header.
 		add_action( 'pa_before_render_admin_tabs', array( $this, 'render_dashboard_header' ) );
 
 		// Register Rollback hooks.
 		add_action( 'admin_post_premium_addons_rollback', array( $this, 'run_pa_rollback' ) );
-
-		// Beta_Testers::get_instance();
 
 		if ( is_admin() ) {
 			$current_page = $_SERVER['REQUEST_URI'];
 			if ( false === strpos( $current_page, 'action=elementor' ) ) {
 				Admin_Notices::get_instance();
 
+				// Beta tester
+				Beta_Testers::get_instance();
+
 				// PA Duplicator.
 				if ( self::check_duplicator() ) {
 					Duplicator::get_instance();
 				}
+			}
+		}
+
+		if ( is_user_logged_in() && self::check_user_can( 'manage_options' ) ) {
+			// PA Dynamic Assets.
+			$row_meta = Helper_Functions::is_hide_row_meta();
+			if ( self::check_dynamic_assets() && ! $row_meta ) {
+				Admin_Bar::get_instance();
 			}
 		}
 
@@ -135,7 +149,7 @@ class Admin_Helper {
 	 *
 	 * @return array widget_list
 	 */
-	private static function get_elements_list() {
+	public static function get_elements_list() {
 
 		if ( null === self::$elements_list ) {
 
@@ -209,7 +223,7 @@ class Admin_Helper {
 		if ( strpos( $current_screen, $this->page_slug ) !== false ) {
 
 			wp_enqueue_style(
-				'pa-admin-css',
+				'pa-admin',
 				PREMIUM_ADDONS_URL . 'admin/assets/css/admin' . $suffix . '.css',
 				array(),
 				PREMIUM_ADDONS_VERSION,
@@ -254,6 +268,7 @@ class Admin_Helper {
 				'settings'               => array(
 					'ajaxurl'          => admin_url( 'admin-ajax.php' ),
 					'nonce'            => wp_create_nonce( 'pa-settings-tab' ),
+					'generate_nonce'   => wp_create_nonce( 'pa-generate-nonce' ),
 					'theme'            => $theme_slug,
 					'isTrackerAllowed' => 'yes' === get_option( 'elementor_allow_tracking', 'no' ) ? true : false,
 				),
@@ -685,10 +700,13 @@ class Admin_Helper {
 	}
 
 	/**
-	 * Get Pro Elements
+	 * Get Pro Elements.
+	 * Return PAPRO Widgets.
 	 *
 	 * @since 4.5.3
 	 * @access public
+	 *
+	 * @return array
 	 */
 	public static function get_pro_elements() {
 
@@ -707,7 +725,60 @@ class Admin_Helper {
 		}
 
 		return $pro_elements;
+	}
 
+	/**
+	 * Get PA Free Elements.
+	 * Return PA Widgets.
+	 *
+	 * @since 4.6.1
+	 * @access public
+	 *
+	 * @return array
+	 */
+	public static function get_free_widgets_names() {
+
+		$elements = self::get_elements_list()['cat-1']['elements'];
+
+		$pa_elements = array();
+
+		if ( count( $elements ) ) {
+			foreach ( $elements as $elem ) {
+				if ( ! isset( $elem['is_pro'] ) && ! isset( $elem['is_global'] ) && isset( $elem['name'] ) ) {
+					array_push( $pa_elements, $elem['name'] );
+				}
+			}
+		}
+
+		return $pa_elements;
+	}
+
+	/**
+	 * Get Global Elements Switchers.
+	 * Construct an associative array of addon_switcher => 'yes' pairs
+	 * Example :
+	 *      + array( 'premium_gradient_switcher' => yes').
+	 *
+	 * @since 4.6.1
+	 * @access public
+	 *
+	 * @return array
+	 */
+	public static function get_global_elements_switchers() {
+
+		$elements = self::get_elements_list()['cat-4'];
+
+		$global_elems = array();
+
+		if ( count( $elements['elements'] ) ) {
+			foreach ( $elements['elements'] as $elem ) {
+				if ( isset( $elem['is_pro'] ) && isset( $elem['is_global'] ) ) {
+					$global_elems[ str_replace( '-', '_', $elem['key'] ) . '_switcher' ] = 'yes';
+				}
+			}
+		}
+
+		return $global_elems;
 	}
 
 	/**
@@ -799,6 +870,27 @@ class Admin_Helper {
 	}
 
 	/**
+	 * Check If Premium Duplicator is enabled
+	 *
+	 * @since 4.9.4
+	 * @access public
+	 *
+	 * @return boolean
+	 */
+	public static function check_dynamic_assets() {
+
+		$settings = self::get_enabled_elements();
+
+		if ( ! isset( $settings['premium-assets-generator'] ) ) {
+			return false;
+		}
+
+		$is_enabled = $settings['premium-assets-generator'];
+
+		return $is_enabled;
+	}
+
+	/**
 	 * Get Integrations Settings
 	 *
 	 * Get plugin integrations settings
@@ -872,6 +964,85 @@ class Admin_Helper {
 		$unused_widgets = array_diff( $pa_elements, array_keys( $used_widgets ) );
 
 		wp_send_json_success( $unused_widgets );
+
+	}
+
+	/**
+	 * Clear Cached Assets.
+	 *
+	 * Deletes assets options from DB And
+	 * deletes assets files from uploads/premium-addons-for-elementor
+	 * diretory.
+	 *
+	 * @access public
+	 * @since 4.9.3
+	 */
+	public function clear_cached_assets() {
+
+		check_ajax_referer( 'pa-generate-nonce', 'security' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( __( 'You are not allowed to do this action', 'premium-addons-for-elementor' ) );
+		}
+
+		$post_id = isset( $_POST['id'] ) ? $_POST['id'] : '';
+
+		if ( empty( $post_id ) ) {
+			$this->delete_assets_options();
+		}
+
+		$this->delete_assets_files( $post_id );
+
+		wp_send_json_success( 'Cached Assets Cleared' );
+	}
+
+	/**
+	 * Delete Assets Options.
+	 *
+	 * @access public
+	 * @since 4.9.3
+	 */
+	public function delete_assets_options() {
+
+		global $wpdb;
+
+		$query = $wpdb->prepare( "DELETE FROM $wpdb->options WHERE option_name LIKE '%pa_elements_%' OR option_name LIKE '%pa_edit_%' AND autoload = 'no'" );
+		$wpdb->query( $query );
+	}
+
+	/**
+	 * Delete Assets Files.
+	 *
+	 * @access public
+	 * @since 4.6.1
+	 *
+	 * @param string $id post id.
+	 */
+	public function delete_assets_files( $id ) {
+
+		$path = PREMIUM_ASSETS_PATH;
+
+		if ( ! is_dir( $path ) || ! file_exists( $path ) ) {
+			return;
+		}
+
+		if ( empty( $id ) ) {
+			foreach ( scandir( $path ) as $file ) {
+				if ( $file == '.' || $file == '..' ) {
+					continue;
+				}
+
+				unlink( Helper_Functions::get_safe_path( $path . DIRECTORY_SEPARATOR . $file ) );
+			}
+		} else {
+
+			$id = Helper_Functions::generate_unique_id( 'pa_assets_' . $id );
+
+			$arr = array();
+			foreach ( glob( PREMIUM_ASSETS_PATH . '/*' . $id . '*' ) as $file ) {
+				unlink( Helper_Functions::get_safe_path( $file ) );
+			}
+		}
 
 	}
 

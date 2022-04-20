@@ -27,6 +27,28 @@ $row_meta = Helper_Functions::is_hide_row_meta();
 		<form action="" method="POST" id="pa-settings" name="pa-settings" class="pa-settings-form">
 			<div id="pa-modules" class="pa-settings-tab">
 
+				<div class="pa-section-outer-wrap">
+					<div class="pa-section-info-wrap">
+						<div class="pa-section-info">
+							<h4><?php echo __( 'Dynamic Assets Generate', 'premium-addons-for-elementor' ); ?></h4>
+							<p><?php echo __( 'Generates CSS/JS files dynamically for each page based on the elements in it. Enable this setting for better performance (recommended).', 'premium-addons-for-elementor' ); ?></p>
+						</div>
+
+						<div class="pa-section-info-cta">
+							<label class="switch">
+							<input type="checkbox" id="premium-assets-generator" name="premium-assets-generator" <?php echo checked( 1, $enabled_elements['premium-assets-generator'], false ); ?>>
+								<span class="slider round"></span>
+							</label>
+							<?php if ( $enabled_elements['premium-assets-generator'] ) : ?>
+								<button type="button" class="pa-btn-regenerate" title="<?php esc_html_e( 'Clear Generated Assets', 'premium-addons-for-elementor' ); ?>">
+									<i class="dashicons dashicons-image-rotate"></i>
+								</button>
+							<?php endif; ?>
+						</div>
+
+					</div>
+				</div>
+
 				<div class="pa-section-info-wrap">
 					<div class="pa-section-info">
 						<h4><?php echo __( 'Master Switch', 'premium-addons-for-elementor' ); ?></h4>

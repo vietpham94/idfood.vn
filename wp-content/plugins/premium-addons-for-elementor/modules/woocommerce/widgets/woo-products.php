@@ -1379,9 +1379,32 @@ class Woo_Products extends Widget_Base {
 			array(
 				'label'      => __( 'Height', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( 'px', '%', 'em' ),
+				'size_units' => array( 'px', 'em' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 0,
+						'max' => 1000,
+					),
+				),
 				'selectors'  => array(
-					'{{WRAPPER}} .premium-woocommerce .woocommerce-loop-product__link img' => 'height: {{SIZE}}{{UNIT}}; object-fit: cover;',
+					'{{WRAPPER}} .premium-woocommerce .woocommerce-loop-product__link img' => 'height: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'product_img_fit',
+			array(
+				'label'     => __( 'Image Fit', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'cover',
+				'options'   => array(
+					'fill'    => __( 'Fill', 'premium-addons-for-elementor' ),
+					'cover'   => __( 'Cover', 'premium-addons-for-elementor' ),
+					'contain' => __( 'Contain', 'premium-addons-for-elementor' ),
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .premium-woocommerce .woocommerce-loop-product__link img' => 'object-fit: {{VALUE}};',
 				),
 			)
 		);

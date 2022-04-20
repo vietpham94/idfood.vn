@@ -136,7 +136,6 @@ class Premium_Template_Tags {
 		return $template_id;
 	}
 
-
 	/**
 	 * Get Elementor Page List
 	 *
@@ -175,16 +174,21 @@ class Premium_Template_Tags {
 	 * @access public
 	 *
 	 * @param string $title Template Title.
+	 * @param bool   $id      indicates if the title is the template title or id.
 	 *
 	 * @return $template_content string HTML Markup of the selected template.
 	 */
-	public function get_template_content( $title ) {
+	public function get_template_content( $title, $id = false ) {
 
 		$frontend = Plugin::$instance->frontend;
 
-		$id = $this->get_id_by_title( $title );
+		if ( ! $id ) {
+			$id = $this->get_id_by_title( $title );
 
-		$id = apply_filters( 'wpml_object_id', $id, 'elementor_library', true );
+			$id = apply_filters( 'wpml_object_id', $id, 'elementor_library', true );
+		} else {
+			$id = $title;
+		}
 
 		$template_content = $frontend->get_builder_content_for_display( $id, true );
 
@@ -431,7 +435,11 @@ class Premium_Template_Tags {
 
 			if ( empty( array_diff( ( $settings['custom_posts_filter'] ), $keys ) ) ) {
 
-				$post_args[ $settings['posts_filter_rule'] ] = $settings['custom_posts_filter'];
+				if ( 'post__in' === $settings['posts_filter_rule'] ) {
+					$post_args['post__in'] = $settings['custom_posts_filter'];
+				} else {
+					$excluded_posts = $settings['custom_posts_filter'];
+				}
 			}
 		}
 
@@ -624,6 +632,7 @@ class Premium_Template_Tags {
 	 * @access public
 	 *
 	 * @param string $read_more read more text.
+	 * @param string $post_target  link target value.
 	 */
 	public static function get_post_excerpt_link( $read_more, $post_target ) {
 
@@ -711,17 +720,18 @@ class Premium_Template_Tags {
 	 * @access protected
 	 *
 	 * @param string $link_target target.
+	 * @param string $key unique key.
 	 */
-	protected function render_post_title( $link_target ) {
+	protected function render_post_title( $link_target, $key ) {
 
 		$settings = self::$settings;
 
-		$this->add_render_attribute( 'title', 'class', 'premium-blog-entry-title' );
+		$this->add_render_attribute( $key . '_title', 'class', 'premium-blog-entry-title' );
 
 		$title_tag = Helper_Functions::validate_html_tag( $settings['premium_blog_title_tag'] );
 
 		?>
-		<<?php echo wp_kses_post( $title_tag . ' ' . $this->get_render_attribute_string( 'title' ) ); ?>>
+		<<?php echo wp_kses_post( $title_tag . ' ' . $this->get_render_attribute_string( $key . '_title' ) ); ?>>
 			<a href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $link_target ); ?>">
 				<?php esc_html( the_title() ); ?>
 			</a>
@@ -964,57 +974,56 @@ class Premium_Template_Tags {
 					<?php endif; ?>
 				<?php endif; ?>
 				<div <?php echo wp_kses_post( $this->get_render_attribute_string( $content_key ) ); ?>>
-					<div class="premium-blog-content-wrapper-inner">
-						<div class="premium-blog-inner-container">
-							<div class="premium-blog-entry-container">
-								<?php if ( in_array( $skin, array( 'side', 'banner' ), true ) && 'yes' === $settings['premium_blog_categories_meta'] ) { ?>
-									<div class="premium-blog-cats-container">
-										<ul class="post-categories">
-											<?php
-												$post_cats     = get_the_category();
-												$cats_repeater = $settings['categories_repeater'];
-											if ( count( $post_cats ) ) {
-												foreach ( $post_cats as $index => $cat ) {
-													$class = isset( $cats_repeater[ $index ] ) ? 'elementor-repeater-item-' . $cats_repeater[ $index ]['_id'] : '';
-													echo wp_kses_post( sprintf( '<li><a href="%s" class="%s">%s</a></li>', get_category_link( $cat->cat_ID ), $class, $cat->name ) );
-												}
-											}
 
-											?>
-										</ul>
-									</div>
-								<?php } ?>
-								<?php
-									$this->render_post_title( $target );
-								if ( 'cards' !== $skin ) {
-									$this->get_post_meta( $target );
-								}
+					<div class="premium-blog-inner-container">
 
-								?>
+						<?php if ( in_array( $skin, array( 'side', 'banner' ), true ) && 'yes' === $settings['premium_blog_categories_meta'] ) { ?>
+							<div class="premium-blog-cats-container">
+								<ul class="post-categories">
+									<?php
+										$post_cats     = get_the_category();
+										$cats_repeater = $settings['categories_repeater'];
+									if ( count( $post_cats ) ) {
+										foreach ( $post_cats as $index => $cat ) {
+											$class = isset( $cats_repeater[ $index ] ) ? 'elementor-repeater-item-' . $cats_repeater[ $index ]['_id'] : '';
+											echo wp_kses_post( sprintf( '<li><a href="%s" class="%s">%s</a></li>', get_category_link( $cat->cat_ID ), $class, $cat->name ) );
+										}
+									}
 
+									?>
+								</ul>
 							</div>
-						</div>
-
+						<?php } ?>
 						<?php
-
-							do_action( 'pa_before_post_content' );
-
-							$this->get_post_content();
-
-						if ( 'cards' === $skin ) {
+							$this->render_post_title( $target, $key );
+						if ( 'cards' !== $skin ) {
 							$this->get_post_meta( $target );
 						}
 
-							do_action( 'pa_after_post_content' );
-
 						?>
-						<?php if ( 'yes' === $settings['premium_blog_tags_meta'] && has_tag() ) : ?>
-							<div class="premium-blog-post-tags-container">
-									<i class="fa fa-tags fa-fw"></i>
-									<?php the_tags( ' ', apply_filters( 'pa_post_tags', ', ' ) ); ?>
-							</div>
-						<?php endif; ?>
+
 					</div>
+
+					<?php
+
+						do_action( 'pa_before_post_content' );
+
+						$this->get_post_content();
+
+					if ( 'cards' === $skin ) {
+						$this->get_post_meta( $target );
+					}
+
+						do_action( 'pa_after_post_content' );
+
+					?>
+					<?php if ( 'yes' === $settings['premium_blog_tags_meta'] && has_tag() ) : ?>
+						<div class="premium-blog-post-tags-container">
+								<i class="fa fa-tags fa-fw"></i>
+								<?php the_tags( ' ', apply_filters( 'pa_post_tags', ', ' ) ); ?>
+						</div>
+					<?php endif; ?>
+
 				</div>
 			</div>
 		</<?php echo wp_kses_post( $post_tag ); ?>>
@@ -1111,6 +1120,10 @@ class Premium_Template_Tags {
 				'type'      => 'array',
 			)
 		);
+
+		if ( ! is_array( $nav_links ) ) {
+			return;
+		}
 
 		?>
 		<nav class="premium-blog-pagination-container" role="navigation" aria-label="<?php echo esc_attr( __( 'Pagination', 'premium-addons-for-elementor' ) ); ?>">
@@ -1241,6 +1254,8 @@ class Premium_Template_Tags {
 	 *
 	 * @since 3.4.0
 	 * @access public
+	 *
+	 * @param string $size image size.
 	 */
 	public static function get_current_product_gallery_images( $size ) {
 
@@ -1269,6 +1284,8 @@ class Premium_Template_Tags {
 	 *
 	 * @since 3.4.0
 	 * @access public
+	 *
+	 * @param string $size image size.
 	 */
 	public static function get_current_product_linked_images( $size ) {
 

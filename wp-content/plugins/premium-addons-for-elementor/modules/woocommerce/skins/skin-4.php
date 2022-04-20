@@ -139,12 +139,12 @@ class Skin_4 extends Skin_Base {
 				'label'    => __( 'Select Product Segment', 'premium-addons-for-elementor' ),
 				'type'     => Controls_Manager::SELECT,
 				'options'  => array(
-					'title'    => __( 'Title', 'premium-addons-pro' ),
-					'category' => __( 'Category', 'premium-addons-pro' ),
-					'ratings'  => __( 'Rating', 'premium-addons-pro' ),
-					'price'    => __( 'Price', 'premium-addons-pro' ),
-					'desc'     => __( 'Excerpt', 'premium-addons-pro' ),
-					'cta'      => __( 'Add To Cart', 'premium-addons-pro' ),
+					'title'    => __( 'Title', 'premium-addons-for-elementor' ),
+					'category' => __( 'Category', 'premium-addons-for-elementor' ),
+					'ratings'  => __( 'Rating', 'premium-addons-for-elementor' ),
+					'price'    => __( 'Price', 'premium-addons-for-elementor' ),
+					'desc'     => __( 'Excerpt', 'premium-addons-for-elementor' ),
+					'cta'      => __( 'Add To Cart', 'premium-addons-for-elementor' ),
 				),
 				'multiple' => true,
 			)

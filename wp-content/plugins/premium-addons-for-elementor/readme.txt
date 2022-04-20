@@ -3,9 +3,9 @@ Contributors: Leap13, Rimoun
 Tags: elementor, elementor addons, elementor widgets, elementor elements, elementor templates
 Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme
 Requires at least: 5.0
-Tested Up To: 5.9.1
+Tested Up To: 5.9.3
 Requires PHP: 5.4
-Stable Tag: 4.8.9
+Stable Tag: 4.9.6
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -20,8 +20,11 @@ Supercharge your [Elementor Page Builder](https://wordpress.org/plugins/elemento
 ### Useful Links
 [Support](https://my.leap13.com/contact-support/) | [Docs](https://premiumaddons.com/docs/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) | [Video Tutorials](https://www.youtube.com/channel/UCXcJ9BeO2sKKHor7Q9VglTQ) | [Facebook Group](https://facebook.com/groups/premiumAddons) | [Upgrade to Pro](https://premiumaddons.com/pro/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme)
 
+### New: Elementor Section Templates Live Builder Tool
+Now, you create build Elementor section templates and insert them inside the Elementor templates based widgets in Premium Addons within the same page using [Elementor Templates Live Editor tool](https://premiumaddons.com/elementor-templates-live-editor/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
+
 ### New: Elementor Display Conditions
-Premium Addons is proudly offering you a professional way to manage your website content with specific conditions which is perfect for marketers and eCommerce websites. You can show/hide content dynamically based on location, browser, operating system, user role, device type, Woocommerce display conditions such as WooCommerce product and WooCommerce shopping cart data, ACF fields, etc. [Check the demo page](https://premiumaddons.com/elementor-display-conditions/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme)
+Premium Addons is proudly offering you a professional way to manage your website content with specific conditions which is perfect for marketers and eCommerce websites. You can show/hide content dynamically based on location, browser, operating system, user role, URL parameters, device type, Woocommerce display conditions such as WooCommerce product and WooCommerce shopping cart data, ACF fields, etc. [Check the demo page](https://premiumaddons.com/elementor-display-conditions/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme)
 
 ### New: Elementor WooCommerce Products Listing widget
 Show off your products in an elegant way using Premium Woo Products Widget for Elementor Page Builder that comes with unlimited customization options. [Check the demo page](https://premiumaddons.com/elementor-woocommerce-products/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme)
@@ -29,7 +32,7 @@ Show off your products in an elegant way using Premium Woo Products Widget for E
 ### New: Elementor Floating Effects
 [Floating Animations for Elementor Global Feature](https://premiumaddons.com/elementor-floating-effects/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) that comes from Premium Addons for Elementor Free Plugin could be added to any Elementor widget including Elementor Sections, Inner-Sections. In addition, it could be added to the Elements inside each Elementor widget using Custom CSS Selector option.
 
-### NEW: Elementor Equal Height Feature
+### Elementor Equal Height Feature
 Now, you can make your columns, widgets or any selector you want the same height with just ONE click using [Elementor Equal Height feature](https://premiumaddons.com/docs/elementor-column-equal-height/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) in section settings -> Advanced tab.
 
 ### Elementor Pre-made Templates
@@ -82,7 +85,7 @@ Each widget and addon has been tested on different screen sizes, mobile devices,
 * [**Image Hotspots Widget**](https://premiumaddons.com/image-hotspots-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: The only Image Hotspots Widget with 100% freehand design experience. Add hotspots to your image using mouse drag n' drop.
 * [**Image Layers Widget**](https://premiumaddons.com/image-layers-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Unleash your creativity with Image Layers Widget that allows you to combine multiple images, order them in layers and make them animated and/or interactive with mouse and/or with scrolling.
 * [**Image Accordion Widget**](https://premiumaddons.com/elementor-image-accordion-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: Create eye-catching Image Accordions in both vertical and horizontal orientations inside Elementor Page Builder.
-* [**Video Box Widget**](https://premiumaddons.com/video-box-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Bring videos from YouTube, Vimeo, or upload your own using Video Box Widget for Elementor. The widget comes with many customization features.
+* [**Video Box Widget**](https://premiumaddons.com/video-box-widget-for-elementor-page-builder/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(FREE)*: Bring videos from YouTube, Vimeo, Dailymotion, or upload your own using Video Box Widget for Elementor. The widget comes with many customization features.
 
 ### Section/Column Addons & Widgets
 * [**Horizontal Scroll Widget**](https://premiumaddons.com/elementor-horizontal-scroll-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) *(PRO)*: The first ever advanced Horizontal Scroll Widget for Elementor and WordPress that makes it easy to create horizontal scroll landing pages or even add horizontal scroll content within your page.
@@ -206,6 +209,65 @@ Premium Addons for Elementor is 100% Ads Free, Ads can only be detected from You
 
 == Changelog ==
 
+= 4.9.6 =
+
+- Tweak: Load Lottie Animations when visible on viewport to improve performance and page loading speed.
+- Tweak: Added Privacy Mode option for YouTube videos in Media Grid widget.
+- Fixed: PHP warning when Image option is not set in Media Grid widget.
+
+= 4.9.5 =
+
+- Tweak: Added Disable Floating Effects on Safari option in widgets that have floating effects.
+- Tweak: Trigger Floating Effects addon when element is visible on viewport to improve page loading speed.
+- Tweak: Removed unnecessary CSS classes from Modal Box widget.
+- Tweak: Compatibility between PA Cross-Domain Copy N’ Paste feature and Elementor Flex Container - [here](https://elementor.com/help/container-element/).
+- Fixed: CSS classes are rendered multiple times in Blog widget.
+- Fixed: Long text causes image icon to get squished in Bullet List widget.
+
+= 4.9.4 =
+
+- Tweak: Added `PA Assets` in admin toolbar to clear generated dynamic assets.
+- Tweak: Disable Floating Effects on Safari option added in Floating Effects global addon.
+- Tweak: Compatibility between Counter and Horizontal Scroll widgets.
+- Tweak: Carousel widget HTML markup optimized for better performance.
+- Fixed: Exclude Posts option not working for custom post types in Blog widget.
+
+= 4.9.3 =
+
+- Tweak: Added button to Clear Generated Assets in dashboard plugin settings -> Widgets & Addons tab.
+- Tweak: Banner widget behavior improved on touch devices.
+- Fixed: Compatibility issues with Elementor v3.6.0.
+
+= 4.9.2 =
+
+- Tweak: Progress Bar and Team Members widgets HTML markup optimized for better performance.
+- Fixed: Featured Image option not working in Blog widget after v4.9.1.
+
+= 4.9.1 =
+
+- New: Added Create/Edit Live Templates feature in all widgets that support Elementor Templates - [here](https://premiumaddons.com/elementor-templates-live-editor/).
+- Tweak: Added Dailymotion and Lightbox options in Videobox widget - [here](https://premiumaddons.com/video-box-widget-for-elementor-page-builder/).
+- Tweak: Media Grid and Blog widgets HTML markup optimized for better performance.
+- Fixed: Carousel widget navigation arrows/dots not working on RTL websites.
+- Fixed: Quickview Popup content is not showing properly for variable products in WooCommerce Products Listing widget.
+
+= 4.9.0 =
+
+- New: Added Generate Dynamic Assets feature in Widgets & Addons plugin settings tab to improve loading speed and performance.
+- Tweak: Added `preload` attribute for self-hosted videos in Media Grid widget to improve page loading speed.
+- Tweak: Added Image Fit option for products thumbnails in WooCommerce Products Listing widget.
+- Tweak: Added Content Overflow option in Modal Box widget.
+- Fixed: Fatal error when IP Location Display Condition is used when Social Reviews widgets are disabled.
+
+= 4.8.11 =
+
+Tweak: JS code optimized for security improvements.
+
+= 4.8.10 =
+
+- Tweak: Show WooCommerce placeholder image if the current product has no thumbnail in WooCommerce Products Listing widget.
+- Fixed: Enable Beta Tester option is not working.
+
 = 4.8.9 =
 
 - Tweak: Added Product Image Height option in WooCommerce Products Listing widget.
@@ -322,7 +384,6 @@ Premium Addons for Elementor is 100% Ads Free, Ads can only be detected from You
 
 = 4.7.2 =
 
-- Tweak: Added WooCommerce Current Product Categories and Current Product Price in Display Conditions feature.
 - Tweak: Added styling options for slashed price in WooCommerce Products Listing widget.
 - Fixed: Next and Previous pagination links not working properly in WooCommerce Products Listing widget.
 - Fixed: Display Conditions not working properly when condition is set to MacOS.
