@@ -71,26 +71,26 @@ function find_handler_user_id(int $order_id): int
     }
 
     $fullStrAddress = $order->get_shipping_address_1() . ' ' . $order->get_shipping_address_2() . ' ' . $order->get_shipping_city() . ' ' . $order->get_shipping_state();
-    $arrChars = explode(';', $fullStrAddress);
+    $arrChars = explode(' ', $fullStrAddress);
+    write_log($fullStrAddress);
+    write_log($arrChars);
 
     $user_ids = find_supplier();
-    $customers = WC_API_Customers::get_customers(null, array('include' => $user_ids));
-
-    write_log(__FILE__ . ': 79');
-    write_log($customers);
-
     $result = [];
-    foreach ($customers as $customer) {
+    foreach ($user_ids as $user_id) {
+        $customer = new WC_Customer($user_id);
         $matchCount = 0;
+        write_log(__FILE__ . ': 81');
+        write_log($customer);
         foreach ($arrChars as $char) {
-            if (strpos($customer->get_billing_address_1(), $char)) {
+            if (strpos($customer->get_shipping_address_1(), $char)) {
                 $matchCount += 1;
             }
         }
-        $result[] = array('matchCount' => $matchCount, 'ID' => $customer->ID);
+        $result[] = array('matchCount' => $matchCount, 'ID' => $user_id);
     }
 
-    write_log(__FILE__ . ': 93');
+    write_log(__FILE__ . ': 91');
     write_log($result);
 
     if (!empty($result)) {
@@ -128,4 +128,147 @@ function find_supplier()
     }
 
     return $user_ids;
+}
+
+/**
+ * Custom shipping and  building in admin user manager
+ * Action to create supplier
+ *
+ */
+add_filter( 'woocommerce_customer_meta_fields', 'supplier_admin_fields' );
+function supplier_admin_fields($admin_fields)
+{
+    if (!isset($_GET['user_id'])) {
+        return;
+    }
+
+    global $tinh_thanhpho;
+    $customer = new WC_Customer($_GET['user_id']);
+
+    $admin_fields['billing']['fields']['billing_last_name'] = array(
+        'label' => __('Họ và tên'),
+        'required' => true,
+    );
+    $admin_fields['billing']['fields']['billing_address_1'] = array(
+        'label' => __('Địa chỉ'),
+        'placeholder' => __('Số nhà, tên đường,..'),
+    );
+
+    $admin_fields['billing']['fields']['billing_state'] = array(
+        'label' => __('Province/City', 'devvn-vncheckout'),
+        'required' => true,
+        'type' => 'select',
+        'placeholder' => _x('Select Province/City', 'placeholder', 'devvn-vncheckout'),
+        'options' => array('' => __('Select Province/City', 'devvn-vncheckout')) + apply_filters('devvn_states_vn', $tinh_thanhpho),
+        'priority' => 30
+    );
+
+    $admin_fields['billing']['fields']['billing_city'] = array(
+        'label' => __('District', 'devvn-vncheckout'),
+        'required' => true,
+        'type' => 'select',
+        'class' => array('form-row-last'),
+        'placeholder' => _x('Select District', 'placeholder', 'devvn-vncheckout'),
+        'options' => get_default_districts($customer),
+        'priority' => 40
+    );
+
+    $admin_fields['billing']['fields']['billing_address_2'] = array(
+        'label' => __('Commune/Ward/Town', 'devvn-vncheckout'),
+        'required' => true,
+        'type' => 'select',
+        'class' => array('form-row-first'),
+        'placeholder' => _x('Select Commune/Ward/Town', 'placeholder', 'devvn-vncheckout'),
+        'options' => get_default_wards($customer),
+        'priority' => 50
+    );
+
+    $admin_fields['shipping']['fields']['shipping_last_name'] = array(
+        'label' => __('Họ và tên')
+    );
+    $admin_fields['shipping']['fields']['shipping_address_1'] = array(
+        'label' => __('Địa chỉ'),
+        'placeholder' => __('Số nhà, tên đường,..')
+    );
+
+    $admin_fields['shipping']['fields']['shipping_state'] = array(
+        'label' => __('Province/City', 'devvn-vncheckout'),
+        'required' => true,
+        'type' => 'select',
+        'class' => array('form-row-first', 'address-field', 'update_totals_on_change'),
+        'placeholder' => _x('Select Province/City', 'placeholder', 'devvn-vncheckout'),
+        'options' => array('' => __('Select Province/City', 'devvn-vncheckout')) + apply_filters('devvn_states_vn', $tinh_thanhpho),
+        'priority' => 30
+    );
+
+    $admin_fields['shipping']['fields']['shipping_city'] = array(
+        'label' => __('District', 'devvn-vncheckout'),
+        'required' => true,
+        'type' => 'select',
+        'class' => array('form-row-last'),
+        'placeholder' => _x('Select District', 'placeholder', 'devvn-vncheckout'),
+        'options' => get_default_districts($customer),
+        'priority' => 40
+    );
+
+    $admin_fields['shipping']['fields']['shipping_address_2'] = array(
+        'label' => __('Commune/Ward/Town', 'devvn-vncheckout'),
+        'required' => true,
+        'type' => 'select',
+        'class' => array('form-row-first'),
+        'placeholder' => _x('Select Commune/Ward/Town', 'placeholder', 'devvn-vncheckout'),
+        'options' => get_default_wards($customer),
+        'priority' => 50
+    );
+
+    unset($admin_fields['billing']['fields']['billing_first_name']);
+    unset($admin_fields['billing']['fields']['billing_company']);
+    unset($admin_fields['billing']['fields']['billing_postcode']);
+    unset($admin_fields['billing']['fields']['billing_country']);
+    unset($admin_fields['shipping']['fields']['shipping_first_name']);
+    unset($admin_fields['shipping']['fields']['shipping_company']);
+    unset($admin_fields['shipping']['fields']['shipping_postcode']);
+    unset($admin_fields['shipping']['fields']['shipping_country']);
+
+    return $admin_fields;
+}
+
+function get_default_districts(WC_Customer $customer)
+{
+    include 'cities/quan_huyen.php';
+
+    if (empty($quan_huyen)) {
+        return array();
+    }
+
+    $id_state = $customer->get_billing_state();
+
+    $quan_huyen_ = array();
+    foreach ($quan_huyen as $obj) {
+        if (isset($obj['matp']) && $obj['matp'] == $id_state) {
+            $quan_huyen_[$obj['maqh']] = $obj['name'];
+        }
+    }
+
+    return $quan_huyen_;
+}
+
+function get_default_wards(WC_Customer $customer)
+{
+    include 'cities/xa_phuong_thitran.php';
+
+    if (empty($xa_phuong_thitran)) {
+        return array();
+    }
+
+    $id_district = $customer->get_billing_city();
+
+    $districts = array();
+    foreach ($xa_phuong_thitran as $obj) {
+        if (isset($obj['maqh']) && $obj['maqh'] == $id_district) {
+            $districts[$obj['xaid']] = $obj['name'];
+        }
+    }
+
+    return $districts;
 }
