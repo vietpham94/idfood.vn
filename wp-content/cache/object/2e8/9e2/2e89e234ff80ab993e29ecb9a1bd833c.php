@@ -1,0 +1,1 @@
+B`Pb<?php exit; ?>a:1:{s:7:"content";s:54:"https://idfood.vn/wp-includes/images/media/default.png";}

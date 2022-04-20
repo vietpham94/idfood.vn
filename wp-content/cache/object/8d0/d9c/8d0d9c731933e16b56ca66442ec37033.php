@@ -1,0 +1,1 @@
+B`Pb<?php exit; ?>a:1:{s:7:"content";s:170:"O:8:"stdClass":5:{s:12:"last_checked";i:1649426676;s:7:"checked";a:1:{s:7:"betheme";s:8:"22.0.2.1";}s:8:"response";a:0:{}s:9:"no_update";a:0:{}s:12:"translations";a:0:{}}";}

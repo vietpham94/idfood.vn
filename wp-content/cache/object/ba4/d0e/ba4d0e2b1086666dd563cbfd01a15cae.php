@@ -1,0 +1,1 @@
+I`Pb<?php exit; ?>a:1:{s:7:"content";s:63:"{{WP_CONTENT_DIR}}/themes/betheme/woocommerce/loop/loop-end.php";}

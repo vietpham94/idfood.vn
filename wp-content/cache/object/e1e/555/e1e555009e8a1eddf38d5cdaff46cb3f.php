@@ -1,0 +1,11 @@
+B`Pb<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":23:{s:2:"ID";s:4:"1962";s:11:"post_author";s:2:"10";s:9:"post_date";s:19:"2022-03-22 16:06:03";s:13:"post_date_gmt";s:19:"2022-03-22 09:06:03";s:12:"post_content";s:1887:"Mùa dâu ở Đà Lạt thường bắt đầu từ tháng 1 – 4 hàng năm, những trái dâu tây chín đỏ mọng ngập tràn trong các khu vườn. Với tiết trời mát mẽ, ôn hòa của Đà Lạt thì dâu tây mới cho chất lượng tốt nhất.
+
+Chắc hẳn ai cũng đã từng nghe qua vì mức độ nổi tiếng dâu tây Đà Lạt ngon trứ danh. Những ai đã ăn dâu tây Đà Lạt, chỉ cần nhắc đến sẽ nhớ đến những trái dâu tây đỏ mọng tươi ngon. Dâu tây vì không để được lâu nên người ta đã tạo ra loại mứt dâu thơm ngon.
+
+Người du lịch Đà Lạt ưa chuộng dâu tây nên thường mua gói về làm quà. Bởi dâu tây có nhiều cách biến tấu hoặc làm mứt để bảo quản được lâu hơn. Một bữa sáng đơn giản với chiếc bánh mì giòn phết thêm lên một ít mứt dâu thật ngon miệng.
+
+Dâu tây ở Đà Lạt ngoài được sử dụng để ăn tươi, thì người dân còn biến tấu ra rất nhiều sản phẩm như: mứt dâu, dây tây sấy, kẹo dâu tây,… Một loại trái cây được xem như đặc sản của Đà Lạt, một món quà mà bao du khách đều yêu thích.
+
+<strong>Mứt dâu tây</strong> là một trong những loại <a href="https://agotourist.com/mut-da-lat/" target="_blank" rel="noopener noreferrer"><strong>mứt Đà Lạt</strong></a> làm say đắm bao du khách. Với vị ngọt thanh, giòn giòn pha chút vị chua chua, hòa quyện cùng hương thơm dịu nhẹ mà hiếm có loại trái cây nào có được.
+
+Nếu đến với <a href="https://agotourist.com/thanh-pho-da-lat/" target="_blank" rel="noopener noreferrer"><strong>thành phố Đà Lạt</strong></a> thì bạn đừng quên mua cho mình một hủ mứt dâu tây nhé.";s:10:"post_title";s:15:"Mứt dâu tây";s:12:"post_excerpt";s:0:"";s:11:"post_status";s:7:"publish";s:14:"comment_status";s:4:"open";s:11:"ping_status";s:6:"closed";s:13:"post_password";s:0:"";s:9:"post_name";s:11:"mut-dau-tay";s:7:"to_ping";s:0:"";s:6:"pinged";s:0:"";s:13:"post_modified";s:19:"2022-04-07 13:04:26";s:17:"post_modified_gmt";s:19:"2022-04-07 06:04:26";s:21:"post_content_filtered";s:0:"";s:11:"post_parent";s:1:"0";s:4:"guid";s:48:"https://idfood.vn/?post_type=product&#038;p=1962";s:10:"menu_order";s:1:"0";s:9:"post_type";s:7:"product";s:14:"post_mime_type";s:0:"";s:13:"comment_count";s:1:"0";}}

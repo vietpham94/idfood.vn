@@ -1,0 +1,7 @@
+B`Pb<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":24:{s:2:"ID";i:610;s:11:"post_author";s:1:"1";s:9:"post_date";s:19:"2021-06-23 01:27:14";s:13:"post_date_gmt";s:19:"2021-06-22 18:27:14";s:12:"post_content";s:555:"<p><a href="/#home-san-pham">TOÀN BỘ </a>         &nbsp |  &nbsp    
+<a href="/?category=rau-cu#home-san-pham">RAU CỦ </a>            &nbsp |  &nbsp    
+<a href="/?category=trai-cay#home-san-pham">TRÁI CÂY</a>          &nbsp |  &nbsp    
+<a href="/?category=am-thuc#home-san-pham">ẨM THỰC</a>         &nbsp |  &nbsp  
+<a href="/?category=banh-keo#home-san-pham">BÁNH KẸO </a>      &nbsp |  &nbsp     
+<a href="/?category=tra-ca-phe#home-san-pham">TRÀ - CÀ PHÊ</a>  &nbsp |  &nbsp    
+<a href="/?category=khac#home-san-pham">KHÁC </a></p>";s:10:"post_title";s:29:"Product categories navigation";s:12:"post_excerpt";s:0:"";s:11:"post_status";s:7:"publish";s:14:"comment_status";s:6:"closed";s:11:"ping_status";s:6:"closed";s:13:"post_password";s:0:"";s:9:"post_name";s:29:"product-categories-navigation";s:7:"to_ping";s:0:"";s:6:"pinged";s:0:"";s:13:"post_modified";s:19:"2021-06-27 01:36:31";s:17:"post_modified_gmt";s:19:"2021-06-26 18:36:31";s:21:"post_content_filtered";s:0:"";s:11:"post_parent";i:0;s:4:"guid";s:65:"https://agritech.dt4g.net/?post_type=elementor_library&#038;p=610";s:10:"menu_order";i:0;s:9:"post_type";s:17:"elementor_library";s:14:"post_mime_type";s:0:"";s:13:"comment_count";s:1:"0";s:6:"filter";s:3:"raw";}}
