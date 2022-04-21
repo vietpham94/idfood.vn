@@ -186,8 +186,6 @@
             'data-premium-temp-id': '',
             'src': ''
         });
-        // $(".premium-live-editor-iframe-modal #pa-live-editor-control-iframe").attr('data-premium-temp-id', '');
-        // $(".premium-live-editor-iframe-modal #pa-live-editor-control-iframe").attr('src', '');
     }
 
     function checkLiveTemplateControl(sectionName, elementorEditor) {

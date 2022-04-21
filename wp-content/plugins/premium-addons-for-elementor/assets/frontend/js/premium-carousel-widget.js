@@ -6,6 +6,9 @@
             settings = $($carouselElem).data("settings"),
             isEdit = elementorFrontend.isEditMode();
 
+        if ($carouselElem.find(".item-wrapper").length < 1)
+            return;
+
         function slideToShow(slick) {
 
             var slidesToShow = slick.options.slidesToShow,

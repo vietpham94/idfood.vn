@@ -815,7 +815,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->add_control(
 			'star_color',
 			array(
-				'label'     => __( 'Star Color', 'elementor-pro' ),
+				'label'     => __( 'Star Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .premium-woocommerce li.product div.star-rating' => 'color: {{VALUE}}',
@@ -826,7 +826,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->add_control(
 			'empty_star_color',
 			array(
-				'label'     => __( 'Empty Star Color', 'elementor-pro' ),
+				'label'     => __( 'Empty Star Color', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .premium-woocommerce li.product div.star-rating::before' => 'color: {{VALUE}}',
@@ -837,7 +837,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->add_control(
 			'star_size',
 			array(
-				'label'     => __( 'Star Size', 'elementor-pro' ),
+				'label'     => __( 'Star Size', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SLIDER,
 				'default'   => array(
 					'unit' => 'em',
@@ -858,7 +858,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->add_responsive_control(
 			'rating_spacing',
 			array(
-				'label'      => __( 'Bottom Spacing', 'elementor-pro' ),
+				'label'      => __( 'Bottom Spacing', 'premium-addons-for-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px', 'em' ),
 				'range'      => array(

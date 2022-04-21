@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 5.9.3
 Requires PHP: 5.4
-Stable Tag: 4.9.6
+Stable Tag: 4.9.8
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -19,6 +19,9 @@ Supercharge your [Elementor Page Builder](https://wordpress.org/plugins/elemento
 
 ### Useful Links
 [Support](https://my.leap13.com/contact-support/) | [Docs](https://premiumaddons.com/docs/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) | [Video Tutorials](https://www.youtube.com/channel/UCXcJ9BeO2sKKHor7Q9VglTQ) | [Facebook Group](https://facebook.com/groups/premiumAddons) | [Upgrade to Pro](https://premiumaddons.com/pro/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme)
+
+### New: Elementor Navigation/Mega Menu Widget
+Now, you build outstanding navigation menus and mega menus in Elementor using Premium Navigation/Mega Menu Widget which allows you to select between four different layouts with dozens of options to create a responsive menu for your Elementor website. [Check it out now!](https://premiumaddons.com/elementor-mega-menu-widget/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
 
 ### New: Elementor Section Templates Live Builder Tool
 Now, you create build Elementor section templates and insert them inside the Elementor templates based widgets in Premium Addons within the same page using [Elementor Templates Live Editor tool](https://premiumaddons.com/elementor-templates-live-editor/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
@@ -208,6 +211,14 @@ Premium Addons for Elementor is 100% Ads Free, Ads can only be detected from You
 14. Premium Progress Bar Widget for Elementor
 
 == Changelog ==
+
+= 4.9.8 =
+
+- Fixed: Fatal PHP error with Premium Nav Menu widget.
+
+= 4.9.7 =
+
+- New: Added Premium Navigation/Mega Menu widget - [here](https://premiumaddons.com/elementor-mega-menu-widget).
 
 = 4.9.6 =
 

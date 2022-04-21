@@ -173,8 +173,8 @@ class Premium_Template_Tags {
 	 * @since 3.6.0
 	 * @access public
 	 *
-	 * @param string $title Template Title.
-	 * @param bool   $id      indicates if the title is the template title or id.
+	 * @param string|int $title   Template Title||id.
+	 * @param bool   $id          indicates if $title is the template title or id.
 	 *
 	 * @return $template_content string HTML Markup of the selected template.
 	 */

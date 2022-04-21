@@ -61,10 +61,10 @@ class Admin_Notices {
 
 		self::$notices = array(
 			'pa-review',
-			'badge_notice',
+			'nav_menu_notice',
 		);
 
-		delete_option( 'woo_notice' );
+		delete_option( 'badge_notice' );
 
 	}
 
@@ -102,7 +102,7 @@ class Admin_Notices {
 			}
 		}
 
-		$this->get_badge_notice();
+		$this->get_menu_notice();
 
 	}
 
@@ -231,22 +231,22 @@ class Admin_Notices {
 
 	/**
 	 *
-	 * Shows admin notice for Premium Badge Addon.
+	 * Shows admin notice for Premium Navigation Menu.
 	 *
 	 * @since 4.8.8
 	 * @access public
 	 *
 	 * @return void
 	 */
-	public function get_badge_notice() {
+	public function get_menu_notice() {
 
-		$badge_notice = get_option( 'badge_notice' );
+		$nav_notice = get_option( 'nav_menu_notice' );
 
-		if ( '1' === $badge_notice ) {
+		if ( '1' === $nav_notice ) {
 			return;
 		}
 
-		$notice_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-badge-global-addon', 'badge-notification', 'wp-dash', 'badge' );
+		$notice_url = Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-mega-menu-widget', 'menu-notification', 'wp-dash', 'mega-menu' );
 
 		?>
 
@@ -256,11 +256,11 @@ class Admin_Notices {
 			</div>
 			<div class="pa-text-wrap">
 				<p>
-					<strong><?php echo __( 'Premium Badge Global Addon', 'premium-addons-for-elemetor' ); ?></strong>
-					<?php echo sprintf( __( 'is now available in Premium Addons Pro. <a href="%s" target="_blank">Check it out now!</a>', 'premium-addons-for-elementor' ), $notice_url ); ?>
+					<strong><?php echo __( 'Premium Navigation/Mega Menu Widget', 'premium-addons-for-elemetor' ); ?></strong>
+					<?php echo sprintf( __( 'is now available in Premium Addons for Elementor. <a href="%s" target="_blank">Check it out now!</a>', 'premium-addons-for-elementor' ), $notice_url ); ?>
 				</p>
 			</div>
-			<div class="pa-notice-close" data-notice="badge">
+			<div class="pa-notice-close" data-notice="nav">
 				<span class="dashicons dashicons-dismiss"></span>
 			</div>
 		</div>

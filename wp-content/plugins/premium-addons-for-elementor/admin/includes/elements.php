@@ -36,6 +36,13 @@ $elements = array(
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs-category/using-widgets/blog/', 'settings-page', 'wp-dash', 'dashboard' ),
 			),
 			array(
+				'key'   => 'premium-nav-menu',
+				'name'  => 'premium-nav-menu',
+				'title' => __( 'Nav/Mega Menu', 'premium-addons-for-elementor' ),
+				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-mega-menu-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-mega-menu-widget-tutorial', 'settings-page', 'wp-dash', 'dashboard' ),
+			),
+			array(
 				'key'      => 'premium-maps',
 				'name'     => 'premium-addon-maps',
 				'title'    => __( 'Google Maps', 'premium-addons-for-elementor' ),
@@ -567,6 +574,13 @@ $elements = array(
 				'title' => __( 'Blog', 'premium-addons-for-elementor' ),
 				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/blog-widget-for-elementor-page-builder/', 'settings-page', 'wp-dash', 'dashboard' ),
 				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs-category/using-widgets/blog/', 'settings-page', 'wp-dash', 'dashboard' ),
+			),
+			array(
+				'key'   => 'premium-nav-menu',
+				'name'  => 'premium-nav-menu',
+				'title' => __( 'Nav/Mega Menu', 'premium-addons-for-elementor' ),
+				'demo'  => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/elementor-mega-menu-widget/', 'settings-page', 'wp-dash', 'dashboard' ),
+				'doc'   => Helper_Functions::get_campaign_link( 'https://premiumaddons.com/docs/elementor-mega-menu-widget-tutorial', 'settings-page', 'wp-dash', 'dashboard' ),
 			),
 			array(
 				'key'      => 'premium-maps',

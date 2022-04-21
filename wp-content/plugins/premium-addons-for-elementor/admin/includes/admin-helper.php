@@ -90,8 +90,11 @@ class Admin_Helper {
 		add_action( 'wp_ajax_pa_elements_settings', array( $this, 'save_settings' ) );
 		add_action( 'wp_ajax_pa_additional_settings', array( $this, 'save_additional_settings' ) );
 		add_action( 'wp_ajax_pa_get_unused_widgets', array( $this, 'get_unused_widgets' ) );
+		add_action( 'wp_ajax_get_pa_menu_item_settings', array( $this, 'get_pa_menu_item_settings' ) );
+		add_action( 'wp_ajax_save_pa_menu_item_settings', array( $this, 'save_pa_menu_item_settings' ) );
+		add_action( 'wp_ajax_save_pa_mega_item_content', array( $this, 'save_pa_mega_item_content' ) );
 
-		// Register AJAX Hooks for regenerate assets
+		// Register AJAX Hooks for regenerate assets.
 		add_action( 'wp_ajax_pa_clear_cached_assets', array( $this, 'clear_cached_assets' ) );
 
 		// Register AJAX Hooks for Newsletter.
@@ -108,7 +111,7 @@ class Admin_Helper {
 			if ( false === strpos( $current_page, 'action=elementor' ) ) {
 				Admin_Notices::get_instance();
 
-				// Beta tester
+				// Beta tester.
 				Beta_Testers::get_instance();
 
 				// PA Duplicator.
@@ -132,6 +135,8 @@ class Admin_Helper {
 	 * Checks user credentials for specific action
 	 *
 	 * @since 2.6.8
+	 *
+	 * @param string $action action.
 	 *
 	 * @return boolean
 	 */
@@ -200,6 +205,10 @@ class Admin_Helper {
 	 */
 	public function admin_enqueue_scripts() {
 
+		$suffix           = is_rtl() ? '-rtl' : '';
+		$current_screen   = self::get_current_screen();
+		$enabled_elements = self::get_enabled_elements();
+
 		wp_enqueue_style(
 			'pa_admin_icon',
 			PREMIUM_ADDONS_URL . 'admin/assets/fonts/style.css',
@@ -207,10 +216,6 @@ class Admin_Helper {
 			PREMIUM_ADDONS_VERSION,
 			'all'
 		);
-
-		$suffix = is_rtl() ? '-rtl' : '';
-
-		$current_screen = self::get_current_screen();
 
 		wp_enqueue_style(
 			'pa-notice-css',
@@ -220,15 +225,23 @@ class Admin_Helper {
 			'all'
 		);
 
+		wp_enqueue_style(
+			'pa-admin-css',
+			PREMIUM_ADDONS_URL . 'admin/assets/css/admin' . $suffix . '.css',
+			array(),
+			PREMIUM_ADDONS_VERSION,
+			'all'
+		);
+
 		if ( strpos( $current_screen, $this->page_slug ) !== false ) {
 
-			wp_enqueue_style(
-				'pa-admin',
-				PREMIUM_ADDONS_URL . 'admin/assets/css/admin' . $suffix . '.css',
-				array(),
-				PREMIUM_ADDONS_VERSION,
-				'all'
-			);
+			// wp_enqueue_style(
+			// 'pa-admin-css',
+			// PREMIUM_ADDONS_URL . 'admin/assets/css/admin' . $suffix . '.css',
+			// array(),
+			// PREMIUM_ADDONS_VERSION,
+			// 'all'
+			// );
 
 			wp_enqueue_style(
 				'pa-sweetalert-style',
@@ -293,6 +306,145 @@ class Admin_Helper {
 			wp_localize_script( 'pa-admin', 'premiumAddonsSettings', $localized_data );
 
 		}
+
+		if ( 'nav-menus' === $current_screen && $enabled_elements['premium-nav-menu'] ) {
+
+			wp_enqueue_style( 'wp-color-picker' );
+
+			wp_enqueue_style(
+				'jquery-fonticonpicker',
+				PREMIUM_ADDONS_URL . 'admin/assets/css/jquery-fonticonpicker.css',
+				array(),
+				PREMIUM_ADDONS_VERSION,
+				'all'
+			);
+
+			wp_enqueue_script(
+				'jquery-fonticonpicker',
+				PREMIUM_ADDONS_URL . 'admin/assets/js/jquery-fonticonpicker.js',
+				array( 'jquery' ),
+				PREMIUM_ADDONS_VERSION,
+				true
+			);
+
+			wp_enqueue_script(
+				'pa-icon-list',
+				PREMIUM_ADDONS_URL . 'admin/assets/js/premium-icons-list.js',
+				array(),
+				PREMIUM_ADDONS_VERSION,
+				true
+			);
+
+			wp_enqueue_script(
+				'mega-content-handler',
+				PREMIUM_ADDONS_URL . 'admin/assets/js/mega-content-handler.js',
+				array( 'jquery' ),
+				PREMIUM_ADDONS_VERSION,
+				true
+			);
+
+			wp_enqueue_script(
+				'menu-editor',
+				PREMIUM_ADDONS_URL . 'admin/assets/js/menu-editor.js',
+				array( 'jquery', 'wp-color-picker' ),
+				PREMIUM_ADDONS_VERSION,
+				true
+			);
+
+			$pa_menu_localized = array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'pa-menu-nonce' ),
+			);
+
+			$menu_content_localized = array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'pa-live-editor' ),
+			);
+
+			wp_localize_script( 'mega-content-handler', 'paMegaContent', $menu_content_localized );
+			wp_localize_script( 'menu-editor', 'paMenuSettings', $pa_menu_localized );
+
+			// menu screen popups.
+			include_once PREMIUM_ADDONS_PATH . 'admin/includes/templates/nav-menu-settings.php';
+		}
+	}
+
+	/**
+	 * Get PA menu item settings.
+	 * Retrieve menu items settings from postmeta table.
+	 *
+	 * @access public
+	 * @since 4.9.4
+	 */
+	public function get_pa_menu_item_settings() {
+
+		check_ajax_referer( 'pa-menu-nonce', 'security' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( 'User is not authorized!' );
+		}
+
+		if ( ! isset( $_POST['item_id'] ) ) {
+			wp_send_json_error( 'Settings are not set!' );
+		}
+
+		$item_settings = json_decode( get_post_meta( $_POST['item_id'], 'pa_megamenu_item_meta', true ) );
+
+		wp_send_json_success( $item_settings );
+	}
+
+	/**
+	 * Save PA menu item settings.
+	 * Save/Update menu items settings in postmeta table.
+	 *
+	 * @access public
+	 * @since 4.9.4
+	 */
+	public function save_pa_menu_item_settings() {
+
+		check_ajax_referer( 'pa-menu-nonce', 'security' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( 'User is not authorized!' );
+		}
+
+		if ( ! isset( $_POST['settings'] ) ) {
+			wp_send_json_error( 'Settings are not set!' );
+		}
+
+		$settings = $_POST['settings'];
+
+		update_post_meta( $settings['item_id'], 'pa_megamenu_item_meta', json_encode( $settings, JSON_UNESCAPED_UNICODE ) );
+
+		wp_send_json_success( 'Item Settings Saved' );
+	}
+
+	/**
+	 * Save Pa Mega Item Content.
+	 * Saves mega content's id in postmeta table.
+	 *
+	 * @access public
+	 * @since 4.9.4
+	 */
+	public function save_pa_mega_item_content() {
+
+		check_ajax_referer( 'pa-live-editor', 'security' );
+
+		if ( ! isset( $_POST['template_id'] ) ) {
+			wp_send_json_error( 'template id is not set!' );
+		}
+
+		if ( ! isset( $_POST['menu_item_id'] ) ) {
+			wp_send_json_error( 'item id is not set!' );
+		}
+
+		$item_id = $_POST['menu_item_id'];
+		$temp_id = $_POST['template_id'];
+
+		update_post_meta( $item_id, 'pa_mega_content_temp', $temp_id );
+
+		wp_send_json_success( 'Item Mega Content Saved' );
+
 	}
 
 	/**

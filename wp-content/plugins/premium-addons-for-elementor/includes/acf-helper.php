@@ -7,9 +7,6 @@
 
 namespace PremiumAddons\Includes;
 
-// Elementor Classes.
-use Elementor\Controls_Manager;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
