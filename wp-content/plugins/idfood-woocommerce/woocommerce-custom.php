@@ -23,6 +23,8 @@ function woocommerce_thankyou_change_order_status($order_id)
     if (!$order_id) return;
     $order = wc_get_order($order_id);
 
+    $product = wc_get_product($order);
+
     $handler_user_id = get_field('handler_user_id', $order_id);
 
     if (empty($handler_user_id)) {
@@ -70,28 +72,46 @@ function find_handler_user_id(int $order_id): int
         return 0;
     }
 
-    $fullStrAddress = $order->get_shipping_address_1() . ' ' . $order->get_shipping_address_2() . ' ' . $order->get_shipping_city() . ' ' . $order->get_shipping_state();
-    $arrChars = explode(' ', $fullStrAddress);
-    write_log($fullStrAddress);
-    write_log($arrChars);
+    $arrAdd1 = explode(' ', $order->get_shipping_address_1());
 
     $user_ids = find_supplier();
     $result = [];
     foreach ($user_ids as $user_id) {
         $customer = new WC_Customer($user_id);
-        $matchCount = 0;
-        write_log(__FILE__ . ': 81');
-        write_log($customer);
-        foreach ($arrChars as $char) {
-            if (strpos($customer->get_shipping_address_1(), $char)) {
-                $matchCount += 1;
-            }
-        }
-        $result[] = array('matchCount' => $matchCount, 'ID' => $user_id);
-    }
 
-    write_log(__FILE__ . ': 91');
-    write_log($result);
+        $matchCount = 0;
+
+        if ($customer->get_billing_state() == $order->get_billing_state()) {
+            $matchCount += 5;
+        }
+
+        if ($customer->get_billing_city() != $order->get_billing_city()) {
+            $matchCount += 10;
+        }
+
+        if ($customer->get_billing_address_2() != $order->get_billing_address_2()) {
+            $matchCount += 15;
+        }
+
+        if ($matchCount == 30) {
+            $matchCountAdd1 = 0;
+            foreach ($arrAdd1 as $char) {
+                if (strpos($customer->get_shipping_address_1(), $char)) {
+                    $matchCountAdd1 += 1;
+                }
+            }
+
+            if ($matchCountAdd1 > sizeof($arrAdd1)) {
+                $matchCountAdd1 = sizeof($arrAdd1) - 1;
+            }
+
+            $matchCount += $matchCountAdd1;
+        }
+
+        if ($matchCount > 0) {
+            $result[] = array('matchCount' => $matchCount, 'ID' => $user_id);
+        }
+    }
 
     if (!empty($result)) {
         usort($result, 'cmp');
@@ -109,11 +129,21 @@ function find_handler_user_id(int $order_id): int
 
 }
 
+/**
+ * To short by matchCount
+ * @param $a
+ * @param $b
+ * @return int
+ */
 function cmp($a, $b)
 {
     return strcmp($b['matchCount'], $a['matchCount']);
 }
 
+/**
+ * Get All supplier
+ * @return array
+ */
 function find_supplier()
 {
     $args = array(
@@ -135,7 +165,7 @@ function find_supplier()
  * Action to create supplier
  *
  */
-add_filter( 'woocommerce_customer_meta_fields', 'supplier_admin_fields' );
+add_filter('woocommerce_customer_meta_fields', 'supplier_admin_fields');
 function supplier_admin_fields($admin_fields)
 {
     if (!isset($_GET['user_id'])) {
@@ -272,3 +302,23 @@ function get_default_wards(WC_Customer $customer)
 
     return $districts;
 }
+
+add_action('edit_user_profile_update', 'update_user_info_bulling_shipping');
+function update_user_info_bulling_shipping($user_id)
+{
+    update_user_meta($user_id, 'billing_last_name', $_POST['billing_last_name']);
+    update_user_meta($user_id, 'billing_address_1', $_POST['shipping_address_1']);
+    update_user_meta($user_id, 'billing_address_2', $_POST['shipping_address_2']);
+    update_user_meta($user_id, 'billing_city', $_POST['shipping_city']);
+    update_user_meta($user_id, 'billing_state', $_POST['shipping_state']);
+    update_user_meta($user_id, 'billing_phone', $_POST['shipping_phone']);
+    update_user_meta($user_id, 'billing_email', $_POST['billing_email']);
+
+    update_user_meta($user_id, 'shipping_last_name', $_POST['shipping_last_name']);
+    update_user_meta($user_id, 'billing_address_1', $_POST['billing_address_1']);
+    update_user_meta($user_id, 'shipping_address_2', $_POST['shipping_address_2']);
+    update_user_meta($user_id, 'shipping_city', $_POST['shipping_city']);
+    update_user_meta($user_id, 'shipping_state', $_POST['shipping_state']);
+    update_user_meta($user_id, 'shipping_phone', $_POST['shipping_phone']);
+}
+
