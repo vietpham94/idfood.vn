@@ -29,7 +29,7 @@ function create_search_form_shortcode()
             <select name="product_cat">
                 <?php foreach ($all_categories as $product_cat): ?>
                     <option value="<?= $product_cat->slug; ?>"
-                        <?= ($_GET["product_cat"] == $product_cat->slug) ? "selected" : ""; ?>>
+                        <?= (isset($_GET["product_cat"]) && $_GET["product_cat"] == $product_cat->slug) ? "selected" : ""; ?>>
                         <?= $product_cat->name; ?>
                     </option>
                 <?php endforeach; ?>

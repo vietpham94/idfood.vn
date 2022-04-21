@@ -45,6 +45,5 @@ function idfood_woocomerce_enqueue($hook) {
         return;
     }
     wp_enqueue_script('idfood_woocomerce_script', plugins_url('assets/js/idfood-woocomerce.js', __FILE__), array('jquery', 'select2'));
-    wp_enqueue_script('devvn_woocomerce_script', plugins_url('assets/js/devvn_tinhthanh.js', __FILE__), array('jquery', 'select2'));
 }
 add_action('admin_enqueue_scripts', 'idfood_woocomerce_enqueue');

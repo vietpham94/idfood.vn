@@ -16,15 +16,19 @@ function add_custom_fields_value_to_order_items($item, $cart_item_key, $values, 
     $order->add_meta_data('_provider', $values['provider']);
 }
 
+add_filter( 'woocommerce_cod_process_payment_order_status', 'set_cod_process_payment_order_status_pending', 10, 2 );
+function set_cod_process_payment_order_status_pending( $status, $order ) {
+    if($order->get_payment_method() == 'cod')
+        return 'pending';
+    return $status;
+}
+
 // After finish order find a provider for order
 add_action('woocommerce_thankyou', 'woocommerce_thankyou_change_order_status', 10, 1);
 function woocommerce_thankyou_change_order_status($order_id)
 {
     if (!$order_id) return;
     $order = wc_get_order($order_id);
-
-    $product = wc_get_product($order);
-
     $handler_user_id = get_field('handler_user_id', $order_id);
 
     if (empty($handler_user_id)) {
@@ -32,17 +36,13 @@ function woocommerce_thankyou_change_order_status($order_id)
         update_field('handler_user_id', $handler_user_id, $order_id);
     }
 
-
     if (empty($handler_user_id)) {
         $handler_user_id = find_handler_user_id($order_id);
         update_field('handler_user_id', $handler_user_id, $order_id);
     }
 
     // Update status to 'mới nhận' with cod payment method
-    if ($order->get_status() == 'processing' && $order->get_payment_method() == 'cod') {
-        $order->update_status('pending');
-        push_order_notification($handler_user_id, $order_id);
-    }
+    push_order_notification($handler_user_id, $order_id);
 }
 
 // Change status order and push notification to provider
@@ -72,9 +72,37 @@ function find_handler_user_id(int $order_id): int
         return 0;
     }
 
+    // Find supplier nearest
+    $result = smart_find_handler($order);
+    if (!empty($result)) {
+        write_log(__FILE__ . ':124 find_handler_user_id ' . $result[0]['ID']);
+        return $result[0]['ID'];
+    }
+
+    // Get Shop Manager for order of supplier
+    $args = array('role' => 'shop_manager', 'orderby' => 'user_nicename', 'order' => 'ASC');
+    $users = get_users($args);
+    if (!empty($users)) {
+        return $users[0]->id;
+    }
+
+    // Don't have anyone to handler order
+    return 0;
+
+}
+
+function smart_find_handler(WC_Order $order): array
+{
+    $items = $order->get_items();
+    foreach ($items as $item) {
+        $product = $item->get_product();
+    }
+    $user_ids = find_supplier($product);
+    write_log(__FILE__ . ': 97');
+    write_log($user_ids);
+
     $arrAdd1 = explode(' ', $order->get_shipping_address_1());
 
-    $user_ids = find_supplier();
     $result = [];
     foreach ($user_ids as $user_id) {
         $customer = new WC_Customer($user_id);
@@ -112,21 +140,14 @@ function find_handler_user_id(int $order_id): int
             $result[] = array('matchCount' => $matchCount, 'ID' => $user_id);
         }
     }
+    write_log(__FILE__ . ': 139');
+    write_log($result);
 
     if (!empty($result)) {
         usort($result, 'cmp');
-        write_log(__FILE__ . ':124 find_handler_user_id ' . $result[0]['ID']);
-        return $result[0]['ID'];
     }
 
-    $args = array('role' => 'shop_manager', 'orderby' => 'user_nicename', 'order' => 'ASC');
-    $users = get_users($args);
-    if (!empty($users)) {
-        return $users[0]->id;
-    }
-
-    return 0;
-
+    return $result;
 }
 
 /**
@@ -144,20 +165,49 @@ function cmp($a, $b)
  * Get All supplier
  * @return array
  */
-function find_supplier()
+function find_supplier(WC_Product $product): array
 {
-    $args = array(
-        'role' => 'supplier',
-        'order' => 'ASC'
-    );
+    $supplier_ids = get_field('cac_nha_cung_cap', $product->get_id());
+    write_log(__FILE__ . ': 167');
+    write_log($supplier_ids);
 
-    $users = get_users($args);
-    $user_ids = array();
-    foreach ($users as $user) {
-        $user_ids[] = $user->ID;
+    $suppliers = get_posts(array(
+        'post_type' => 'supplier',
+        'meta_query' => array(
+            'key' => 'supplier_user',
+            'value' => $supplier_ids,
+            'compare' => 'IN',
+        )
+    ));
+
+    write_log(__FILE__ . ': 192');
+    write_log($suppliers);
+
+    $supplier_ids = array();
+    foreach ($suppliers as $supplier) {
+        $supplier_products = get_field('supplier_products', $supplier->ID);
+        if (empty($supplier_products)) {
+            continue;
+        }
+
+        write_log(__FILE__ . ': 189');
+        write_log($supplier_products);
+
+        foreach ($supplier_products as $product_sku) {
+            if ($product_sku['supplier_product'] != $product->get_id()) {
+                continue;
+            }
+
+            if ($product_sku['supplier_num_sku'] == 0) {
+                break;
+            }
+
+            $supplier_ids[] = get_field('supplier_user', $supplier);
+            break;
+        }
     }
 
-    return $user_ids;
+    return $supplier_ids;
 }
 
 /**
@@ -263,7 +313,7 @@ function supplier_admin_fields($admin_fields)
     return $admin_fields;
 }
 
-function get_default_districts(WC_Customer $customer)
+function get_default_districts(WC_Customer $customer): array
 {
     include 'cities/quan_huyen.php';
 
@@ -283,7 +333,7 @@ function get_default_districts(WC_Customer $customer)
     return $quan_huyen_;
 }
 
-function get_default_wards(WC_Customer $customer)
+function get_default_wards(WC_Customer $customer): array
 {
     include 'cities/xa_phuong_thitran.php';
 
