@@ -13,12 +13,15 @@ function add_custom_fields_value_to_cart_item($cart_item_data)
 add_action('woocommerce_checkout_create_order_line_item', 'add_custom_fields_value_to_order_items', 10, 4);
 function add_custom_fields_value_to_order_items($item, $cart_item_key, $values, WC_Order $order)
 {
-    $order->add_meta_data('_provider', $values['provider']);
+    if (isset($values['provider'])) {
+        $order->add_meta_data('_provider', $values['provider']);
+    }
 }
 
-add_filter( 'woocommerce_cod_process_payment_order_status', 'set_cod_process_payment_order_status_pending', 10, 2 );
-function set_cod_process_payment_order_status_pending( $status, $order ) {
-    if($order->get_payment_method() == 'cod')
+add_filter('woocommerce_cod_process_payment_order_status', 'set_cod_process_payment_order_status_pending', 10, 2);
+function set_cod_process_payment_order_status_pending($status, $order)
+{
+    if ($order->get_payment_method() == 'cod')
         return 'pending';
     return $status;
 }
@@ -27,6 +30,11 @@ function set_cod_process_payment_order_status_pending( $status, $order ) {
 add_action('woocommerce_thankyou', 'woocommerce_thankyou_change_order_status', 10, 1);
 function woocommerce_thankyou_change_order_status($order_id)
 {
+    $background_process = new WC_IdFood_Background_Process(find_supplier_for_order_process($order_id));
+    $background_process->save()->dispatch();
+}
+
+function find_supplier_for_order_process($order_id) {
     if (!$order_id) return;
     $order = wc_get_order($order_id);
     $handler_user_id = get_field('handler_user_id', $order_id);
@@ -41,7 +49,6 @@ function woocommerce_thankyou_change_order_status($order_id)
         update_field('handler_user_id', $handler_user_id, $order_id);
     }
 
-    // Update status to 'mới nhận' with cod payment method
     push_order_notification($handler_user_id, $order_id);
 }
 
@@ -98,8 +105,6 @@ function smart_find_handler(WC_Order $order): array
         $product = $item->get_product();
     }
     $user_ids = find_supplier($product);
-    write_log(__FILE__ . ': 97');
-    write_log($user_ids);
 
     $arrAdd1 = explode(' ', $order->get_shipping_address_1());
 
@@ -140,10 +145,8 @@ function smart_find_handler(WC_Order $order): array
             $result[] = array('matchCount' => $matchCount, 'ID' => $user_id);
         }
     }
-    write_log(__FILE__ . ': 139');
-    write_log($result);
 
-    if (!empty($result)) {
+    if (!empty($result) && sizeof($result) > 1) {
         usort($result, 'cmp');
     }
 

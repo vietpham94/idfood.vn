@@ -34,6 +34,7 @@ function on_deactivation()
 
 include_once(plugin_dir_path(__FILE__) . 'firebase.php');
 include_once(plugin_dir_path(__FILE__) . 'WC_REST_Custom_Controller.php');
+include_once(plugin_dir_path(__FILE__) . 'WC_IdFood_Background_Process.php');
 include_once(plugin_dir_path(__FILE__) . 'woocommerce-custom.php');
 
 /**

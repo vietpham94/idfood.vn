@@ -24,5 +24,6 @@ npm-debug.log*
 /.sourcemaps
 /.versions
 /.vscode
+vendor
 
 wp-config.php
