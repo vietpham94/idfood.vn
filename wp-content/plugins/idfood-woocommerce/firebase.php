@@ -62,15 +62,16 @@ function push_order_notification(int $handler_user_id, int $order_id, $notificat
     $notification_data = array(
         'post_title' => $notification['title'],
         'post_type' => 'notification',
-        'post_content' => $notification['body']
+        'post_content' => $notification['body'],
+        'post_status' => 'publish'
     );
     $notification_id = wp_insert_post($notification_data);
 
     if ($notification_id) {
-        update_field('order_id', $order_id, [$notification_id]);
-        update_field('receiver_id', $handler_user_id, [$notification_id]);
-        update_field('status', 0, [$notification_id]);
-        update_field('type', 'order', [$notification_id]);
+        update_field('order_id', $order_id, $notification_id);
+        update_field('receiver_id', $handler_user_id, $notification_id);
+        update_field('status', 0, $notification_id);
+        update_field('type', 'order', $notification_id);
     }
 }
 

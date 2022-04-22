@@ -34,8 +34,9 @@ function woocommerce_thankyou_change_order_status($order_id)
     $background_process->save()->dispatch();
 }
 
-function find_supplier_for_order_process($order_id) {
-    if (!$order_id) return;
+function find_supplier_for_order_process($order_id)
+{
+    if (empty($order_id)) return;
     $order = wc_get_order($order_id);
     $handler_user_id = get_field('handler_user_id', $order_id);
 
@@ -56,11 +57,118 @@ function find_supplier_for_order_process($order_id) {
 add_action('woocommerce_order_status_changed', 'action_woocommerce_order_status_changed', 10, 4);
 function action_woocommerce_order_status_changed($order_id, $this_status_transition_from, $this_status_transition_to, $order)
 {
-    if (!$order_id) return;
+    if (empty($order_id)) return;
     $handler_user_id = get_field('handler_user_id', $order_id);
 
     if ($this_status_transition_from == 'on-hold' && $this_status_transition_to == 'pending') {
-        push_order_notification($handler_user_id, $order_id);
+        $background_process = new WC_IdFood_Background_Process(push_order_notification($handler_user_id, $order_id));
+        $background_process->save()->dispatch();
+    }
+}
+
+// Process order pending to in progress
+add_action('woocommerce_order_status_processing', 'action_woocommerce_order_processing', 10, 4);
+function action_woocommerce_order_processing($order_id)
+{
+    if (empty($order_id)) return;
+
+    $background_process = new WC_IdFood_Background_Process(updateSupplierStock($order_id));
+    $background_process->save()->dispatch();
+}
+
+add_action('woocommerce_order_status_changed', 'action_woocommerce_order_increase_processing', 10, 4);
+function action_woocommerce_order_increase_processing($order_id, $this_status_transition_from, $this_status_transition_to, $order)
+{
+    if (empty($order_id)) return;
+
+    if ($this_status_transition_from == 'processing' && $this_status_transition_to == 'pending') {
+        $background_process = new WC_IdFood_Background_Process(updateSupplierStock($order_id, true));
+        $background_process->save()->dispatch();
+    }
+}
+
+function updateSupplierStock($order_id, $increase = false)
+{
+    if (empty($order_id)) {
+        write_log(__FILE__ . ': 94 order_id is empty');
+        return;
+    }
+
+    $order = wc_get_order($order_id);
+    $handler_user_id = get_field('handler_user_id', $order_id);
+    if (empty($order) || empty($handler_user_id)) {
+        write_log(__FILE__ . ': 101 handler_user_id is empty');
+        return;
+    }
+
+    $items = $order->get_items();
+    $quantity = 0;
+    foreach ($items as $item) {
+        $product = $item->get_product();
+        $quantity = $item->get_quantity();
+    }
+
+    if (empty($product)) {
+        write_log(__FILE__ . ': 113 product is empty');
+        return;
+    }
+
+    $suppliers = get_posts(array(
+        'post_type' => 'supplier',
+        'meta_key' => 'supplier_user',
+        'meta_value' => $handler_user_id,
+    ));
+    write_log(__FILE__ . ': 122');
+    write_log($suppliers);
+
+    foreach ($suppliers as $supplier) {
+        if (get_field('supplier_user', $supplier->ID) !== $handler_user_id) {
+            continue;
+        }
+
+        $products_stock = get_field('supplier_products', $supplier->ID);
+        if (empty($products_stock)) {
+            write_log(__FILE__ . ': 132 products_stock is empty');
+            return;
+        }
+
+        write_log(__FILE__ . ': 136');
+        write_log($products_stock);
+
+        foreach ($products_stock as $key => $stock_row) {
+            if ($stock_row['supplier_product'] != $product->get_id()) {
+                continue;
+            }
+
+            if ($increase) {
+                $stock_row['supplier_num_sku'] = $stock_row['supplier_num_sku'] + $quantity;
+            } else {
+                $stock_row['supplier_num_sku'] = $stock_row['supplier_num_sku'] - $quantity;
+            }
+
+            write_log(__FILE__ . ': 150');
+            write_log($stock_row);
+            write_log($key);
+
+            $products_stock[$key] = $stock_row;
+            break;
+        }
+
+        update_field('supplier_products', $products_stock, $supplier->ID);
+        break;
+    }
+}
+
+add_action('woocommerce_order_status_completed', 'action_woocommerce_order_completed', 10, 4);
+function action_woocommerce_order_payment_complete($order_id)
+{
+    if (empty($order_id)) return;
+
+    $handler_user_id = get_field('handler_user_id', $order_id);
+    $user_data = get_userdata($handler_user_id);
+    if (!in_array('shop_admin', $user_data->roles)) {
+        $background_process = new WC_IdFood_Background_Process(wc_increase_stock_levels($order_id));
+        $background_process->save()->dispatch();
     }
 }
 
@@ -129,6 +237,10 @@ function smart_find_handler(WC_Order $order): array
         if ($matchCount == 30) {
             $matchCountAdd1 = 0;
             foreach ($arrAdd1 as $char) {
+                if (empty($char)) {
+                    continue;
+                }
+
                 if (strpos($customer->get_shipping_address_1(), $char)) {
                     $matchCountAdd1 += 1;
                 }
@@ -171,9 +283,6 @@ function cmp($a, $b)
 function find_supplier(WC_Product $product): array
 {
     $supplier_ids = get_field('cac_nha_cung_cap', $product->get_id());
-    write_log(__FILE__ . ': 167');
-    write_log($supplier_ids);
-
     $suppliers = get_posts(array(
         'post_type' => 'supplier',
         'meta_query' => array(
@@ -183,18 +292,12 @@ function find_supplier(WC_Product $product): array
         )
     ));
 
-    write_log(__FILE__ . ': 192');
-    write_log($suppliers);
-
     $supplier_ids = array();
     foreach ($suppliers as $supplier) {
         $supplier_products = get_field('supplier_products', $supplier->ID);
         if (empty($supplier_products)) {
             continue;
         }
-
-        write_log(__FILE__ . ': 189');
-        write_log($supplier_products);
 
         foreach ($supplier_products as $product_sku) {
             if ($product_sku['supplier_product'] != $product->get_id()) {
