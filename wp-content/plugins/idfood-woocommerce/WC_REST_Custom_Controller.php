@@ -76,6 +76,24 @@ class WC_REST_Custom_Controller
 
         register_rest_route(
             $this->namespace,
+            '/dns',
+            array(
+                'methods' => 'GET',
+                'callback' => array($this, 'get_dns'),
+            )
+        );
+
+        register_rest_route(
+            $this->namespace,
+            '/provinces',
+            array(
+                'methods' => 'GET',
+                'callback' => array($this, 'get_provinces'),
+            )
+        );
+
+        register_rest_route(
+            $this->namespace,
             '/cities',
             array(
                 'methods' => 'GET',
@@ -85,19 +103,10 @@ class WC_REST_Custom_Controller
 
         register_rest_route(
             $this->namespace,
-            '/add-my-customer',
-            array(
-                'methods' => 'POST',
-                'callback' => array($this, 'create_customer'),
-            )
-        );
-
-        register_rest_route(
-            $this->namespace,
-            '/dns',
+            '/wards',
             array(
                 'methods' => 'GET',
-                'callback' => array($this, 'get_dns'),
+                'callback' => array($this, 'get_wards'),
             )
         );
     }
@@ -402,85 +411,6 @@ class WC_REST_Custom_Controller
         }
     }
 
-    public function get_cities(): array
-    {
-        $cities = array(
-            "HANOI" => "Hà Nội",
-            "HOCHIMINH" => "Hồ Chí Minh",
-            "ANGIANG" => "An Giang",
-            "BACGIANG" => "Bắc Giang",
-            "BACKAN" => "Bắc Kạn",
-            "BACLIEU" => "Bạc Liêu",
-            "BACNINH" => "Bắc Ninh",
-            "BARIAVUNGTAU" => "Bà Rịa - Vũng Tàu",
-            "BENTRE" => "Bến Tre",
-            "BINHDINH" => "Bình Định",
-            "BINHDUONG" => "Bình Dương",
-            "BINHPHUOC" => "Bình Phước",
-            "BINHTHUAN" => "Bình Thuận",
-            "CAMAU" => "Cà Mau",
-            "CANTHO" => "Cần Thơ",
-            "CAOBANG" => "Cao Bằng",
-            "DAKLAK" => "Đắk Lắk",
-            "DAKNONG" => "Đắk Nông",
-            "DANANG" => "Đà Nẵng",
-            "DIENBIEN" => "Điện Biên",
-            "DONGNAI" => "Đồng Nai",
-            "DONGTHAP" => "Đồng Tháp",
-            "GIALAI" => "Gia Lai",
-            "HAGIANG" => "Hà Giang",
-            "HAIDUONG" => "Hải Dương",
-            "HAIPHONG" => "Hải Phòng",
-            "HANAM" => "Hà Nam",
-            "HATINH" => "Hà Tĩnh",
-            "HAUGIANG" => "Hậu Giang",
-            "HOABINH" => "Hòa Bình",
-            "HUNGYEN" => "Hưng Yên",
-            "KHANHHOA" => "Khánh Hòa",
-            "KIENGIANG" => "Kiên Giang",
-            "KONTUM" => "Kon Tum",
-            "LAICHAU" => "Lai Châu",
-            "LAMDONG" => "Lâm Đồng",
-            "LANGSON" => "Lạng Sơn",
-            "LAOCAI" => "Lào Cai",
-            "LONGAN" => "Long An",
-            "NAMDINH" => "Nam Định",
-            "NGHEAN" => "Nghệ An",
-            "NINHBINH" => "Ninh Bình",
-            "NINHTHUAN" => "Ninh Thuận",
-            "PHUTHO" => "Phú Thọ",
-            "PHUYEN" => "Phú Yên",
-            "QUANGBINH" => "Quảng Bình",
-            "QUANGNAM" => "Quảng Nam",
-            "QUANGNGAI" => "Quảng Ngãi",
-            "QUANGNINH" => "Quảng Ninh",
-            "QUANGTRI" => "Quảng Trị",
-            "SOCTRANG" => "Sóc Trăng",
-            "SONLA" => "Sơn La",
-            "TAYNINH" => "Tây Ninh",
-            "THAIBINH" => "Thái Bình",
-            "THAINGUYEN" => "Thái Nguyên",
-            "THANHHOA" => "Thanh Hóa",
-            "THUATHIENHUE" => "Thừa Thiên Huế",
-            "TIENGIANG" => "Tiền Giang",
-            "TRAVINH" => "Trà Vinh",
-            "TUYENQUANG" => "Tuyên Quang",
-            "VINHLONG" => "Vĩnh Long",
-            "VINHPHUC" => "Vĩnh Phúc",
-            "YENBAI" => "Yên Bái",
-        );
-
-        $result = array();
-        foreach ($cities as $key => $value) {
-            $result[] = array(
-                "value" => $key,
-                "title" => $value
-            );
-        }
-
-        return $result;
-    }
-
     public function get_customers(WP_REST_Request $request)
     {
         if (get_current_user_id() == 0) {
@@ -493,9 +423,6 @@ class WC_REST_Custom_Controller
             );
         }
 
-        global $wpdb;
-        $table_customer = $wpdb->prefix . 'wc_customer_lookup';
-        $table_usermeta = $wpdb->prefix . 'usermeta';
         $provider_id = get_current_user_id();
 
         $offset = 0;
@@ -503,74 +430,89 @@ class WC_REST_Custom_Controller
             $offset = ($request->get_param('page') - 1) * 10;
         }
 
-        $sql_customers = "SELECT * FROM $table_customer WHERE provider_id=$provider_id ";
+        $query = new WP_User_Query(apply_filters(
+            'woocommerce_customer_search_customers',
+            array(
+                'fields' => 'ID',
+                'offset' => $offset,
+                'meta_query' => array(
+                    'relation' => 'AND',
+                    array(
+                        'key' => 'create_by',
+                        'value' => $provider_id,
+                        'compare' => 'LIKE',
+                    ),
+                    array(array(
+                        'relation' => 'OR',
+                        array(
+                            'key' => 'last_name',
+                            'value' => $request->get_param('search'),
+                            'compare' => 'LIKE',
+                        ),
+                        array(
+                            'key' => 'first_name',
+                            'value' => $request->get_param('search'),
+                            'compare' => 'LIKE',
+                        )
+                    )),
+                ),
+                'meta_query'
+            )
+        ));
+        $customer_ids = $query->get_results();
 
-        if (!empty($request->get_param('search'))) {
-            $search = $request->get_param('search');
-            $sql_customers .= "AND (username LIKE '%$search%' OR first_name LIKE '%$search%' OR last_name LIKE '%$search%' OR address LIKE '%$search%')";
-        }
-
-        $args['meta_key'] = 'handler_user_id';
-        $args['meta_value'] = get_current_user_id();
-        $loop = wc_get_orders($args);
-        $customer_ids = array();
-        foreach ($loop as $itemLoop) {
-            $order = wc_get_order($itemLoop->get_id());
-            if ($order->get_customer_id() > 0) {
-                $customer_ids[] = $order->get_customer_id();
-            }
-        }
-
-        if (sizeof($customer_ids) > 0) {
-            $include_ids = implode(",", $customer_ids);
-            $sql_customers .= "OR customer_id IN($include_ids)";
-        }
-
-        $sql_customers .= " LIMIT 10 OFFSET $offset";
-
-        write_log(__FILE__ . ':520 ' . $sql_customers);
-
-        $customer_lockup = $wpdb->get_results($sql_customers, "ARRAY_A");
         $customers = array();
-        foreach ($customer_lockup as $customer) {
-            if (!empty($customer['user_id'])) {
-                $user_id = $customer['user_id'];
-                $sql_usermeta = "SELECT * FROM $table_usermeta WHERE user_id=$user_id";
-                $meta_user = $wpdb->get_results($sql_usermeta, "ARRAY_A");
-                $user_address = $this->findObjectByKey('meta_key', 'billing_address_1', $meta_user);
-                $user_city = $this->findObjectByKey('meta_key', 'billing_city', $meta_user);
-                $customer['address'] = ($user_address ? $user_address['meta_value'] : '') . ', ' . ($user_city ? $user_city['meta_value'] : '');
-                $user_phone = $this->findObjectByKey('meta_key', 'billing_phone', $meta_user);
-                $customer['phone'] = $user_phone ? $user_phone['meta_value'] : '';
-                $customer['provider_id'] = $provider_id;
-            }
-            $customers[] = $customer;
+        foreach ($customer_ids as $user_id) {
+            $customer = new WC_Customer($user_id);
+            $last_order = $customer->get_last_order();
+            $customer_data = array(
+                'id' => $customer->get_id(),
+                'created_at' => $this->format_datetime($customer->get_date_created() ? $customer->get_date_created()->getTimestamp() : 0), // API gives UTC times.
+                'last_update' => $this->format_datetime($customer->get_date_modified() ? $customer->get_date_modified()->getTimestamp() : 0), // API gives UTC times.
+                'email' => $customer->get_email(),
+                'first_name' => $customer->get_first_name(),
+                'last_name' => $customer->get_last_name(),
+                'username' => $customer->get_username(),
+                'role' => $customer->get_role(),
+                'last_order_id' => is_object($last_order) ? $last_order->get_id() : null,
+                'last_order_date' => is_object($last_order) ? $this->format_datetime($last_order->get_date_created() ? $last_order->get_date_created()->getTimestamp() : 0) : null, // API gives UTC times.
+                'orders_count' => $customer->get_order_count(),
+                'total_spent' => wc_format_decimal($customer->get_total_spent(), 2),
+                'avatar_url' => $customer->get_avatar_url(),
+                'billing' => array(
+                    'first_name' => $customer->get_billing_first_name(),
+                    'last_name' => $customer->get_billing_last_name(),
+                    'company' => $customer->get_billing_company(),
+                    'address_1' => $customer->get_billing_address_1(),
+                    'address_2' => $customer->get_billing_address_2(),
+                    'city' => $customer->get_billing_city(),
+                    'state' => $customer->get_billing_state(),
+                    'postcode' => $customer->get_billing_postcode(),
+                    'country' => $customer->get_billing_country(),
+                    'email' => $customer->get_billing_email(),
+                    'phone' => $customer->get_billing_phone(),
+                ),
+                'shipping' => array(
+                    'first_name' => $customer->get_shipping_first_name(),
+                    'last_name' => $customer->get_shipping_last_name(),
+                    'company' => $customer->get_shipping_company(),
+                    'address_1' => $customer->get_shipping_address_1(),
+                    'address_2' => $customer->get_shipping_address_2(),
+                    'city' => $customer->get_shipping_city(),
+                    'state' => $customer->get_shipping_state(),
+                    'postcode' => $customer->get_shipping_postcode(),
+                    'country' => $customer->get_shipping_country(),
+                ),
+                'meta_data' => $customer->get_meta_data(),
+            );
+            $customers[] = $customer_data;
         }
 
         return $customers;
     }
 
-    public function create_customer(WP_REST_Request $request)
+    public function get_dns(WP_REST_Request $request)
     {
-        if (get_current_user_id() == 0) {
-            return new WP_Error(
-                'woocommerce_rest_cannot_view',
-                'Xin lỗi, xảy ra lỗi xác thực thông tin người dùng. Vui lòng kiểm tra thông tin và đăng nhập lại.',
-                array(
-                    'status' => 401,
-                )
-            );
-        }
-
-        global $wpdb;
-        $data = $request->get_params();
-        $data['provider_id'] = get_current_user_id();
-        $table_customer = $wpdb->prefix . 'wc_customer_lookup';
-        $wpdb->insert($table_customer, $data);
-        return $data;
-    }
-
-    public function get_dns(WP_REST_Request $request) {
         if (empty($request->get_param('prefix'))) {
             return new WP_Error(
                 'dns_get_domain',
@@ -582,10 +524,10 @@ class WC_REST_Custom_Controller
         }
 
         $posts = get_posts(array(
-            'numberposts'	=> 1,
-            'post_type'		=> 'dns-domain',
-            'meta_key'		=> 'prefix',
-            'meta_value'	=> $request->get_param('prefix')
+            'numberposts' => 1,
+            'post_type' => 'dns-domain',
+            'meta_key' => 'prefix',
+            'meta_value' => $request->get_param('prefix')
         ));
 
         if (empty($posts)) {
@@ -617,6 +559,95 @@ class WC_REST_Custom_Controller
         return $result;
     }
 
+    public function get_provinces(WP_REST_Request $request)
+    {
+        global $tinh_thanhpho;
+        if (empty($request->get_param('id'))) {
+            $result = array();
+            foreach ($tinh_thanhpho as $key => $title) {
+                $result[] = array(
+                    'key' => $key,
+                    'title' => $title
+                );
+            }
+            return $result;
+        } else {
+            return array($request->get_param('id') => $tinh_thanhpho[$request->get_param('id')]);
+        }
+    }
+
+    public function get_cities(WP_REST_Request $request): array
+    {
+        if (empty($request->get_param('provinceId'))) {
+            return new WP_Error(
+                'Validation',
+                'Vui lòng truyền lên mã của tỉnh cần lấy dánh sách quận huyện',
+                array(
+                    'status' => 404,
+                )
+            );
+        }
+
+        include 'cities/quan_huyen.php';
+
+        if (empty($request->get_param('id'))) {
+            $result = array();
+            foreach ($quan_huyen as $value) {
+                if ($value['matp'] != $request->get_param('provinceId')) {
+                    continue;
+                }
+
+                $result[] = $value;
+            }
+
+            return $result;
+        } else {
+            foreach ($quan_huyen as $value) {
+                if ($value['matp'] == $request->get_param('provinceId') && $value['maqh'] == $request->get_param('id')) {
+                    return $value;
+                }
+            }
+        }
+
+        return array();
+    }
+
+    public function get_wards(WP_REST_Request $request): array
+    {
+        if (empty($request->get_param('cityId'))) {
+            return new WP_Error(
+                'Validation',
+                'Vui lòng truyền lên mã của tỉnh cần lấy dánh sách quận huyện',
+                array(
+                    'status' => 404,
+                )
+            );
+        }
+
+        include 'cities/xa_phuong_thitran.php';
+
+        if (empty($request->get_param('id'))) {
+            $result = array();
+            foreach ($xa_phuong_thitran as $value) {
+                if ($value['maqh'] != $request->get_param('cityId')) {
+                    continue;
+                }
+
+                $result[] = $value;
+            }
+
+            return $result;
+        } else {
+            foreach ($xa_phuong_thitran as $value) {
+                if ($value['maqh'] == $request->get_param('cityId') && $value['xaid'] == $request->get_param('id')) {
+                    return $value;
+                }
+            }
+        }
+
+        return array();
+    }
+
     private function findObjectByKey($key, $value, $data = array())
     {
         foreach ($data as $element) {
@@ -625,6 +656,42 @@ class WC_REST_Custom_Controller
             }
         }
         return false;
+    }
+
+    private function format_datetime($timestamp, $convert_to_utc = false, $convert_to_gmt = false)
+    {
+        if ($convert_to_gmt) {
+            if (is_numeric($timestamp)) {
+                $timestamp = date('Y-m-d H:i:s', $timestamp);
+            }
+
+            $timestamp = get_gmt_from_date($timestamp);
+        }
+
+        if ($convert_to_utc) {
+            $timezone = new DateTimeZone(wc_timezone_string());
+        } else {
+            $timezone = new DateTimeZone('UTC');
+        }
+
+        try {
+
+            if (is_numeric($timestamp)) {
+                $date = new DateTime("@{$timestamp}");
+            } else {
+                $date = new DateTime($timestamp, $timezone);
+            }
+
+            // convert to UTC by adjusting the time based on the offset of the site's timezone
+            if ($convert_to_utc) {
+                $date->modify(-1 * $date->getOffset() . ' seconds');
+            }
+        } catch (Exception $e) {
+
+            $date = new DateTime('@0');
+        }
+
+        return $date->format('Y-m-d\TH:i:s\Z');
     }
 }
 

@@ -50,6 +50,19 @@ function find_supplier_for_order_process($order_id)
         update_field('handler_user_id', $handler_user_id, $order_id);
     }
 
+    $customer = new WC_Customer($order->get_customer_id());
+    $create_by = $handler_user_id;
+    $meta_create_by = $customer->get_meta('create_by');
+    if (!empty($meta_create_by)) {
+        $create_by .= ', ' . $meta_create_by;
+    }
+
+    $customer->update_meta_data('create_by', $create_by);
+    $customer->save();
+
+    write_log(__FILE__ . ':69 ');
+    write_log($customer->get_meta_data());
+
     push_order_notification($handler_user_id, $order_id);
 }
 
