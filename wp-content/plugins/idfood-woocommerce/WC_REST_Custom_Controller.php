@@ -109,6 +109,15 @@ class WC_REST_Custom_Controller
                 'callback' => array($this, 'get_wards'),
             )
         );
+
+        register_rest_route(
+            $this->namespace,
+            '/suppliers',
+            array(
+                'methods' => 'GET',
+                'callback' => array($this, 'get_suppliers'),
+            )
+        );
     }
 
     public function get_orders(WP_REST_Request $request)
@@ -587,7 +596,7 @@ class WC_REST_Custom_Controller
                 )
             );
         }
-
+        $quan_huyen = array();
         include 'cities/quan_huyen.php';
 
         if (empty($request->get_param('id'))) {
@@ -624,6 +633,7 @@ class WC_REST_Custom_Controller
             );
         }
 
+        $xa_phuong_thitran = array();
         include 'cities/xa_phuong_thitran.php';
 
         if (empty($request->get_param('id'))) {
@@ -646,6 +656,42 @@ class WC_REST_Custom_Controller
         }
 
         return array();
+    }
+
+    public function get_suppliers(WP_REST_Request $request)
+    {
+        if (get_current_user_id() == 0) {
+            return new WP_Error(
+                'woocommerce_rest_cannot_view',
+                'Xin lỗi, xảy ra lỗi xác thực thông tin người dùng. Vui lòng kiểm tra thông tin và đăng nhập lại.',
+                array(
+                    'status' => 401,
+                )
+            );
+        }
+
+        $args = array(
+            'post_type' => 'supplier',
+            'meta_key' => 'supplier_user',
+            'meta_value' => get_current_user_id()
+        );
+
+        $suppliers = get_posts($args);
+
+        if (sizeof($suppliers) > 0) {
+            $supplier = (array)$suppliers[0];
+            $supplier['stock'] = array();
+            $stocks = get_field('supplier_products', $suppliers[0]->ID);
+            foreach ($stocks as $stock) {
+                $data = (array)$stock;
+                $data['_woo_uom_input'] = get_post_meta($stock['supplier_product']->ID, '_woo_uom_input');
+                $data['product_image'] = get_the_post_thumbnail_url($stock['supplier_product']->ID);
+                $supplier['stock'][] = $data;
+            }
+            return $supplier;
+        }
+
+        return null;
     }
 
     private function findObjectByKey($key, $value, $data = array())
