@@ -127,7 +127,7 @@ class Premium_Nav_Menu extends Widget_Base {
 	 * @return string Widget keywords.
 	 */
 	public function get_keywords() {
-		return array( 'nav', 'menu', 'mega', 'navigation' );
+		return array( 'nav', 'menu', 'mega', 'navigation', 'mega menu' );
 	}
 
 	/**
@@ -1002,8 +1002,9 @@ class Premium_Nav_Menu extends Widget_Base {
 						'step' => 0.1,
 					),
 				),
+				'description' => 'Default is 0.5s',
 				'selectors'   => array(
-					'{{WRAPPER}} .premium-sub-menu, {{WRAPPER}} .premium-mega-content-container' => 'transition: {{SIZE}}s all ease-in-out;',
+					'{{WRAPPER}} .premium-sub-menu, {{WRAPPER}} .premium-mega-content-container' => 'transition-duration: {{SIZE}}s;',
 				),
 				'condition'   => array(
 					'pa_nav_menu_layout' => array( 'hor', 'ver' ),
@@ -1025,6 +1026,7 @@ class Premium_Nav_Menu extends Widget_Base {
 						'step' => 0.1,
 					),
 				),
+				'description' => 'Default is 0.1s',
 				'selectors'   => array(
 					'{{WRAPPER}} .premium-sub-menu, {{WRAPPER}} .premium-mega-content-container' => 'transition-delay: {{SIZE}}s;',
 				),
@@ -1065,6 +1067,41 @@ class Premium_Nav_Menu extends Widget_Base {
 					'{{WRAPPER}}.premium-ham-dropdown .premium-main-mobile-menu, {{WRAPPER}}.premium-nav-dropdown .premium-main-mobile-menu' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.premium-ham-slide .premium-mobile-menu-outer-container, {{WRAPPER}}.premium-nav-slide .premium-mobile-menu-outer-container' => 'width: {{SIZE}}{{UNIT}}; transform:translateX(-{{SIZE}}{{UNIT}} );',
 				),
+				'condition'   => array(
+					'pa_toggle_full!' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
+			'pa_toggle_full',
+			array(
+				'label'       => __( 'Full Width', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::SWITCHER,
+				'render_type' => 'template',
+				'conditions'  => array(
+					'relation' => 'or',
+					'terms'    => array(
+						array(
+							'name'  => 'pa_nav_menu_layout',
+							'value' => 'dropdown',
+						),
+						array(
+							'relation' => 'and',
+							'terms'    => array(
+								array(
+									'name'  => 'pa_mobile_menu_layout',
+									'value' => 'dropdown',
+								),
+								array(
+									'name'     => 'pa_nav_menu_layout',
+									'operator' => 'in',
+									'value'    => array( 'hor', 'ver' ),
+								),
+							),
+						),
+					),
+				),
 			)
 		);
 
@@ -1074,12 +1111,29 @@ class Premium_Nav_Menu extends Widget_Base {
 				'label'     => __( 'Breakpoint', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SELECT,
 				'options'   => array(
-					'1024' => 'Tablet (<1025)',
-					'676'  => 'Mobile (<768)',
+					'1024'   => __( 'Tablet (<1025)', 'premium-addons-for-elementor' ),
+					'676'    => __( 'Mobile (<768)', 'premium-addons-for-elementor' ),
+					'custom' => __( 'Custom', 'premium-addons-for-elementor' ),
 				),
 				'default'   => '1024',
 				'condition' => array(
 					'pa_nav_menu_layout' => array( 'hor', 'ver' ),
+				),
+			)
+		);
+
+		$this->add_control(
+			'pa_custom_breakpoint',
+			array(
+				'label'       => __( 'Custom Breakpoint (px)', 'premium-addons-for-elementor' ),
+				'type'        => Controls_Manager::NUMBER,
+				'min'         => 0,
+				'max'         => 2000,
+				'step'        => 5,
+				'description' => 'Use this option to control when to turn your menu into a toggle menu, Default is 1025',
+				'condition'   => array(
+					'pa_nav_menu_layout'        => array( 'hor', 'ver' ),
+					'pa_mobile_menu_breakpoint' => 'custom',
 				),
 			)
 		);
@@ -1102,13 +1156,13 @@ class Premium_Nav_Menu extends Widget_Base {
 			)
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'pa_mobile_toggle_pos',
 			array(
 				'label'     => __( 'Toggle Button Position', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::CHOOSE,
 				'options'   => array(
-					'left'   => array(
+					$align_left   => array(
 						'title' => __( 'Left', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-h-align-left',
 					),
@@ -1116,7 +1170,7 @@ class Premium_Nav_Menu extends Widget_Base {
 						'title' => __( 'Center', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-h-align-center',
 					),
-					'right'  => array(
+					$align_right  => array(
 						'title' => __( 'Right', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-h-align-right',
 					),
@@ -1124,9 +1178,7 @@ class Premium_Nav_Menu extends Widget_Base {
 				'default'   => 'center',
 				'toggle'    => false,
 				'selectors' => array(
-					'{{WRAPPER}}.premium-hamburger-menu .premium-nav-widget-container,
-					{{WRAPPER}}.premium-nav-slide .premium-nav-widget-container,
-					{{WRAPPER}}.premium-nav-dropdown .premium-nav-widget-container' => 'text-align: {{VALUE}}',
+					'{{WRAPPER}} .premium-hamburger-toggle' => 'justify-content: {{VALUE}}',
 				),
 			)
 		);
@@ -1170,8 +1222,9 @@ class Premium_Nav_Menu extends Widget_Base {
 									'value' => 'dropdown',
 								),
 								array(
-									'name'  => 'pa_nav_menu_layout',
-									'value' => array( 'hor', 'ver' ),
+									'name'     => 'pa_nav_menu_layout',
+									'operator' => 'in',
+									'value'    => array( 'hor', 'ver' ),
 								),
 							),
 						),
@@ -1268,19 +1321,6 @@ class Premium_Nav_Menu extends Widget_Base {
 				'default'     => array(
 					'value'   => 'fas fa-times',
 					'library' => 'solid',
-				),
-				'conditions'  => array(
-					'relation' => 'or',
-					'terms'    => array(
-						array(
-							'name'  => 'pa_mobile_menu_layout',
-							'value' => 'slide',
-						),
-						array(
-							'name'  => 'pa_nav_menu_layout',
-							'value' => 'slide',
-						),
-					),
 				),
 			)
 		);
@@ -1624,8 +1664,9 @@ class Premium_Nav_Menu extends Widget_Base {
 									'value' => 'slide',
 								),
 								array(
-									'name'  => 'pa_nav_menu_layout',
-									'value' => array( 'hor', 'ver' ),
+									'name'     => 'pa_nav_menu_layout',
+									'operator' => 'in',
+									'value'    => array( 'hor', 'ver' ),
 								),
 							),
 						),
@@ -3375,6 +3416,12 @@ class Premium_Nav_Menu extends Widget_Base {
 
 		$menu_type = $settings['menu_type'];
 
+		$break_point = 'custom' === $settings['pa_mobile_menu_breakpoint'] ? $settings['pa_custom_breakpoint'] : $settings['pa_mobile_menu_breakpoint'];
+
+		$break_point = '' === $break_point ? '1025' : $break_point;
+
+		$stretch_dropdown = 'yes' === $settings['pa_toggle_full'] ? true : false;
+
 		if ( 'wordpress_menu' === $menu_type ) {
 
 			$menu_list = $this->get_menu_list();
@@ -3387,9 +3434,10 @@ class Premium_Nav_Menu extends Widget_Base {
 		$div_end = '';
 
 		$menu_settings = array(
-			'breakpoint'   => (int) $settings['pa_mobile_menu_breakpoint'],
-			'mobileLayout' => $settings['pa_mobile_menu_layout'],
-			'mainLayout'   => $settings['pa_nav_menu_layout'],
+			'breakpoint'      => (int) $break_point,
+			'mobileLayout'    => $settings['pa_mobile_menu_layout'],
+			'mainLayout'      => $settings['pa_nav_menu_layout'],
+			'stretchDropdown' => $stretch_dropdown,
 		);
 
 		$this->add_render_attribute(
@@ -3402,6 +3450,10 @@ class Premium_Nav_Menu extends Widget_Base {
 				),
 			)
 		);
+
+		if ( $stretch_dropdown ) {
+			$this->add_render_attribute( 'wrapper', 'class', 'premium-stretch-dropdown' );
+		}
 
 		switch ( $settings['pointer'] ) {
 			case 'underline':
@@ -3426,9 +3478,18 @@ class Premium_Nav_Menu extends Widget_Base {
 		?>
 			<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
 				<a class="premium-hamburger-toggle premium-mobile-menu-icon" href="javascript:void(0)">
-					<?php Icons_Manager::render_icon( $settings['pa_mobile_toggle_icon'], array( 'aria-hidden' => 'true' ) ); ?>
-					<span class="premium-toggle-text"><?php echo esc_html( $settings['pa_mobile_toggle_text'] ); ?></span>
-					<span class="premium-toggle-close"><?php echo esc_html( $settings['pa_mobile_toggle_close'] ); ?></span>
+					<span class="premium-toggle-text">
+						<?php
+							Icons_Manager::render_icon( $settings['pa_mobile_toggle_icon'], array( 'aria-hidden' => 'true' ) );
+							echo esc_html( $settings['pa_mobile_toggle_text'] );
+						?>
+					</span>
+					<span class="premium-toggle-close">
+						<?php
+							Icons_Manager::render_icon( $settings['pa_mobile_close_icon'], array( 'aria-hidden' => 'true' ) );
+							echo esc_html( $settings['pa_mobile_toggle_close'] );
+						?>
+					</span>
 				</a>
 				<?php
 				if ( 'custom' === $settings['menu_type'] ) {
@@ -3442,7 +3503,7 @@ class Premium_Nav_Menu extends Widget_Base {
 			if ( in_array( $settings['pa_nav_menu_layout'], array( 'hor', 'ver' ), true ) ) {
 				$args = array(
 					'container'       => 'div',
-					'container_class' => 'premium-nav-menu-container',
+					'container_class' => 'premium-nav-menu-container premium-nav-default',
 					'menu'            => $settings['pa_nav_menus'],
 					'menu_class'      => 'premium-nav-menu premium-main-nav-menu',
 					'echo'            => true,
@@ -3616,6 +3677,7 @@ class Premium_Nav_Menu extends Widget_Base {
 
 							if ( $is_link ) {
 								$html_output .= '</ul>';
+								$is_link      = false;
 							}
 
 							$html_output .= '</li>';

@@ -354,10 +354,6 @@ msgstr ""
 msgid "Yelp Reviews"
 msgstr ""
 
-#: admin/includes/elements.php:347 admin/includes/elements.php:872
-msgid "Trustpilot Reviews"
-msgstr ""
-
 #: admin/includes/elements.php:358 admin/includes/elements.php:887
 #: widgets/premium-countdown.php:51 widgets/premium-countdown.php:152
 msgid "Countdown"

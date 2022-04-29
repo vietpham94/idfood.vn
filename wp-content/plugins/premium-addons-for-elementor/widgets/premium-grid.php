@@ -282,6 +282,9 @@ class Premium_Grid extends Widget_Base {
 				'label'       => __( 'Load More Button', 'premium-addons-for-elementor' ),
 				'description' => __( 'Requires number of images larger than 6', 'premium-addons-for-elementor' ),
 				'type'        => Controls_Manager::SWITCHER,
+				'condition'   => array(
+					'premium_gallery_shuffle_onload!' => 'yes',
+				),
 			)
 		);
 
@@ -928,8 +931,11 @@ class Premium_Grid extends Widget_Base {
 		$this->add_control(
 			'premium_gallery_shuffle_onload',
 			array(
-				'label' => __( 'Shuffle Images on Page Load', 'premium-addons-for-elementor' ),
-				'type'  => Controls_Manager::SWITCHER,
+				'label'     => __( 'Shuffle Images on Page Load', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'condition' => array(
+					'premium_gallery_load_more!' => 'yes',
+				),
 			)
 		);
 

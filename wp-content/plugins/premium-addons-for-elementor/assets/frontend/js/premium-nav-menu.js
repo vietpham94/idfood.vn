@@ -10,6 +10,8 @@
             $scope.addClass('premium-ver-hamburger-menu');
         }
 
+        checkBreakPoint(settings);
+
         $hamMenuCloser.on('click', function () {
             $scope.find('.premium-mobile-menu-outer-container, .premium-nav-slide-overlay').removeClass('premium-vertical-toggle-open');
         });
@@ -24,18 +26,26 @@
             $menuToggler.toggleClass('premium-toggle-opened');
         });
 
-        checkBreakPoint(settings);
-
         $menuContainer.find('.premium-nav-menu-item.menu-item-has-children, .premium-mega-nav-item').on('click', function (e) {
 
+            e.stopPropagation();
             e.preventDefault();
-            $(this).toggleClass('premium-active-menu');
+
+            if ($(this).hasClass('premium-active-menu')) {
+
+                $(this).removeClass('premium-active-menu');
+
+            } else {
+                $menuContainer.find('.premium-active-menu').toggleClass('premium-active-menu');
+                $(this).toggleClass('premium-active-menu');
+            }
 
             // make sure the parent node is always open whenever the child node is opened.
             $(this).parents('.premium-nav-menu-item.menu-item-has-children').toggleClass('premium-active-menu');
         });
 
-        // $(window).on('resize', function() {
+        // $(window).on('resize', function () {
+        //     $menuToggler.removeClass('premium-toggle-opened');
         //     checkBreakPoint(settings);
         // });
 
@@ -48,10 +58,28 @@
 
                 $scope.addClass('premium-hamburger-menu');
                 $scope.find('.premium-active-menu').removeClass('premium-active-menu');
+
+                stretchDropdown( $scope.find('.premium-stretch-dropdown .premium-mobile-menu-container') );
+
             } else {
                 $scope.removeClass('premium-hamburger-menu');
                 $scope.find('.premium-vertical-toggle-open').removeClass('premium-vertical-toggle-open');
+                $scope.find('.premium-nav-default').removeClass('premium-nav-default');
             }
+        }
+
+        function stretchDropdown( $menu ) {
+
+            var $sectionContainer = $($scope).closest('.elementor-top-section'),
+                width = $($sectionContainer).width(),
+                top = $scope.find('.premium-nav-widget-container').outerHeight(),
+                left = width - $scope.find('.premium-stretch-dropdown').width() - 10;
+
+            $($menu).css({
+                width: width + 'px',
+                left: '-' + left + 'px',
+                top: top + 'px',
+            });
         }
     };
 

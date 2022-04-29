@@ -110,22 +110,14 @@
 
                 if (!$multiplePersons.length) return;
 
+                if ("yes" === $multiplePersons.data("persons-equal")) {
+                    this.runEqualHeight();
+                }
+
                 var carousel = this.getElementSettings('carousel');
 
                 if (carousel)
                     $multiplePersons.slick(this.getSlickSettings());
-
-                // if ($multiplePersons.hasClass("premium-person-style1")) return;
-
-                if ("yes" !== $multiplePersons.data("persons-equal")) return;
-
-                this.runEqualHeight();
-
-                if (carousel) {
-                    $multiplePersons.on('afterChange', function () {
-                        _this.runEqualHeight();
-                    })
-                }
 
             }
 

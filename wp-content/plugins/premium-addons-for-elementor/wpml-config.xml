@@ -236,5 +236,17 @@
                 <field name="Woo Products: Out Of Stock String" editor_type="LINE">sold_out_string</field>
             </fields>
         </widget>
+
+        <widget name="premium-nav-menu">
+            <fields>
+                <field name="Mega Menu: Toggle Text" editor_type="LINE">pa_mobile_toggle_text</field>
+                <field name="Mega Menu: Close Text" editor_type="LINE">pa_mobile_toggle_close</field>
+            </fields>
+            <fields-in-item items_of="menu_items">
+                <field type="Mega Menu: Item Text" editor_type="LINE">premium_textextt_strings_text_field</field>
+                <field type="Mega Menu: Item Link" editor_type="LINK">link>url</field>
+                <field type="Mega Menu: Badge Text" editor_type="LINE">badge_text</field>
+            </fields-in-item>
+        </widget>
     </elementor-widgets>
 </wpml-config>

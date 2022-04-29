@@ -156,7 +156,6 @@ class Assets_Manager {
 			'premium-yelp-reviews',
 			'premium-google-reviews',
 			'premium-facebook-reviews',
-			'premium-trustpilot-reviews',
 		);
 
 		$pa_elems = array();

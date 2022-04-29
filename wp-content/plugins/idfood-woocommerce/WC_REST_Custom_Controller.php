@@ -172,10 +172,11 @@ class WC_REST_Custom_Controller
         if (!empty($request->get_param('search'))) {
             if (is_numeric($request->get_param('search'))) {
                 $args['p'] = $request->get_param('search');
-            } else if (!empty(get_search_product_ids($request->get_param('search')))) {
-                $product_ids = get_search_product_ids($request->get_param('search'));
-            } else if (empty(get_search_product_ids($request->get_param('search')))) {
-                return array();
+            } else {
+                $product_ids = $this->get_search_product_ids($request->get_param('search'));
+                if (empty($product_ids)) {
+                    return array();
+                }
             }
         }
 
@@ -183,8 +184,7 @@ class WC_REST_Custom_Controller
 
         $orders = array();
         foreach ($loop as $itemLoop) {
-            $order = wc_get_order($itemLoop->get_id());
-            $orderData = $order->get_data();
+            $orderData = $itemLoop->get_data();
             $orderData['line_items'] = [];
 
             if (!empty($product_ids)) {
@@ -193,22 +193,23 @@ class WC_REST_Custom_Controller
                 $flagFilterProduct = true;
             }
 
-            foreach ($order->get_items() as $item_key => $item) {
-                $product = $item->get_product();
-                $imageLink = wp_get_attachment_thumb_url($product->get_image_id());
-                $productData = $item->get_data();
-                $productData['image_link'] = $imageLink;
-                $productData['price'] = $product->get_price();
-                $productData['product_id'] = $item->get_product_id();
-                $productData['_woo_uom_input'] = $product->get_meta('_woo_uom_input');
-                $orderData['line_items'][] = $productData;
-                if (!empty($product_ids) && in_array($item->get_product_id(), $product_ids)) {
-                    $flagFilterProduct = true;
-                }
+            $line_item = current($itemLoop->get_items());
+            $product = $line_item->get_product();
+
+            $productData = $line_item->get_data();
+            $productData['image_link'] = wp_get_attachment_thumb_url($product->get_image_id());
+            $productData['price'] = $product->get_price();
+            $productData['product_id'] = $product->get_id();
+            $productData['_woo_uom_input'] = $product->get_meta('_woo_uom_input');
+
+            $orderData['line_items'][] = $productData;
+
+            if (!empty($product_ids) && in_array($line_item->get_product_id(), $product_ids)) {
+                $flagFilterProduct = true;
             }
-            if ($flagFilterProduct) {
-                $orders[] = $orderData;
-            }
+        }
+        if ($flagFilterProduct) {
+            $orders[] = $orderData;
         }
 
         return $orders;
@@ -301,39 +302,20 @@ class WC_REST_Custom_Controller
             );
         }
 
-        $limit = 10;
         $offset = 0;
         if (!empty($request->get_param('page'))) {
-            $offset = ($request->get_param('page') - 1) * $limit;
+            $offset = ($request->get_param('page') - 1) * 10;
         }
 
-        global $wpdb;
-        $notifications_table_name = $wpdb->prefix . 'notifications';
-        $result = $wpdb->get_results("SELECT * FROM `$notifications_table_name` WHERE receiver_id=" . get_current_user_id() . " ORDER BY time DESC LIMIT $offset, $limit", "ARRAY_A");
-        $notifications = array();
-        foreach ($result as $item_notification) {
-            $order = wc_get_order($item_notification["order_id"]);
-            if (!empty($order)) {
-                $orderData = $order->get_data();
-                $orderData['line_items'] = array();
-                foreach ($order->get_items() as $item) {
-                    $product = $item->get_product();
-                    if (!empty($product)) {
-                        $imageLink = wp_get_attachment_thumb_url($product->get_image_id());
-                        $productData = $item->get_data();
-                        $productData['image_link'] = $imageLink;
-                        $productData['price'] = $product->get_price();
-                        $productData['product_id'] = $item->get_product_id();
-                        $productData['_woo_uom_input'] = $product->get_meta('_woo_uom_input');
-                        $orderData['line_items'][] = $productData;
-                    }
-                }
-                $item_notification["order"] = $orderData;
-                $notifications[] = $item_notification;
-            }
-        }
+        $offset = array(
+            'post_type' => 'notification',
+            'numberposts' => 10,
+            'offset' => $offset,
+            'meta_key' => 'receiver_id',
+            'meta_value' => get_current_user_id()
+        );
 
-        return $notifications;
+        return get_posts($offset);
     }
 
     public function update_notification_status($data)
@@ -358,10 +340,8 @@ class WC_REST_Custom_Controller
                 )
             );
         }
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'notifications';
-        $dbData = array("status" => true);
-        return $wpdb->update($table_name, $dbData, array('order_id' => $notification_id));
+
+        update_field('status', true, $notification_id);
     }
 
     public function update_order($data)
@@ -472,49 +452,7 @@ class WC_REST_Custom_Controller
 
         $customers = array();
         foreach ($customer_ids as $user_id) {
-            $customer = new WC_Customer($user_id);
-            $last_order = $customer->get_last_order();
-            $customer_data = array(
-                'id' => $customer->get_id(),
-                'created_at' => $this->format_datetime($customer->get_date_created() ? $customer->get_date_created()->getTimestamp() : 0), // API gives UTC times.
-                'last_update' => $this->format_datetime($customer->get_date_modified() ? $customer->get_date_modified()->getTimestamp() : 0), // API gives UTC times.
-                'email' => $customer->get_email(),
-                'first_name' => $customer->get_first_name(),
-                'last_name' => $customer->get_last_name(),
-                'username' => $customer->get_username(),
-                'role' => $customer->get_role(),
-                'last_order_id' => is_object($last_order) ? $last_order->get_id() : null,
-                'last_order_date' => is_object($last_order) ? $this->format_datetime($last_order->get_date_created() ? $last_order->get_date_created()->getTimestamp() : 0) : null, // API gives UTC times.
-                'orders_count' => $customer->get_order_count(),
-                'total_spent' => wc_format_decimal($customer->get_total_spent(), 2),
-                'avatar_url' => $customer->get_avatar_url(),
-                'billing' => array(
-                    'first_name' => $customer->get_billing_first_name(),
-                    'last_name' => $customer->get_billing_last_name(),
-                    'company' => $customer->get_billing_company(),
-                    'address_1' => $customer->get_billing_address_1(),
-                    'address_2' => $customer->get_billing_address_2(),
-                    'city' => $customer->get_billing_city(),
-                    'state' => $customer->get_billing_state(),
-                    'postcode' => $customer->get_billing_postcode(),
-                    'country' => $customer->get_billing_country(),
-                    'email' => $customer->get_billing_email(),
-                    'phone' => $customer->get_billing_phone(),
-                ),
-                'shipping' => array(
-                    'first_name' => $customer->get_shipping_first_name(),
-                    'last_name' => $customer->get_shipping_last_name(),
-                    'company' => $customer->get_shipping_company(),
-                    'address_1' => $customer->get_shipping_address_1(),
-                    'address_2' => $customer->get_shipping_address_2(),
-                    'city' => $customer->get_shipping_city(),
-                    'state' => $customer->get_shipping_state(),
-                    'postcode' => $customer->get_shipping_postcode(),
-                    'country' => $customer->get_shipping_country(),
-                ),
-                'meta_data' => $customer->get_meta_data(),
-            );
-            $customers[] = $customer_data;
+            $customers[] = $this->fillDataCustomer(new WC_Customer($user_id));
         }
 
         return $customers;
@@ -691,7 +629,7 @@ class WC_REST_Custom_Controller
             return $supplier;
         }
 
-        return null;
+        return false;
     }
 
     private function findObjectByKey($key, $value, $data = array())
@@ -738,6 +676,52 @@ class WC_REST_Custom_Controller
         }
 
         return $date->format('Y-m-d\TH:i:s\Z');
+    }
+
+    private function get_search_product_ids($search)
+    {
+        $args = array('post_type' => 'product', 'numberposts' => -1, 's' => $search, 'fields' => 'ids');
+        $products = get_posts($args);
+        write_log($products);
+        return $products;
+    }
+
+    private function fillDataCustomer(WC_Customer $customer)
+    {
+        $last_order = $customer->get_last_order();
+
+        $address = array(
+            'first_name' => $customer->get_billing_first_name(),
+            'last_name' => $customer->get_billing_last_name(),
+            'company' => $customer->get_billing_company(),
+            'address_1' => $customer->get_billing_address_1(),
+            'address_2' => $customer->get_billing_address_2(),
+            'city' => $customer->get_billing_city(),
+            'state' => $customer->get_billing_state(),
+            'postcode' => $customer->get_billing_postcode(),
+            'country' => $customer->get_billing_country(),
+            'email' => $customer->get_billing_email(),
+            'phone' => $customer->get_billing_phone(),
+        );
+
+        $last_order = array(
+            'id' => $customer->get_id(),
+            'created_at' => $this->format_datetime($customer->get_date_created() ? $customer->get_date_created()->getTimestamp() : 0), // API gives UTC times.
+            'last_update' => $this->format_datetime($customer->get_date_modified() ? $customer->get_date_modified()->getTimestamp() : 0), // API gives UTC times.
+            'email' => $customer->get_email(),
+            'first_name' => $customer->get_first_name(),
+            'last_name' => $customer->get_last_name(),
+            'username' => $customer->get_username(),
+            'last_order_id' => is_object($last_order) ? $last_order->get_id() : null,
+            'last_order_date' => is_object($last_order) ? $this->format_datetime($last_order->get_date_created() ? $last_order->get_date_created()->getTimestamp() : 0) : null, // API gives UTC times.
+            'orders_count' => $customer->get_order_count(),
+            'total_spent' => wc_format_decimal($customer->get_total_spent(), 2),
+            'avatar_url' => $customer->get_avatar_url(),
+            'billing' => $address,
+            'shipping' => $address,
+            'meta_data' => $customer->get_meta_data(),
+        );
+        return $last_order;
     }
 }
 

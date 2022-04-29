@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 5.9.3
 Requires PHP: 5.4
-Stable Tag: 4.9.8
+Stable Tag: 4.9.10
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -211,6 +211,19 @@ Premium Addons for Elementor is 100% Ads Free, Ads can only be detected from You
 14. Premium Progress Bar Widget for Elementor
 
 == Changelog ==
+
+= 4.9.10 =
+
+- Tweak: Close all the opened items when a new item is clicked in Mega Menu widget.
+- Tweak: Custom Breakpoint option added in Mega Menu widget.
+- Fixed: Change Close Button Icon option added in Mega Menu widget.
+- Tweak: Set dropdown menu width to full width option added in Mega Menu widget.
+- Fixed: Toggle Button Position option applied on the content in Mega Menu widget.
+- Fixed: Equal Height and Carousel options conflict in Premium Team Members widget.
+
+= 4.9.9 =
+
+- Tweak: Added WPML compatibility for Nav/Mega Menu widget.
 
 = 4.9.8 =
 
@@ -567,7 +580,7 @@ Tweak: JS code optimized for security improvements.
 
 = 4.3.6 =
 
-- Tweak: Premium Trustpilot Reviews switcher changed to disabled by default.
+- Tweak: Code improvements for better performance.
 
 = 4.3.5 =
 

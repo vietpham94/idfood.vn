@@ -1871,10 +1871,6 @@ input:checked+.slider:before {
     content: "\e924";
 }
 
-.pa-dash-premium-trustpilot-reviews:before {
-    content: "\e920";
-}
-
 .pa-dash-premium-banner:before {
     content: "\e925";
 }

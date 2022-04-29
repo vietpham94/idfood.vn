@@ -158,18 +158,18 @@ class Pa_Nav_Menu_Walker extends \Walker_Nav_Menu {
 	 * @param stdClass $args              An object of wp_nav_menu() arguments.
 	 * @param int      $current_object_id Optional. ID of the current menu item. Default 0.
 	 */
-	public function start_el( &$output, $data_object, $depth = 0, $args = null, $current_object_id = 0 ) {
+	public function start_el( &$output, $data_object, $depth = 0, $args = array(), $current_object_id = 0 ) {
 
 		$settings = $this->settings;
 
 		// Restores the more descriptive, specific name for use within this method.
 		$menu_item = $data_object;
 
-		$item_meta = $this->get_item_postmeta( $menu_item->ID );
-
 		if ( is_null( $menu_item ) ) {
 			return;
 		}
+
+		$item_meta = $this->get_item_postmeta( $menu_item->ID );
 
 		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
 			$t = '';
@@ -294,7 +294,7 @@ class Pa_Nav_Menu_Walker extends \Walker_Nav_Menu {
 		$icon_class          = 0 < $depth ? ' premium-sub-item-icon' : ' premium-item-icon';
 		$badge_class         = 0 < $depth ? 'premium-sub-item-badge' : 'premium-item-badge';
 
-		if ( in_array( 'menu-item-has-children', $menu_item->classes, true ) || 'true' == $item_meta->mega_content_enabled ) {
+		if ( in_array( 'menu-item-has-children', $classes, true ) || 'true' == $item_meta->mega_content_enabled ) {
 
 			$dropdown_icon_class  = 0 === $depth ? $settings['submenu_icon']['value'] : 'fas fa-angle-right';
 			$dropdown_icon_class .= ' premium-dropdown-icon';
