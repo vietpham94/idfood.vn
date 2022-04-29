@@ -632,6 +632,42 @@ class WC_REST_Custom_Controller
         return false;
     }
 
+    public function update_suppliers_stock(WP_REST_Request $request)
+    {
+        if (get_current_user_id() == 0) {
+            return new WP_Error(
+                'woocommerce_rest_cannot_view',
+                'Xin lỗi, xảy ra lỗi xác thực thông tin người dùng. Vui lòng kiểm tra thông tin và đăng nhập lại.',
+                array(
+                    'status' => 401,
+                )
+            );
+        }
+
+        $args = array(
+            'post_type' => 'supplier',
+            'meta_key' => 'supplier_user',
+            'meta_value' => get_current_user_id()
+        );
+
+        $suppliers = get_posts($args);
+
+        if (sizeof($suppliers) > 0) {
+            $supplier = (array)$suppliers[0];
+            $supplier['stock'] = array();
+            $stocks = get_field('supplier_products', $suppliers[0]->ID);
+            foreach ($stocks as $stock) {
+                $data = (array)$stock;
+                $data['_woo_uom_input'] = get_post_meta($stock['supplier_product']->ID, '_woo_uom_input');
+                $data['product_image'] = get_the_post_thumbnail_url($stock['supplier_product']->ID);
+                $supplier['stock'][] = $data;
+            }
+            return $supplier;
+        }
+
+        return false;
+    }
+
     private function findObjectByKey($key, $value, $data = array())
     {
         foreach ($data as $element) {
