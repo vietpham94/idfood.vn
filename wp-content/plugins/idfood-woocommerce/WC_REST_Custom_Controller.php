@@ -118,6 +118,15 @@ class WC_REST_Custom_Controller
                 'callback' => array($this, 'get_suppliers'),
             )
         );
+
+        register_rest_route(
+            $this->namespace,
+            '/idf-stock',
+            array(
+                'methods' => 'GET',
+                'callback' => array($this, 'get_idfood_stock_prroduct'),
+            )
+        );
     }
 
     public function get_orders(WP_REST_Request $request)
@@ -668,6 +677,40 @@ class WC_REST_Custom_Controller
         return false;
     }
 
+    public function get_idfood_stock_prroduct(WP_REST_Request $request)
+    {
+        if (get_current_user_id() == 0) {
+            return new WP_Error(
+                'woocommerce_rest_cannot_view',
+                'Xin lỗi, xảy ra lỗi xác thực thông tin người dùng. Vui lòng kiểm tra thông tin và đăng nhập lại.',
+                array(
+                    'status' => 401,
+                )
+            );
+        }
+
+        $args = array(
+            'post_type' => 'idf_stock',
+        );
+
+        if (!empty($request->get_param('products'))) {
+            $args['meta_key'] = 'product';
+            $args['meta_value'] = $request->get_param('products');
+            $args['meta_compare'] = 'IN';
+        }
+
+        $idf_stock = get_posts($args);
+
+        $result = array();
+        if (sizeof($idf_stock) > 0) {
+            foreach ($idf_stock as $stock) {
+                $result[] = get_fields($stock->ID);
+            }
+        }
+
+        return $result;
+    }
+
     private function findObjectByKey($key, $value, $data = array())
     {
         foreach ($data as $element) {
@@ -759,6 +802,7 @@ class WC_REST_Custom_Controller
         );
         return $last_order;
     }
+
 }
 
 add_filter('woocommerce_rest_api_get_rest_namespaces', 'wc_custom_api');
