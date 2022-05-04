@@ -67,9 +67,6 @@ function find_supplier_for_order_process($order_id)
     $customer->update_meta_data('create_by', $create_by);
     $customer->save();
 
-    write_log(__FILE__ . ':69 ');
-    write_log($customer->get_meta_data());
-
     push_order_notification($handler_user_id, $order_id);
 }
 
@@ -180,7 +177,7 @@ function updateSupplierStock($order_id, $increase = false)
 }
 
 add_action('woocommerce_order_status_completed', 'action_woocommerce_order_completed', 10, 4);
-function action_woocommerce_order_payment_complete($order_id)
+function action_woocommerce_order_completed($order_id)
 {
     if (empty($order_id)) return;
 
