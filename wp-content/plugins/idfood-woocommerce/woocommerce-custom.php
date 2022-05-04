@@ -34,6 +34,13 @@ function woocommerce_thankyou_change_order_status($order_id)
     $background_process->save()->dispatch();
 }
 
+add_action('woocommerce_new_order', 'action_woocommerce_api_create_order', 10, 3);
+function action_woocommerce_api_create_order($order_id)
+{
+    $background_process = new WC_IdFood_Background_Process(find_supplier_for_order_process($order_id));
+    $background_process->save()->dispatch();
+}
+
 function find_supplier_for_order_process($order_id)
 {
     if (empty($order_id)) return;
@@ -182,6 +189,9 @@ function action_woocommerce_order_payment_complete($order_id)
     if (!in_array('shop_admin', $user_data->roles)) {
         $background_process = new WC_IdFood_Background_Process(wc_increase_stock_levels($order_id));
         $background_process->save()->dispatch();
+    } else {
+        $background_process = new WC_IdFood_Background_Process(updateSupplierStock($order_id));
+        $background_process->save()->dispatch();
     }
 }
 
@@ -225,6 +235,11 @@ function smart_find_handler(WC_Order $order): array
     foreach ($items as $item) {
         $product = $item->get_product();
     }
+
+    if (empty($product)) {
+        return array();
+    }
+
     $user_ids = find_supplier($product);
 
     $arrAdd1 = explode(' ', $order->get_shipping_address_1());

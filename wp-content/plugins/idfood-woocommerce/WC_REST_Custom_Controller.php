@@ -216,9 +216,10 @@ class WC_REST_Custom_Controller
             if (!empty($product_ids) && in_array($line_item->get_product_id(), $product_ids)) {
                 $flagFilterProduct = true;
             }
-        }
-        if ($flagFilterProduct) {
-            $orders[] = $orderData;
+
+            if ($flagFilterProduct) {
+                $orders[] = $orderData;
+            }
         }
 
         return $orders;
