@@ -124,7 +124,7 @@
         $scope.find(".premium-carousel-hidden").removeClass("premium-carousel-hidden");
         $carouselElem.find(".premium-carousel-nav-arrow-prev").remove();
         $carouselElem.find(".premium-carousel-nav-arrow-next").remove();
-        $carouselElem.find(".premium-carousel-nav-dot").remove();
+        // $carouselElem.find(".premium-carousel-nav-dot").remove();
 
         if (settings.variableWidth) {
             $carouselElem.find(".elementor-container").css("flex-wrap", "nowrap");

@@ -11,7 +11,9 @@
 
         var self = this,
             $elem = $scope.find(".premium-woocommerce"),
-            skin = $scope.find('.premium-woocommerce').data('skin');
+            skin = $scope.find('.premium-woocommerce').data('skin'),
+            html = null,
+            canLoadMore = false;
 
         //Check Quick View
         var isQuickView = $elem.data("quick-view");
@@ -37,6 +39,8 @@
             }
 
             self.handleProductPagination();
+
+            self.handleLoadMore();
 
             self.handleAddToCart();
 
@@ -467,6 +471,90 @@
                     $(product).slick(slickSettings);
                 }
             });
+        }
+
+        self.handleLoadMore = function () {
+
+            var $loadMoreBtn = $elem.find(".premium-woo-load-more-btn"),
+                page_number = 2;
+
+            if ($loadMoreBtn.length < 1)
+                return;
+
+            self.getMoreProducts(page_number);
+
+            $loadMoreBtn.on('click', function (e) {
+
+                $elem.find('ul.products').after('<div class="premium-loading-feed"><div class="premium-loader"></div></div>');
+
+                $loadMoreBtn.find("div").removeClass("premium-woo-hidden");
+
+                setTimeout(function () {
+
+                    if (!canLoadMore)
+                        return;
+
+                    $elem.find('.premium-loading-feed').remove();
+                    $loadMoreBtn.find("div").addClass("premium-woo-hidden");
+
+                    var $currentProducts = $elem.find('ul.products');
+
+                    //Remove the wrapper <ul>
+                    html = html.replace(html.substring(0, html.indexOf('>') + 1), '');
+                    html = html.replace("</ul>", "");
+
+                    $currentProducts.append(html);
+
+                    //Trigger carousel for products in the next pages.
+                    if ("grid_7" === skin) {
+                        self.handleGalleryCarousel(skin);
+                    }
+
+                    if ($elem.hasClass("premium-woo-products-metro"))
+                        self.handleGridMetro();
+
+                    canLoadMore = false;
+
+                }, 2000);
+
+                page_number++;
+                self.getMoreProducts(page_number);
+
+            });
+        }
+
+        self.getMoreProducts = function (pageNumber) {
+
+            var pageID = $elem.data('page-id');
+
+            $.ajax({
+                url: PremiumWooSettings.ajaxurl,
+                data: {
+                    action: 'get_woo_products',
+                    pageID: pageID,
+                    elemID: $scope.data('id'),
+                    category: '',
+                    skin: skin,
+                    page_number: pageNumber,
+                    nonce: PremiumWooSettings.products_nonce,
+                },
+                dataType: 'json',
+                type: 'POST',
+                success: function (data) {
+
+                    html = data.data.html;
+
+                    if (-1 == html.indexOf("</li>"))
+                        $(".premium-woo-load-more").remove();
+
+                    canLoadMore = true;
+
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+
         }
 
         self.handleProductPagination = function () {

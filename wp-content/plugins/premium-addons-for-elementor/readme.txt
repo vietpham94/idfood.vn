@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at least: 5.0
 Tested Up To: 5.9.3
 Requires PHP: 5.4
-Stable Tag: 4.9.10
+Stable Tag: 4.9.11
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -211,6 +211,11 @@ Premium Addons for Elementor is 100% Ads Free, Ads can only be detected from You
 14. Premium Progress Bar Widget for Elementor
 
 == Changelog ==
+
+= 4.9.11 =
+
+- Tweak: Added Load More button and Product Description Length options in WooCommerce Products Listing widget.
+- Fixed: Mega Menu automatically closes when a link is clicked.
 
 = 4.9.10 =
 

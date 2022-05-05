@@ -145,14 +145,6 @@ class Skin_11 extends Skin_Base {
 			)
 		);
 
-		// $this->add_control(
-		// 'product_excerpt',
-		// array(
-		// 'label' => __( 'Excerpt', 'premium-addons-for-elementor' ),
-		// 'type'  => Controls_Manager::SWITCHER,
-		// )
-		// );
-
 		$this->add_control(
 			'product_cta',
 			array(

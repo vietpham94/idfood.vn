@@ -150,6 +150,17 @@ class Skin_4 extends Skin_Base {
 			)
 		);
 
+		$repeater->add_control(
+			'excerpt_length',
+			array(
+				'label'     => __( 'Excerpt Length', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::NUMBER,
+				'condition' => array(
+					'product_segment' => 'desc',
+				),
+			)
+		);
+
 		$this->add_control(
 			'product_structure',
 			array(

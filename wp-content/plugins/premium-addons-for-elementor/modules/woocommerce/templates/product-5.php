@@ -116,8 +116,9 @@ $out_of_stock = 'outofstock' === get_post_meta( $product_id, '_stock_status', tr
 						break;
 
 					case 'desc':
+						$length = $segment['excerpt_length'];
 						do_action( 'pa_woo_product_before_desc', $product_id, $settings );
-						Premium_Template_Tags::get_product_excerpt();
+						Premium_Template_Tags::get_product_excerpt( $length );
 						do_action( 'pa_woo_product_after_desc', $product_id, $settings );
 						break;
 

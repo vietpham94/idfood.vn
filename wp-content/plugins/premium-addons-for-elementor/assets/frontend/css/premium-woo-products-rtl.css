@@ -1099,6 +1099,60 @@ html.premium-woo-qv-opened body {
     vertical-align: baseline;
 }
 
+/*
+* Load More Button
+*/
+.premium-woo-load-more {
+    position: relative; }
+    .premium-woo-load-more .premium-woo-load-more-btn {
+      -webkit-box-shadow: none;
+              box-shadow: none;
+      text-shadow: none;
+      border: none;
+      outline: none;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+         -moz-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      vertical-align: bottom;
+      cursor: pointer;
+      line-height: 1;
+      font-style: normal;
+      font-weight: normal;
+      background-image: none;
+      color: #fff;
+      -webkit-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out; }
+  
+  .premium-woo-load-more-btn {
+    -js-display: inline-flex;
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+       -moz-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
+  
+  .premium-woo-load-more-btn span {
+    margin-right: 3px; }
+  
+  .premium-woo-load-more-btn .premium-loader {
+    display: inline-block;
+    width: 20px;
+    height: 20px; }
+
+    .premium-woo-hidden {
+        visibility: hidden;
+        width: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important; }
+
 @media (min-width: 545px) {
     #premium-woo-quick-view-content div.summary {
         content: "544";

@@ -130,8 +130,9 @@ $image_size      = $settings['featured_image_size'];
 						break;
 
 					case 'desc':
+						$length = $segment['excerpt_length'];
 						do_action( 'pa_woo_product_before_desc', $product_id, $settings );
-						Premium_Template_Tags::get_product_excerpt();
+						Premium_Template_Tags::get_product_excerpt( $length );
 						do_action( 'pa_woo_product_after_desc', $product_id, $settings );
 						break;
 

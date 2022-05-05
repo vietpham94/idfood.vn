@@ -950,11 +950,10 @@ class Premium_Blog extends Widget_Base {
 		$this->add_control(
 			'premium_blog_excerpt_length',
 			array(
-				'label'       => __( 'Excerpt Length', 'premium-addons-for-elementor' ),
-				'type'        => Controls_Manager::NUMBER,
-				'description' => __( 'Excerpt is used for article summary with a link to the whole entry. The default except length is 22', 'premium-addons-for-elementor' ),
-				'default'     => 22,
-				'condition'   => array(
+				'label'     => __( 'Excerpt Length', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::NUMBER,
+				'default'   => 22,
+				'condition' => array(
 					'premium_blog_excerpt' => 'yes',
 					'content_source'       => 'excerpt',
 				),
@@ -3118,6 +3117,10 @@ class Premium_Blog extends Widget_Base {
 
 			$this->add_render_attribute( 'blog', 'class', 'premium-blog-list' );
 
+		}
+
+		if ( 'yes' === $settings['premium_blog_carousel'] ) {
+			$this->add_render_attribute( 'blog', 'class', 'premium-carousel-hidden' );
 		}
 
 		// Add page ID to be used later to get posts by AJAX.

@@ -174,7 +174,7 @@ class Premium_Template_Tags {
 	 * @access public
 	 *
 	 * @param string|int $title   Template Title||id.
-	 * @param bool   $id          indicates if $title is the template title or id.
+	 * @param bool       $id          indicates if $title is the template title or id.
 	 *
 	 * @return $template_content string HTML Markup of the selected template.
 	 */
@@ -1343,12 +1343,33 @@ class Premium_Template_Tags {
 	 *
 	 * @since 3.4.0
 	 * @access public
+	 *
+	 * @param integer $length excerpt length.
 	 */
-	public static function get_product_excerpt() {
+	public static function get_product_excerpt( $length ) {
 
 		if ( has_excerpt() ) {
+
+			$excerpt = trim( get_the_excerpt() );
+
+			if ( ! empty( $length ) ) {
+
+				$words = explode( ' ', $excerpt, $length + 1 );
+
+				if ( count( $words ) > $length ) {
+
+					array_pop( $words );
+
+					array_push( $words, '…' );
+
+				}
+
+				$excerpt = implode( ' ', $words );
+
+			}
+
 			echo '<div class="premium-woo-product-desc">';
-				echo wp_kses_post( the_excerpt() );
+				echo wp_kses_post( $excerpt );
 			echo '</div>';
 		}
 

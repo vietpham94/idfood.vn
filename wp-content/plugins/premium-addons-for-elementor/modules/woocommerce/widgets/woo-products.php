@@ -10,6 +10,7 @@ use Elementor\Widget_Base;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Border;
+use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Css_Filter;
@@ -213,6 +214,7 @@ class Woo_Products extends Widget_Base {
 		$this->register_style_general_section( $pro_skins );
 		$this->register_style_image_section( $pro_skins );
 		$this->register_style_pagination_section( $pro_skins );
+		$this->register_style_loadmore_section( $pro_skins );
 		$this->register_style_carousel_section( $pro_skins );
 		$this->register_style_sold_out_controls( $pro_skins );
 	}
@@ -385,6 +387,61 @@ class Woo_Products extends Widget_Base {
 				'type'        => Controls_Manager::NUMBER,
 				'min'         => 1,
 				'default'     => 6,
+			)
+		);
+
+		$this->add_control(
+			'load_more',
+			array(
+				'label'     => __( 'Load More Button', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::SWITCHER,
+				'condition' => array(
+					'pagination!' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
+			'load_more_text',
+			array(
+				'label'     => __( 'Button Text', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::TEXT,
+				'default'   => __( 'Load More', 'premium-addons-for-elementor' ),
+				'dynamic'   => array( 'active' => true ),
+				'condition' => array(
+					'load_more'   => 'yes',
+					'pagination!' => 'yes',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'load_more_align',
+			array(
+				'label'     => __( 'Button Alignment', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'options'   => array(
+					'left'   => array(
+						'title' => __( 'Left', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-left',
+					),
+					'center' => array(
+						'title' => __( 'Center', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-center',
+					),
+					'right'  => array(
+						'title' => __( 'Right', 'premium-addons-for-elementor' ),
+						'icon'  => 'eicon-text-align-right',
+					),
+				),
+				'default'   => 'center',
+				'selectors' => array(
+					'{{WRAPPER}} .premium-woo-load-more' => 'text-align: {{VALUE}};',
+				),
+				'condition' => array(
+					'load_more'   => 'yes',
+					'pagination!' => 'yes',
+				),
 			)
 		);
 
@@ -811,6 +868,7 @@ class Woo_Products extends Widget_Base {
 				'label'     => __( 'Pagination', 'premium-addons-for-elementor' ),
 				'condition' => array(
 					'layout_type' => array( 'grid', 'metro' ),
+					'load_more!'  => 'yes',
 					'_skin!'      => $pro_skins,
 				),
 			)
@@ -1412,6 +1470,247 @@ class Woo_Products extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	public function register_style_loadmore_section( $pro_skins ) {
+
+		$this->start_controls_section(
+			'button_style_settings',
+			array(
+				'label'     => __( 'Load More Button', 'premium-addons-for-elementor' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
+				'condition' => array(
+					'layout_type' => array( 'grid', 'metro' ),
+					'load_more'   => 'yes',
+					'pagination!' => 'yes',
+					'_skin!'      => $pro_skins,
+				),
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'button_typo',
+				'global'   => array(
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				),
+				'selector' => '{{WRAPPER}} .premium-woo-load-more-btn',
+			)
+		);
+
+		$this->start_controls_tabs( 'button_style_tabs' );
+
+		$this->start_controls_tab(
+			'button_style_normal',
+			array(
+				'label' => __( 'Normal', 'premium-addons-for-elementor' ),
+			)
+		);
+
+		$this->add_control(
+			'button_color',
+			array(
+				'label'     => __( 'Text Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => array(
+					'default' => Global_Colors::COLOR_SECONDARY,
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .premium-woo-load-more-btn'  => 'color: {{VALUE}};',
+					'{{WRAPPER}} .premium-woo-load-more-btn .premium-loader'  => 'border-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'button_spin_color',
+			array(
+				'label'     => __( 'Spinner Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'global'    => array(
+					'default' => Global_Colors::COLOR_SECONDARY,
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .premium-woo-load-more-btn .premium-loader'  => 'border-top-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			array(
+				'name'     => 'button_text_shadow',
+				'selector' => '{{WRAPPER}} .premium-woo-load-more-btn',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			array(
+				'name'           => 'button_background',
+				'types'          => array( 'classic', 'gradient' ),
+				'selector'       => '{{WRAPPER}} .premium-woo-load-more-btn',
+				'fields_options' => array(
+					'background' => array(
+						'default' => 'classic',
+					),
+					'color'      => array(
+						'global' => array(
+							'default' => Global_Colors::COLOR_PRIMARY,
+						),
+					),
+				),
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			array(
+				'name'     => 'button_border',
+				'selector' => '{{WRAPPER}} .premium-woo-load-more-btn',
+			)
+		);
+
+		$this->add_control(
+			'button_border_radius',
+			array(
+				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-woo-load-more-btn' => 'border-radius: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			array(
+				'name'     => 'button_box_shadow',
+				'selector' => '{{WRAPPER}} .premium-woo-load-more-btn',
+			)
+		);
+
+		$this->add_responsive_control(
+			'button_margin',
+			array(
+				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-woo-load-more' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'button_padding',
+			array(
+				'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-woo-load-more-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'button_style_hover',
+			array(
+				'label' => __( 'Hover', 'premium-addons-for-elementor' ),
+			)
+		);
+
+		$this->add_control(
+			'button_hover_color',
+			array(
+				'label'     => __( 'Text Hover Color', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .premium-woo-load-more-btn:hover'  => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			array(
+				'name'     => 'button_text_shadow_hover',
+				'selector' => '{{WRAPPER}} .premium-woo-load-more-btn:hover',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Background::get_type(),
+			array(
+				'name'     => 'button_background_hover',
+				'types'    => array( 'classic', 'gradient' ),
+				'selector' => '{{WRAPPER}} .premium-woo-load-more-btn:hover',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			array(
+				'name'     => 'button_border_hover',
+				'selector' => '{{WRAPPER}} .premium-woo-load-more-btn:hover',
+			)
+		);
+
+		$this->add_control(
+			'button_border_radius_hover',
+			array(
+				'label'      => __( 'Border Radius', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-woo-load-more-btn:hover' => 'border-radius: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			array(
+				'name'     => 'button_shadow_hover',
+				'selector' => '{{WRAPPER}} .premium-woo-load-more-btn:hover',
+			)
+		);
+
+		$this->add_responsive_control(
+			'button_margin_hover',
+			array(
+				'label'      => __( 'Margin', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-woo-load-more-btn:hover' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'button_padding_hover',
+			array(
+				'label'      => __( 'Padding', 'premium-addons-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .premium-woo-load-more-btn:hover' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->end_controls_section();
+
+	}
+
 	/**
 	 * Register style pagination section.
 	 *
@@ -1428,6 +1727,7 @@ class Woo_Products extends Widget_Base {
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => array(
 					'layout_type' => array( 'grid', 'metro' ),
+					'load_more!'  => 'yes',
 					'pagination'  => 'yes',
 					'_skin!'      => $pro_skins,
 				),

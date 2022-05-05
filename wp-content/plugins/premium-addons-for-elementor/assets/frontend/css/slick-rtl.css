@@ -225,3 +225,8 @@ ul.slick-dots li {
     height: 20px;
     cursor: pointer;
 }
+
+.premium-carousel-hidden {
+    opacity: 0;
+    visibility: hidden;
+}

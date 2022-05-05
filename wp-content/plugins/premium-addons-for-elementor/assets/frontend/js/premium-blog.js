@@ -1,6 +1,6 @@
 
 
-(function($){
+(function ($) {
     $(window).on('elementor/frontend/init', function () {
 
         var PremiumBlogHandler = elementorModules.frontend.handlers.Base.extend({
@@ -134,6 +134,8 @@
 
                 if (this.settings.carousel) {
                     $blogElement.slick(this.getSlickSettings());
+
+                    $blogElement.removeClass("premium-carousel-hidden");
                 }
 
                 if ("even" === this.settings.layout && this.settings.equalHeight) {

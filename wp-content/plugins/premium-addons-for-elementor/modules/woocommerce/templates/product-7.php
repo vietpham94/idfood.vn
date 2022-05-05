@@ -104,10 +104,6 @@ $out_of_stock    = 'outofstock' === get_post_meta( $product_id, '_stock_status',
 
 		echo '</div>';
 
-		// if ( 'yes' === $this->get_option_value( 'product_excerpt' ) ) {
-		// Premium_Template_Tags::get_product_excerpt();
-		// }
-
 		echo '<div class="premium-woo-product-buttons">';
 
 		if ( 'yes' === $this->get_option_value( 'product_cta' ) ) {

@@ -245,7 +245,7 @@ abstract class Skin_Style {
 						$query_args['posts_per_page'] = $settings['products_numbers'];
 					}
 
-					if ( 'yes' === $settings['pagination'] ) {
+					if ( 'yes' === $settings['pagination'] || 'yes' === $settings['load_more'] ) {
 
 						$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : '1';
 
@@ -346,7 +346,7 @@ abstract class Skin_Style {
 					$query_args['posts_per_page'] = $settings['products_numbers'];
 				}
 
-				if ( 'yes' === $settings['pagination'] ) {
+				if ( 'yes' === $settings['pagination'] || 'yes' === $settings['load_more'] ) {
 
 					$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : '1';
 
@@ -546,6 +546,26 @@ abstract class Skin_Style {
 
 			remove_filter( 'premium_woo_pagination_args', array( $this, 'get_pagination_args' ) );
 			remove_filter( 'wc_get_template', array( $this, 'woo_pagination_template' ), 10, 5 );
+		}
+	}
+
+	/**
+	 * Render Load More Button
+	 *
+	 * @since 4.9.11
+	 */
+	public function render_load_more_button() {
+
+		$settings = self::$settings;
+
+		if ( 'yes' === $settings['load_more'] ) { ?>
+			<div class="premium-woo-load-more">
+				<button class="premium-woo-load-more-btn">
+					<span><?php echo wp_kses_post( $settings['load_more_text'] ); ?></span>
+					<div class="premium-loader premium-woo-hidden"></div>
+				</button>
+			</div>
+			<?php
 		}
 	}
 
@@ -785,6 +805,8 @@ abstract class Skin_Style {
 		$this->render_woo_products();
 
 		$this->render_pagination_structure();
+
+		$this->render_load_more_button();
 
 		$this->render_reset_loop();
 

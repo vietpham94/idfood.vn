@@ -1162,15 +1162,15 @@ class Premium_Nav_Menu extends Widget_Base {
 				'label'     => __( 'Toggle Button Position', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::CHOOSE,
 				'options'   => array(
-					$align_left   => array(
+					$align_left  => array(
 						'title' => __( 'Left', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-h-align-left',
 					),
-					'center' => array(
+					'center'     => array(
 						'title' => __( 'Center', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-h-align-center',
 					),
-					$align_right  => array(
+					$align_right => array(
 						'title' => __( 'Right', 'premium-addons-for-elementor' ),
 						'icon'  => 'eicon-h-align-right',
 					),
@@ -2335,7 +2335,7 @@ class Premium_Nav_Menu extends Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-main-nav-menu > .premium-nav-menu-item > .premium-menu-link:hover' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .premium-main-nav-menu > .premium-nav-menu-item:hover > .premium-menu-link' => 'color: {{VALUE}};',
 				),
 			)
 		);
@@ -2349,7 +2349,7 @@ class Premium_Nav_Menu extends Widget_Base {
 					'default' => Global_Colors::COLOR_SECONDARY,
 				),
 				'selectors' => array(
-					'{{WRAPPER}} .premium-main-nav-menu > .premium-nav-menu-item > .premium-menu-link:hover .premium-dropdown-icon' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .premium-main-nav-menu > .premium-nav-menu-item:hover > .premium-menu-link .premium-dropdown-icon' => 'color: {{VALUE}};',
 				),
 			)
 		);
@@ -3414,140 +3414,174 @@ class Premium_Nav_Menu extends Widget_Base {
 
 		$settings = $this->get_settings_for_display();
 
-		$menu_type = $settings['menu_type'];
+		$is_valid = $this->is_valid_menu( $settings['pa_nav_menus'] );
 
-		$break_point = 'custom' === $settings['pa_mobile_menu_breakpoint'] ? $settings['pa_custom_breakpoint'] : $settings['pa_mobile_menu_breakpoint'];
+		if ( ! $is_valid ) {
+			?>
+				<div class="premium-error-notice">
+					<?php echo esc_html( __( 'This is an empty menu. Please make sure your menu has items.', 'premium-addons-for-elementor' ) ); ?>
+				</div>
+			<?php
+		} else {
 
-		$break_point = '' === $break_point ? '1025' : $break_point;
+			$menu_type = $settings['menu_type'];
 
-		$stretch_dropdown = 'yes' === $settings['pa_toggle_full'] ? true : false;
+			$break_point = 'custom' === $settings['pa_mobile_menu_breakpoint'] ? $settings['pa_custom_breakpoint'] : $settings['pa_mobile_menu_breakpoint'];
 
-		if ( 'wordpress_menu' === $menu_type ) {
+			$break_point = '' === $break_point ? '1025' : $break_point;
 
-			$menu_list = $this->get_menu_list();
+			$stretch_dropdown = 'yes' === $settings['pa_toggle_full'] ? true : false;
 
-			if ( ! $menu_list ) {
-				return;
+			if ( 'wordpress_menu' === $menu_type ) {
+
+				$menu_list = $this->get_menu_list();
+
+				if ( ! $menu_list ) {
+					return;
+				}
 			}
-		}
 
-		$div_end = '';
+			$div_end = '';
 
-		$menu_settings = array(
-			'breakpoint'      => (int) $break_point,
-			'mobileLayout'    => $settings['pa_mobile_menu_layout'],
-			'mainLayout'      => $settings['pa_nav_menu_layout'],
-			'stretchDropdown' => $stretch_dropdown,
-		);
+			$menu_settings = array(
+				'breakpoint'      => (int) $break_point,
+				'mobileLayout'    => $settings['pa_mobile_menu_layout'],
+				'mainLayout'      => $settings['pa_nav_menu_layout'],
+				'stretchDropdown' => $stretch_dropdown,
+			);
 
-		$this->add_render_attribute(
-			'wrapper',
-			array(
-				'data-settings' => json_encode( $menu_settings ),
-				'class'         => array(
-					'premium-nav-widget-container',
-					'premium-nav-pointer-' . $settings['pointer'],
-				),
-			)
-		);
+			$this->add_render_attribute(
+				'wrapper',
+				array(
+					'data-settings' => json_encode( $menu_settings ),
+					'class'         => array(
+						'premium-nav-widget-container',
+						'premium-nav-pointer-' . $settings['pointer'],
+					),
+				)
+			);
 
-		if ( $stretch_dropdown ) {
-			$this->add_render_attribute( 'wrapper', 'class', 'premium-stretch-dropdown' );
-		}
+			if ( $stretch_dropdown ) {
+				$this->add_render_attribute( 'wrapper', 'class', 'premium-stretch-dropdown' );
+			}
 
-		switch ( $settings['pointer'] ) {
-			case 'underline':
-			case 'overline':
-			case 'double-line':
-				$this->add_render_attribute( 'wrapper', 'class', 'premium-nav-animation-' . $settings['animation_line'] );
-				break;
-			case 'framed':
-				$this->add_render_attribute( 'wrapper', 'class', 'premium-nav-animation-' . $settings['animation_framed'] );
-				break;
-			case 'text':
-				$this->add_render_attribute( 'wrapper', 'class', 'premium-nav-animation-' . $settings['animation_text'] );
-				break;
-			case 'background':
-				$this->add_render_attribute( 'wrapper', 'class', 'premium-nav-animation-' . $settings['animation_background'] );
-				break;
-		}
+			switch ( $settings['pointer'] ) {
+				case 'underline':
+				case 'overline':
+				case 'double-line':
+					$this->add_render_attribute( 'wrapper', 'class', 'premium-nav-animation-' . $settings['animation_line'] );
+					break;
+				case 'framed':
+					$this->add_render_attribute( 'wrapper', 'class', 'premium-nav-animation-' . $settings['animation_framed'] );
+					break;
+				case 'text':
+					$this->add_render_attribute( 'wrapper', 'class', 'premium-nav-animation-' . $settings['animation_text'] );
+					break;
+				case 'background':
+					$this->add_render_attribute( 'wrapper', 'class', 'premium-nav-animation-' . $settings['animation_background'] );
+					break;
+			}
 
-		/**
-		 * Hamburger Menu Button.
-		 */
-		?>
-			<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
-				<a class="premium-hamburger-toggle premium-mobile-menu-icon" href="javascript:void(0)">
-					<span class="premium-toggle-text">
-						<?php
-							Icons_Manager::render_icon( $settings['pa_mobile_toggle_icon'], array( 'aria-hidden' => 'true' ) );
-							echo esc_html( $settings['pa_mobile_toggle_text'] );
-						?>
-					</span>
-					<span class="premium-toggle-close">
-						<?php
-							Icons_Manager::render_icon( $settings['pa_mobile_close_icon'], array( 'aria-hidden' => 'true' ) );
-							echo esc_html( $settings['pa_mobile_toggle_close'] );
-						?>
-					</span>
-				</a>
-				<?php
-				if ( 'custom' === $settings['menu_type'] ) {
-					$this->get_custom_menu();
+			/**
+			 * Hamburger Menu Button.
+			 */
+			?>
+				<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
+					<a class="premium-hamburger-toggle premium-mobile-menu-icon" href="javascript:void(0)">
+						<span class="premium-toggle-text">
+							<?php
+								Icons_Manager::render_icon( $settings['pa_mobile_toggle_icon'], array( 'aria-hidden' => 'true' ) );
+								echo esc_html( $settings['pa_mobile_toggle_text'] );
+							?>
+						</span>
+						<span class="premium-toggle-close">
+							<?php
+								Icons_Manager::render_icon( $settings['pa_mobile_close_icon'], array( 'aria-hidden' => 'true' ) );
+								echo esc_html( $settings['pa_mobile_toggle_close'] );
+							?>
+						</span>
+					</a>
+					<?php
+					if ( 'custom' === $settings['menu_type'] ) {
+						$this->get_custom_menu();
+					}
+
+					?>
+			<?php
+
+			if ( 'wordpress_menu' === $menu_type ) {
+				if ( in_array( $settings['pa_nav_menu_layout'], array( 'hor', 'ver' ), true ) ) {
+					$args = array(
+						'container'       => 'div',
+						'container_class' => 'premium-nav-menu-container premium-nav-default',
+						'menu'            => $settings['pa_nav_menus'],
+						'menu_class'      => 'premium-nav-menu premium-main-nav-menu',
+						'echo'            => true,
+						'fallback_cb'     => 'wp_page_menu',
+						'walker'          => new Pa_Nav_Menu_Walker( $settings ),
+					);
+
+					wp_nav_menu( $args );
 				}
 
-				?>
-		<?php
-
-		if ( 'wordpress_menu' === $menu_type ) {
-			if ( in_array( $settings['pa_nav_menu_layout'], array( 'hor', 'ver' ), true ) ) {
-				$args = array(
+				$mobile_args = array(
 					'container'       => 'div',
-					'container_class' => 'premium-nav-menu-container premium-nav-default',
+					'container_class' => 'premium-mobile-menu-container',
 					'menu'            => $settings['pa_nav_menus'],
-					'menu_class'      => 'premium-nav-menu premium-main-nav-menu',
+					'menu_class'      => 'premium-mobile-menu premium-main-mobile-menu premium-main-nav-menu',
 					'echo'            => true,
 					'fallback_cb'     => 'wp_page_menu',
 					'walker'          => new Pa_Nav_Menu_Walker( $settings ),
 				);
 
-				wp_nav_menu( $args );
 			}
 
-			$mobile_args = array(
-				'container'       => 'div',
-				'container_class' => 'premium-mobile-menu-container',
-				'menu'            => $settings['pa_nav_menus'],
-				'menu_class'      => 'premium-mobile-menu premium-main-mobile-menu premium-main-nav-menu',
-				'echo'            => true,
-				'fallback_cb'     => 'wp_page_menu',
-				'walker'          => new Pa_Nav_Menu_Walker( $settings ),
-			);
+			if ( 'slide' === $settings['pa_mobile_menu_layout'] || 'slide' === $settings['pa_nav_menu_layout'] ) {
+				$div_end = '</div>';
+				?>
+				<div class="premium-nav-slide-overlay"></div>
+				<div class="premium-mobile-menu-outer-container">
+					<a class="premium-mobile-menu-close" href="javascript:void(0)">
+						<?php Icons_Manager::render_icon( $settings['pa_mobile_close_icon'], array( 'aria-hidden' => 'true' ) ); ?>
+						<span class="premium-toggle-close"><?php echo esc_html( $settings['pa_mobile_toggle_close'] ); ?></span>
+					</a>
+				<?php
+			}
 
-		}
+			if ( 'wordpress_menu' === $menu_type ) {
+				wp_nav_menu( $mobile_args );
+			} else {
+				$this->get_custom_menu( 'mobile' );
+			}
 
-		if ( 'slide' === $settings['pa_mobile_menu_layout'] || 'slide' === $settings['pa_nav_menu_layout'] ) {
-			$div_end = '</div>';
+			echo $div_end;
 			?>
-			<div class="premium-nav-slide-overlay"></div>
-			<div class="premium-mobile-menu-outer-container">
-				<a class="premium-mobile-menu-close" href="javascript:void(0)">
-					<?php Icons_Manager::render_icon( $settings['pa_mobile_close_icon'], array( 'aria-hidden' => 'true' ) ); ?>
-					<span class="premium-toggle-close"><?php echo esc_html( $settings['pa_mobile_toggle_close'] ); ?></span>
-				</a>
+			</div>
 			<?php
 		}
+	}
 
-		if ( 'wordpress_menu' === $menu_type ) {
-			wp_nav_menu( $mobile_args );
-		} else {
-			$this->get_custom_menu( 'mobile' );
+	/**
+	 * Is Valid Menu.
+	 *
+	 * @access private
+	 * @since 4.9.10
+	 *
+	 * @param string|int $id  menu id.
+	 *
+	 * @return bool   true if the menu has items.
+	 */
+	private function is_valid_menu( $id ) {
+
+		$is_valid = false;
+
+		$item_count = wp_get_nav_menu_object( $id )->count;
+
+		if ( 0 < $item_count ) {
+			$is_valid = true;
 		}
 
-		echo $div_end;
-		?>
-		</div>
-		<?php
+		return $is_valid;
 	}
 
 	/**
@@ -3618,7 +3652,7 @@ class Premium_Nav_Menu extends Widget_Base {
 
 						if ( 'link' === $item['menu_content_type'] ) {
 
-							// If no submenu items was rendered before
+							// If no submenu items was rendered before.
 							if ( false === $is_child ) {
 								$html_output .= "<ul class='premium-sub-menu'>";
 								$is_link      = true;

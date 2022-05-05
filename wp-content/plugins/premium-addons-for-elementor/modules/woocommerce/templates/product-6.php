@@ -32,6 +32,7 @@ $featured_ribbon = self::$settings['featured'];
 $quick_view      = $this->get_option_value( 'quick_view' );
 $out_of_stock    = 'outofstock' === get_post_meta( $product_id, '_stock_status', true ) && 'yes' === self::$settings['sold_out'];
 $image_size      = $settings['featured_image_size'];
+
 ?>
 <li class=" <?php echo esc_attr( $wc_classes ); ?>">
 	<div class="premium-woo-product-wrapper">
@@ -120,8 +121,9 @@ $image_size      = $settings['featured_image_size'];
 			echo '</div>';
 
 		if ( 'yes' === $this->get_option_value( 'product_excerpt' ) ) {
+			$length = $this->get_option_value( 'excerpt_length' );
 			do_action( 'pa_woo_product_before_desc', $product_id, $settings );
-			Premium_Template_Tags::get_product_excerpt();
+			Premium_Template_Tags::get_product_excerpt( $length );
 			do_action( 'pa_woo_product_after_desc', $product_id, $settings );
 		}
 

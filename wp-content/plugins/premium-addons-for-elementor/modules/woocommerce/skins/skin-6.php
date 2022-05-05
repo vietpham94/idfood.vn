@@ -148,6 +148,17 @@ class Skin_6 extends Skin_Base {
 		);
 
 		$this->add_control(
+			'excerpt_length',
+			array(
+				'label'     => __( 'Excerpt Length', 'premium-addons-for-elementor' ),
+				'type'      => Controls_Manager::NUMBER,
+				'condition' => array(
+					$this->get_control_id( 'product_excerpt' ) => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
 			'product_cta',
 			array(
 				'label'   => __( 'Add To Cart', 'premium-addons-for-elementor' ),

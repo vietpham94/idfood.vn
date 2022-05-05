@@ -145,14 +145,6 @@ class Skin_7 extends Skin_Base {
 			)
 		);
 
-		// $this->add_control(
-		// 'product_excerpt',
-		// array(
-		// 'label' => __( 'Excerpt', 'premium-addons-for-elementor' ),
-		// 'type'  => Controls_Manager::SWITCHER,
-		// )
-		// );
-
 		$this->add_control(
 			'product_cta',
 			array(
@@ -161,34 +153,6 @@ class Skin_7 extends Skin_Base {
 				'default' => 'yes',
 			)
 		);
-
-		// $this->add_responsive_control(
-		// 'alignment',
-		// array(
-		// 'label'        => __( 'Alignment', 'premium-addons-for-elementor' ),
-		// 'type'         => Controls_Manager::CHOOSE,
-		// 'options'      => array(
-		// 'left'   => array(
-		// 'title' => __( 'Left', 'premium-addons-for-elementor' ),
-		// 'icon'  => 'eicon-text-align-left',
-		// ),
-		// 'center' => array(
-		// 'title' => __( 'Center', 'premium-addons-for-elementor' ),
-		// 'icon'  => 'eicon-text-align-center',
-		// ),
-		// 'right'  => array(
-		// 'title' => __( 'Right', 'premium-addons-for-elementor' ),
-		// 'icon'  => 'eicon-text-align-right',
-		// ),
-		// ),
-		// 'default'      => 'left',
-		// 'toggle'       => false,
-		// 'prefix_class' => 'premium-woo-product-align-',
-		// 'selectors'    => array(
-		// '{{WRAPPER}} .premium-woo-products-details-wrap'    => 'text-align: {{VALUE}}',
-		// ),
-		// )
-		// );
 
 		$this->end_controls_section();
 	}

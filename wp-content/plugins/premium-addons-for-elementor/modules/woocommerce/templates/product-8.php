@@ -127,9 +127,6 @@ $out_of_stock    = 'outofstock' === get_post_meta( $product_id, '_stock_status',
 
 			echo '</div>';
 
-		// if ( 'yes' === $this->get_option_value( 'product_excerpt' ) ) {
-		// Premium_Template_Tags::get_product_excerpt();
-		// }
 		do_action( 'pa_woo_product_before_details_wrap_end', $product_id, $settings );
 		echo '</div>';
 		do_action( 'pa_woo_product_after_details_wrap_end', $product_id, $settings );
