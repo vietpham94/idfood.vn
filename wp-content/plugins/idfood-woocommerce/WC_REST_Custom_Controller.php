@@ -202,19 +202,20 @@ class WC_REST_Custom_Controller
                 $flagFilterProduct = true;
             }
 
-            $line_item = current($itemLoop->get_items());
-            $product = $line_item->get_product();
+            foreach ($itemLoop->get_items() as $line_item) {
+                $product = $line_item->get_product();
 
-            $productData = $line_item->get_data();
-            $productData['image_link'] = wp_get_attachment_thumb_url($product->get_image_id());
-            $productData['price'] = $product->get_price();
-            $productData['product_id'] = $product->get_id();
-            $productData['_woo_uom_input'] = $product->get_meta('_woo_uom_input');
+                $productData = $line_item->get_data();
+                $productData['image_link'] = wp_get_attachment_thumb_url($product->get_image_id());
+                $productData['price'] = $product->get_price();
+                $productData['product_id'] = $product->get_id();
+                $productData['_woo_uom_input'] = $product->get_meta('_woo_uom_input');
 
-            $orderData['line_items'][] = $productData;
+                $orderData['line_items'][] = $productData;
 
-            if (!empty($product_ids) && in_array($line_item->get_product_id(), $product_ids)) {
-                $flagFilterProduct = true;
+                if (!empty($product_ids) && in_array($line_item->get_product_id(), $product_ids)) {
+                    $flagFilterProduct = true;
+                }
             }
 
             if ($flagFilterProduct) {

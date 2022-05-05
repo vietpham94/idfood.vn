@@ -107,14 +107,14 @@ function action_woocommerce_order_increase_processing($order_id, $this_status_tr
 function updateSupplierStock($order_id, $increase = false)
 {
     if (empty($order_id)) {
-        write_log(__FILE__ . ': 94 order_id is empty');
+        write_log(__FILE__ . ':' . __LINE__ . ' order_id is empty');
         return;
     }
 
     $order = wc_get_order($order_id);
     $handler_user_id = get_field('handler_user_id', $order_id);
     if (empty($order) || empty($handler_user_id)) {
-        write_log(__FILE__ . ': 101 handler_user_id is empty');
+        write_log(__FILE__ . ':' . __LINE__ . ' handler_user_id is empty');
         return;
     }
 
@@ -126,7 +126,7 @@ function updateSupplierStock($order_id, $increase = false)
     }
 
     if (empty($product)) {
-        write_log(__FILE__ . ': 113 product is empty');
+        write_log(__FILE__ . ':' . __LINE__ . ' 113 product is empty');
         return;
     }
 
@@ -135,7 +135,7 @@ function updateSupplierStock($order_id, $increase = false)
         'meta_key' => 'supplier_user',
         'meta_value' => $handler_user_id,
     ));
-    write_log(__FILE__ . ': 122');
+    write_log(__FILE__ . ':' . __LINE__);
     write_log($suppliers);
 
     foreach ($suppliers as $supplier) {
@@ -149,7 +149,7 @@ function updateSupplierStock($order_id, $increase = false)
             return;
         }
 
-        write_log(__FILE__ . ': 136');
+        write_log(__FILE__ . ':' . __LINE__);
         write_log($products_stock);
 
         foreach ($products_stock as $key => $stock_row) {
@@ -163,7 +163,7 @@ function updateSupplierStock($order_id, $increase = false)
                 $stock_row['supplier_num_sku'] = $stock_row['supplier_num_sku'] - $quantity;
             }
 
-            write_log(__FILE__ . ': 150');
+            write_log(__FILE__ . ':' . __LINE__);
             write_log($stock_row);
             write_log($key);
 
@@ -176,6 +176,54 @@ function updateSupplierStock($order_id, $increase = false)
     }
 }
 
+function updateIdfStock($order_id, $increase = false)
+{
+    if (empty($order_id)) {
+        write_log(__FILE__ . ': 94 order_id is empty');
+        return;
+    }
+
+    $order = wc_get_order($order_id);
+    $handler_user_id = get_field('handler_user_id', $order_id);
+    if (empty($order) || empty($handler_user_id)) {
+        write_log(__FILE__ . ': 101 handler_user_id is empty');
+        return;
+    }
+
+    $items = $order->get_items();
+    foreach ($items as $item) {
+        $product = $item->get_product();
+        $quantity = $item->get_quantity();
+
+        if (empty($product)) {
+            write_log(__FILE__ . ': 113 product is empty');
+            continue;
+        }
+
+        $idf_stocks = get_posts(array(
+            'post_type' => 'idf_stock',
+            'meta_key' => 'product',
+            'meta_value' => $product->get_id(),
+        ));
+
+        write_log(__FILE__ . ': 210');
+        write_log($idf_stocks);
+
+        if (sizeof($idf_stocks)) {
+            continue;
+        }
+
+        $idf_stock = current($idf_stocks);
+        if (empty($idf_stock)) {
+            continue;
+        }
+
+        $stock_num = get_field('stock', $idf_stock->ID);
+        $stock_num = $stock_num - $quantity;
+        update_field('stock', $stock_num, $idf_stock);
+    }
+}
+
 add_action('woocommerce_order_status_completed', 'action_woocommerce_order_completed', 10, 4);
 function action_woocommerce_order_completed($order_id)
 {
@@ -183,13 +231,14 @@ function action_woocommerce_order_completed($order_id)
 
     $handler_user_id = get_field('handler_user_id', $order_id);
     $user_data = get_userdata($handler_user_id);
-    if (!in_array('shop_admin', $user_data->roles)) {
-        $background_process = new WC_IdFood_Background_Process(wc_increase_stock_levels($order_id));
-        $background_process->save()->dispatch();
-    } else {
+    write_log(__FILE__ . ':' . __LINE__);
+    write_log($user_data->roles);
+    if (!in_array('shop_manager', $user_data->roles)) {
         $background_process = new WC_IdFood_Background_Process(updateSupplierStock($order_id));
-        $background_process->save()->dispatch();
+    } else {
+        $background_process = new WC_IdFood_Background_Process(updateIdfStock($order_id));
     }
+    $background_process->save()->dispatch();
 }
 
 /**
@@ -203,14 +252,14 @@ function find_handler_user_id(int $order_id): int
 {
     $order = wc_get_order($order_id);
     if (empty($order)) {
-        write_log(__FILE__ . ':90 Order id ' . $order_id . ' not exists');
+        write_log(__FILE__ . ':' . __LINE__ . ' Order id ' . $order_id . ' not exists');
         return 0;
     }
 
     // Find supplier nearest
     $result = smart_find_handler($order);
     if (!empty($result)) {
-        write_log(__FILE__ . ':124 find_handler_user_id ' . $result[0]['ID']);
+        write_log(__FILE__ . ':' . __LINE__ . ' find_handler_user_id ' . $result[0]['ID']);
         return $result[0]['ID'];
     }
 
