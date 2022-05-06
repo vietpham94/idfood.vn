@@ -326,7 +326,39 @@ class WC_REST_Custom_Controller
             'meta_value' => get_current_user_id()
         );
 
-        return get_posts($offset);
+        $notifications = get_posts($offset);
+        $notificationList = array();
+        if (!empty($notifications)) {
+            foreach ($notifications as $notification) {
+                $order = wc_get_order(get_field('order_id', $notification->ID));
+                $orderData = $order ? $order->get_data() : false;
+                if ($orderData) {
+                    $orderData['line_items'] = array();
+                    $line_items = $order->get_items();
+                    if (!empty($line_items)) {
+                        foreach ($line_items as $line_item) {
+                            $product = $line_item->get_product();
+                            $lineItemData = $line_item->get_data();
+                            $lineItemData['_woo_uom_input'] = $product ? $product->get_meta('_woo_uom_input') : '';
+                            $orderData['line_items'][] = $lineItemData;
+                        }
+                    }
+                }
+                $notificationList[] = array(
+                    id => $notification->ID,
+                    title => $notification->post_title,
+                    body => $notification->post_content,
+                    receiver_id => get_field('receiver_id', $notification->ID),
+                    order_id => get_field('order_id', $notification->ID),
+                    status => get_field('status', $notification->ID),
+                    type => get_field('type', $notification->ID),
+                    order => $orderData,
+                    time => $notification->post_date
+                );
+            }
+        }
+
+        return $notificationList;
     }
 
     public function update_notification_status($data)
@@ -352,7 +384,7 @@ class WC_REST_Custom_Controller
             );
         }
 
-        update_field('status', true, $notification_id);
+        return update_field('status', 1, $notification_id);
     }
 
     public function update_order($data)
