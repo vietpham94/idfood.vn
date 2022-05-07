@@ -1,8 +1,8 @@
 <?php
-require_once ABSPATH . 'vendor/a5hleyrich/wp-background-processing/classes/wp-async-request.php';
-require_once ABSPATH . 'vendor/a5hleyrich/wp-background-processing/classes/wp-background-process.php';
+//require_once ABSPATH . 'vendor/a5hleyrich/wp-background-processing/classes/wp-async-request.php';
+//require_once ABSPATH . 'vendor/a5hleyrich/wp-background-processing/classes/wp-background-process.php';
 
-class WC_IdFood_Background_Process extends WP_Background_Process
+class WC_IdFood_Background_Process extends \Elementor\Core\Base\BackgroundProcess\WP_Background_Process
 {
 
     protected $action = 'wc_idfood_background_process';

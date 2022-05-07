@@ -89,6 +89,10 @@ function action_woocommerce_api_create_order($order_id)
     $handler_user_id = get_field('handler_user_id', $order_id);
 
     if (empty($handler_user_id)) {
+        $user_data = get_userdata(get_current_user_id());
+    }
+
+    if (isset($user_data) && in_array('supplier', $user_data->roles)) {
         // Get Shop Manager for order of supplier
         $args = array('role' => 'shop_manager', 'orderby' => 'user_nicename', 'order' => 'ASC');
         $users = get_users($args);
@@ -96,10 +100,9 @@ function action_woocommerce_api_create_order($order_id)
         if (!empty($users)) {
             update_field('handler_user_id', $users[0]->id, $order_id);
         }
+        $background_process = new WC_IdFood_Background_Process(find_supplier_for_order_process($order_id));
+        $background_process->save()->dispatch();
     }
-
-    $background_process = new WC_IdFood_Background_Process(find_supplier_for_order_process($order_id));
-    $background_process->save()->dispatch();
 }
 
 /**
@@ -241,7 +244,8 @@ function updateSupplierStock($order_id, bool $increase = false)
     write_log($suppliers);
 
     foreach ($suppliers as $supplier) {
-        if (get_field('supplier_user', $supplier->ID) !== $handler_user_id) {
+        if (get_field('supplier_user', $supplier->ID) != $handler_user_id) {
+            write_log(__FILE__ . ':' . __LINE__ . ' ' . get_field('supplier_user', $supplier->ID) . ' <> ' . $handler_user_id);
             continue;
         }
 
@@ -251,11 +255,12 @@ function updateSupplierStock($order_id, bool $increase = false)
             return;
         }
 
-        write_log(__FILE__ . ':' . __LINE__);
-        write_log($products_stock);
-
         foreach ($products_stock as $key => $stock_row) {
-            if ($stock_row['supplier_product'] != $product->get_id()) {
+
+            if ($stock_row['supplier_product']->ID != $product->get_id()) {
+                write_log(__FILE__ . ':' . __LINE__);
+                write_log($stock_row['supplier_product']->ID);
+                write_log($product->get_id());
                 continue;
             }
 
@@ -391,12 +396,17 @@ function find_handler_user_id(int $order_id): int
         return $result[0]['ID'];
     }
 
+    write_log(__FILE__ . ':' . __LINE__ . ' Find supplier null, get Shop Manager');
+
     // Get Shop Manager for order of supplier
     $args = array('role' => 'shop_manager', 'orderby' => 'user_nicename', 'order' => 'ASC');
     $users = get_users($args);
     if (!empty($users)) {
+        write_log(__FILE__ . ':' . __LINE__ . 'Shop Manager to handler order ' . $users[0]->id);
         return $users[0]->id;
     }
+
+    write_log(__FILE__ . ':' . __LINE__ . ' Do not have anyone to handler order');
 
     // Don't have anyone to handler order
     return 0;
@@ -509,9 +519,11 @@ function find_supplier(WC_Product $product): array
     ));
 
     $supplier_ids = array();
+    write_log(__FILE__ . ':' . __LINE__ . ' size of $suppliers ' . sizeof($suppliers));
     foreach ($suppliers as $supplier) {
         $supplier_products = get_field('supplier_products', $supplier->ID);
         if (empty($supplier_products)) {
+            write_log(__FILE__ . ':' . __LINE__ . ' empty $supplier_products');
             continue;
         }
 
@@ -529,6 +541,8 @@ function find_supplier(WC_Product $product): array
         }
     }
 
+    write_log(__FILE__ . ':' . __LINE__);
+    write_log($supplier_ids);
     return $supplier_ids;
 }
 
