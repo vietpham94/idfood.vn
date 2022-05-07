@@ -186,7 +186,7 @@ abstract class Skin_Style {
 		$this->add_render_attribute(
 			'wrapper',
 			array(
-				'class'             => 'premium-woo-hidden',
+				'class'             => 'premium-carousel-hidden',
 				'data-woo_carousel' => wp_json_encode( $slick_options ),
 			)
 		);
@@ -558,7 +558,7 @@ abstract class Skin_Style {
 
 		$settings = self::$settings;
 
-		if ( 'yes' === $settings['load_more'] ) { ?>
+		if ( 'yes' === $settings['load_more'] && 'grid' === $settings['layout_type'] ) { ?>
 			<div class="premium-woo-load-more">
 				<button class="premium-woo-load-more-btn">
 					<span><?php echo wp_kses_post( $settings['load_more_text'] ); ?></span>

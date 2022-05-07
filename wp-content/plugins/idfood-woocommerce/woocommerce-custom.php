@@ -14,6 +14,8 @@ add_action('woocommerce_order_status_changed', 'action_woocommerce_order_status_
 add_action('woocommerce_order_status_processing', 'action_woocommerce_order_processing', 10, 4);
 add_action('woocommerce_order_status_completed', 'action_woocommerce_order_completed', 10, 4);
 
+add_filter('woocommerce_my_account_my_orders_actions', 'remove_myaccount_orders_cancel_button', 10, 2);
+
 /**
  * Add provider when customer choose a provider to buy
  *
@@ -139,7 +141,6 @@ function find_supplier_for_order_process($order_id)
 
     push_order_notification($handler_user_id, $order_id);
 }
-
 
 /**
  * When Shop Manager change order status from on-hold to pending, push notification to provider
@@ -392,8 +393,8 @@ function find_handler_user_id(int $order_id): int
     // Find supplier nearest
     $result = smart_find_handler($order);
     if (!empty($result)) {
-        write_log(__FILE__ . ':' . __LINE__ . ' find_handler_user_id ' . $result[0]['ID']);
-        return $result[0]['ID'];
+        write_log(__FILE__ . ':' . __LINE__ . ' find_handler_user_id ' . array_key_last($result));
+        return array_key_last($result);
     }
 
     write_log(__FILE__ . ':' . __LINE__ . ' Find supplier null, get Shop Manager');
@@ -437,21 +438,26 @@ function smart_find_handler(WC_Order $order): array
 
     $arrAdd1 = explode(' ', $order->get_shipping_address_1());
 
-    $result = [];
+    $result = array();
     foreach ($user_ids as $user_id) {
         $customer = new WC_Customer($user_id);
 
         $matchCount = 0;
 
+        write_log(__FILE__ . ':' . __LINE__ . ' ' . $customer->get_display_name());
+
         if ($customer->get_billing_state() == $order->get_billing_state()) {
+            write_log(__FILE__ . ':' . __LINE__ . ' get_billing_state ' . $customer->get_billing_state() . ' = ' . $order->get_billing_state());
             $matchCount += 5;
         }
 
-        if ($customer->get_billing_city() != $order->get_billing_city()) {
+        if ($customer->get_billing_city() == $order->get_billing_city()) {
+            write_log(__FILE__ . ':' . __LINE__ . ' get_billing_city ' . $customer->get_billing_city() . ' = ' . $order->get_billing_city());
             $matchCount += 10;
         }
 
-        if ($customer->get_billing_address_2() != $order->get_billing_address_2()) {
+        if ($customer->get_billing_address_2() == $order->get_billing_address_2()) {
+            write_log(__FILE__ . ':' . __LINE__ . ' get_billing_address_2 ' . $customer->get_billing_address_2() . ' = ' . $order->get_billing_address_2());
             $matchCount += 15;
         }
 
@@ -475,28 +481,16 @@ function smart_find_handler(WC_Order $order): array
         }
 
         if ($matchCount > 0) {
-            $result[] = array('matchCount' => $matchCount, 'ID' => $user_id);
+            $result[$user_id] = $matchCount;
         }
     }
 
     if (!empty($result) && sizeof($result) > 1) {
-        usort($result, 'cmp');
+        asort($result);
     }
-
+    write_log(__FILE__ . ': function smart_find_handler $result');
+    write_log($result);
     return $result;
-}
-
-/**
- * To short by matchCount
- *
- * @param $a
- * @param $b
- * @return int
- */
-function cmp($a, $b)
-{
-    write_log(__FILE__ . ': function cmp');
-    return strcmp($b['matchCount'], $a['matchCount']);
 }
 
 /**
@@ -528,16 +522,17 @@ function find_supplier(WC_Product $product): array
         }
 
         foreach ($supplier_products as $product_sku) {
-            if ($product_sku['supplier_product'] != $product->get_id()) {
+            if ($product_sku['supplier_product']->ID != $product->get_id()) {
+                write_log(__FILE__ . ':' . __LINE__ . ' ' . $product_sku['supplier_product']->ID . '<>' . $product->get_id());
                 continue;
             }
 
             if ($product_sku['supplier_num_sku'] == 0) {
-                break;
+                write_log(__FILE__ . ':' . __LINE__ . ' empty supplier_num_sku');
+                continue;
             }
 
-            $supplier_ids[] = get_field('supplier_user', $supplier);
-            break;
+            $supplier_ids[] = get_field('supplier_user', $supplier->ID);
         }
     }
 
@@ -729,5 +724,21 @@ function update_user_info_bulling_shipping($user_id)
     update_user_meta($user_id, 'shipping_city', $_POST['shipping_city']);
     update_user_meta($user_id, 'shipping_state', $_POST['shipping_state']);
     update_user_meta($user_id, 'shipping_phone', $_POST['shipping_phone']);
+}
+
+/**
+ * Remove cancel order when status is in-progress
+ *
+ * @param $actions
+ * @param $order
+ * @return mixed
+ */
+function remove_myaccount_orders_cancel_button( $actions, WC_Order $order ){
+    if ( $order->get_status() == 'processing') {
+        unset($actions['cancel']);
+    }
+    unset($actions['pay']);
+
+    return $actions;
 }
 

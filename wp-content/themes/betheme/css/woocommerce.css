@@ -1948,7 +1948,7 @@ h3#ship-to-different-address label {
 
 .woocommerce .product-data-action .quality-standards .htx a:not(.button) {
     color: #109A4E;
-    font-size: 20px;
+    /*font-size: 20px;*/
     font-weight: 700;
 }
 

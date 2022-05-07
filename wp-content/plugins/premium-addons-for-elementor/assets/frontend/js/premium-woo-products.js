@@ -82,7 +82,7 @@
 
             $products.on("init", function (event) {
                 setTimeout(function () {
-                    $elem.removeClass("premium-woo-hidden");
+                    $elem.removeClass("premium-carousel-hidden");
                 }, 100);
 
             });

@@ -396,7 +396,8 @@ class Woo_Products extends Widget_Base {
 				'label'     => __( 'Load More Button', 'premium-addons-for-elementor' ),
 				'type'      => Controls_Manager::SWITCHER,
 				'condition' => array(
-					'pagination!' => 'yes',
+					'pagination!'  => 'yes',
+					'layout_type!' => 'carousel',
 				),
 			)
 		);

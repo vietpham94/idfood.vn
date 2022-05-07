@@ -106,11 +106,11 @@ $translate['all'] = mfn_opts_get('translate') ? mfn_opts_get('translate-all', 'S
     $gallery_image_ids = $product->get_gallery_image_ids();
     $attachment_image = wp_get_attachment_image_url($product->get_image_id(), 'single-post-thumbnail');
 
-    $cityVn = get_the_customer_city();
-    $customerCity = strtoupper(vn_to_str($cityVn));
+    //    $cityVn = get_the_customer_city();
+    //    $customerCity = strtoupper(vn_to_str($cityVn));
 
     $providers_number_str = get_post_meta(get_the_ID(), 'cac_nha_cung_cap');
-    $providers = get_the_providers($providers_number_str, $customerCity);
+    $providers = get_the_providers($providers_number_str, empty($customerCity) ? null : $customerCity);
     $cac_nha_cung_cap_khu_vuc = $providers[0];
     $cityVn = $providers[1];
     ?>
@@ -262,7 +262,7 @@ $translate['all'] = mfn_opts_get('translate') ? mfn_opts_get('translate-all', 'S
                                         $htx_page = get_page_by_path($htx["link"]);
                                     } ?>
                                     <p class="heading-title mb-1 mt-4 mt-xl-0 mr-2 mr-md-0">
-                                        <?= __('Sản phẩm của');?>
+                                        <?= __('Sản phẩm của'); ?>
                                     </p>
                                     <a href="<?php echo $htx["link"]; ?>" target="_blank">
                                         <i class="premium-title-icon far fa-hand-point-right" aria-hidden="true"></i>
@@ -272,8 +272,15 @@ $translate['all'] = mfn_opts_get('translate') ? mfn_opts_get('translate-all', 'S
                                     </a>
                                 <?php endif; ?>
 
-                                <?php $link_truy_xuat_nguon_goc = get_field('link_truy_xuat_nguon_goc', get_the_ID()); ?>
+                                <?php $process_certificate = get_field('process_certificate', get_the_ID()); ?>
                                 <a class="button mt-3" target="_blank"
+                                   href="<?= empty($process_certificate) ? '#' : $process_certificate; ?>">
+                                    <i aria-hidden="true" class="fas fa-qrcode"></i>
+                                    <span><?= __('Quy trình sản xuất'); ?></span>
+                                </a>
+
+                                <?php $link_truy_xuat_nguon_goc = get_field('link_truy_xuat_nguon_goc', get_the_ID()); ?>
+                                <a class="button mt-3 d-none" target="_blank"
                                    href="<?= empty($link_truy_xuat_nguon_goc) ? '#' : $link_truy_xuat_nguon_goc; ?>">
                                     <i aria-hidden="true" class="fas fa-qrcode"></i>
                                     <span><?= __('Tra cứu nguồn gốc sản phẩm'); ?></span>
@@ -314,7 +321,8 @@ $translate['all'] = mfn_opts_get('translate') ? mfn_opts_get('translate-all', 'S
                                 <?= __('Điện thoại'); ?>:
                                 <?php echo $diem_ban_le->billing['phone']; ?>
                             </p>
-                            <a class="button buy-now" data-provider="<?= $diem_ban_le->id; ?>"><?= __('Mua hàng'); ?></a>
+                            <a class="button buy-now"
+                               data-provider="<?= $diem_ban_le->id; ?>"><?= __('Mua hàng'); ?></a>
                             <a class="button direct" target="_blank"
                                href="https://www.google.co.uk/maps/place/<?= formatSearchAddressGoogle($diem_ban_le->address_1); ?>">
                                 <?= __('Chỉ đường'); ?>

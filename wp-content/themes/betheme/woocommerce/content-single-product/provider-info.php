@@ -1,5 +1,7 @@
 <?php
-function get_the_providers($providers_number_str, $customerCity) {
+function get_the_providers($providers_number_str, $customerCity)
+{
+
     if (!empty($providers_number_str)) {
         $providers_number_num = intval($providers_number_str[0]);
     } else {
@@ -13,14 +15,73 @@ function get_the_providers($providers_number_str, $customerCity) {
         }
     }
 
+    global $tinh_thanhpho;
+
     $cac_nha_cung_cap_khu_vuc = array();
     foreach ($cac_nha_cung_cap as $item) {
+
         $provider = new WC_Customer($item['nha_cung_cap']);
-        if ($customerCity == strtoupper(vn_to_str($provider->get_billing_city()))) {
+        if (empty($provider)) {
+            continue;
+        }
+
+        write_log(__FILE__ . ':' . __LINE__ . ' ' . $provider->get_billing_address_2());
+
+        $address = $provider->get_billing_address_1() . ', ' . get_name_village($provider->get_billing_address_2()) . ', ' . get_name_district($provider->get_billing_city()) . ', ' . $tinh_thanhpho[$provider->get_billing_state()];
+        $provider->set_billing_address_1($address);
+
+        if (!empty($customerCity) & $customerCity == strtoupper(vn_to_str($provider->get_billing_state()))) {
             $cac_nha_cung_cap_khu_vuc[] = $provider;
-            $cityVn = $provider->get_billing_city();
+            $cityVn = $provider->get_billing_state();
+        } else if (empty($customerCity)) {
+            $cac_nha_cung_cap_khu_vuc[] = $provider;
         }
     }
 
-    return [$cac_nha_cung_cap_khu_vuc, $cityVn];
+
+    return [$cac_nha_cung_cap_khu_vuc, !empty($cityVn) ? $tinh_thanhpho[$cityVn] : ''];
+}
+
+function get_name_district($id = '')
+{
+    include(WP_PLUGIN_DIR . '/idfood-woocommerce/cities/quan_huyen.php');
+
+    $id_quan = sprintf("%03d", intval($id));
+    if (!empty($quan_huyen) && is_array($quan_huyen)) {
+        $nameQuan = search_in_array($quan_huyen, 'maqh', $id_quan);
+        $nameQuan = isset($nameQuan[0]['name']) ? $nameQuan[0]['name'] : '';
+        return $nameQuan;
+    }
+    return false;
+}
+
+function get_name_village($id = '')
+{
+    include(WP_PLUGIN_DIR . '/idfood-woocommerce/cities/xa_phuong_thitran.php');
+
+    $id_xa = sprintf("%05d", intval($id));
+    if (!empty($xa_phuong_thitran) && is_array($xa_phuong_thitran)) {
+        $name = search_in_array($xa_phuong_thitran, 'xaid', $id_xa);
+        $name = isset($name[0]['name']) ? $name[0]['name'] : '';
+        return $name;
+    }
+    return false;
+}
+
+function search_in_array($array, $key, $value)
+{
+    $results = array();
+
+    if (is_array($array)) {
+        if (isset($array[$key]) && $array[$key] == $value) {
+            $results[] = $array;
+        } elseif (isset($array[$key]) && is_serialized($array[$key]) && in_array($value, maybe_unserialize($array[$key]))) {
+            $results[] = $array;
+        }
+        foreach ($array as $subarray) {
+            $results = array_merge($results, search_in_array($subarray, $key, $value));
+        }
+    }
+
+    return $results;
 }

@@ -701,7 +701,7 @@
 /*
 * Carousel
 */
-.premium-woo-hidden {
+.premium-carousel-hidden {
   opacity: 0;
   visibility: hidden; }
 
@@ -985,7 +985,7 @@ html.premium-woo-qv-opened body {
   width: 20px;
   height: 20px; }
 
-.premium-woo-hidden {
+.premium-woo-btn-hidden {
   visibility: hidden;
   width: 0 !important;
   height: 0 !important;

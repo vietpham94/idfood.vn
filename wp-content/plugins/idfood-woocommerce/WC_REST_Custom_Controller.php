@@ -218,6 +218,7 @@ class WC_REST_Custom_Controller
                 }
             }
 
+            $orderData['acf'] = get_fields($itemLoop->get_id());
             if ($flagFilterProduct) {
                 $orders[] = $orderData;
             }
@@ -384,7 +385,7 @@ class WC_REST_Custom_Controller
             );
         }
 
-        return update_field('status', 1, $notification_id);
+        return update_field('status', true, $notification_id);
     }
 
     public function update_order($data)

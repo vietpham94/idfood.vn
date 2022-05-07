@@ -10044,6 +10044,11 @@ ul.premium-person-social-list {
 /*
 * Carousel
 */
+.premium-carousel-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
 .premium-woocommerce:not(.premium-woo-skin-grid-7) .slick-arrow {
     -webkit-border-radius: 50%;
     border-radius: 50%;
