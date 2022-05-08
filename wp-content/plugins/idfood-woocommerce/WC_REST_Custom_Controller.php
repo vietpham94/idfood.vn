@@ -127,6 +127,15 @@ class WC_REST_Custom_Controller
                 'callback' => array($this, 'get_idfood_stock_prroduct'),
             )
         );
+
+        register_rest_route(
+            $this->namespace,
+            '/supplier-stock',
+            array(
+                'methods' => 'GET',
+                'callback' => array($this, 'update_supplier_stock'),
+            )
+        );
     }
 
     public function get_orders(WP_REST_Request $request)
@@ -141,10 +150,12 @@ class WC_REST_Custom_Controller
             );
         }
 
+        $user_data = get_userdata(get_current_user_id());
+
         $args = array(
             'post_type' => 'shop_order',
             'post_status' => ($request->get_param('status') && $request->get_param('status') != 'any') ? [$request->get_param('status')] : array_keys(wc_get_order_statuses()),
-            'posts_per_page' => 10
+            'posts_per_page' => 10,
         );
 
         if (!empty($request->get_param('page'))) {
@@ -154,9 +165,19 @@ class WC_REST_Custom_Controller
 
         if (!empty($request->get_param('customer'))) {
             $args['customer_id'] = $request->get_param('customer');
+            if ($request->get_param('customer') != get_current_user_id()) {
+                $args['meta_key'] = 'handler_user_id';
+                $args['meta_value'] = get_current_user_id();
+                if (in_array('supplier', $user_data->roles)) {
+                    $args['created_via'] = 'checkout';
+                }
+            }
         } else {
             $args['meta_key'] = 'handler_user_id';
             $args['meta_value'] = get_current_user_id();
+            if (in_array('supplier', $user_data->roles)) {
+                $args['created_via'] = 'checkout';
+            }
         }
 
         if (!empty($request->get_param('after')) && !empty($request->get_param('before'))) {
@@ -437,6 +458,9 @@ class WC_REST_Custom_Controller
         $orderData = $data->get_param('data');
         $result = $order->update_status($orderData['status']);
         update_field('thong_tin_giao_nhan', $orderData['acf']['thong_tin_giao_nhan'], $order_id);
+        if (!empty($orderData['acf']['refunded'])) {
+            update_field('refunded', $orderData['acf']['refunded'], $order_id);
+        }
         if ($result) {
             return true;
         } else {
@@ -471,7 +495,7 @@ class WC_REST_Custom_Controller
                 'meta_query' => array(
                     'relation' => 'AND',
                     array(
-                        'key' => 'create_by',
+                        'key' => 'create_by_users',
                         'value' => $provider_id,
                         'compare' => 'LIKE',
                     ),
@@ -676,42 +700,6 @@ class WC_REST_Custom_Controller
         return false;
     }
 
-    public function update_suppliers_stock(WP_REST_Request $request)
-    {
-        if (get_current_user_id() == 0) {
-            return new WP_Error(
-                'woocommerce_rest_cannot_view',
-                'Xin lỗi, xảy ra lỗi xác thực thông tin người dùng. Vui lòng kiểm tra thông tin và đăng nhập lại.',
-                array(
-                    'status' => 401,
-                )
-            );
-        }
-
-        $args = array(
-            'post_type' => 'supplier',
-            'meta_key' => 'supplier_user',
-            'meta_value' => get_current_user_id()
-        );
-
-        $suppliers = get_posts($args);
-
-        if (sizeof($suppliers) > 0) {
-            $supplier = (array)$suppliers[0];
-            $supplier['stock'] = array();
-            $stocks = get_field('supplier_products', $suppliers[0]->ID);
-            foreach ($stocks as $stock) {
-                $data = (array)$stock;
-                $data['_woo_uom_input'] = get_post_meta($stock['supplier_product']->ID, '_woo_uom_input');
-                $data['product_image'] = get_the_post_thumbnail_url($stock['supplier_product']->ID);
-                $supplier['stock'][] = $data;
-            }
-            return $supplier;
-        }
-
-        return false;
-    }
-
     public function get_idfood_stock_prroduct(WP_REST_Request $request)
     {
         if (get_current_user_id() == 0) {
@@ -739,11 +727,126 @@ class WC_REST_Custom_Controller
         $result = array();
         if (sizeof($idf_stock) > 0) {
             foreach ($idf_stock as $stock) {
-                $result[] = get_fields($stock->ID);
+                $stock = get_fields($stock->ID);
+                $product = wc_get_product($stock['product']);
+                $stock['product'] = array(
+                    ID => $product->get_id(),
+                    post_title => $product->get_name()
+                );
+
+                $_woo_uom_input = $product->get_meta('_woo_uom_input');
+                $stock['_woo_uom_input'] = $_woo_uom_input;
+                $stock['product_image'] = wp_get_attachment_image_url($product->get_image_id());
+
+                $result[] = $stock;
             }
         }
 
         return $result;
+    }
+
+    public function update_supplier_stock(WP_REST_Request $request)
+    {
+        if (get_current_user_id() == 0) {
+            return new WP_Error(
+                'woocommerce_rest_cannot_view',
+                'Xin lỗi, xảy ra lỗi xác thực thông tin người dùng. Vui lòng kiểm tra thông tin và đăng nhập lại.',
+                array(
+                    'status' => 401,
+                )
+            );
+        }
+
+        $supplier_product = $request->get_param('supplier_product');
+        if (empty($supplier_product)) {
+            return new WP_Error(
+                'update_supplier_stock_lost_data',
+                'Xin lỗi, không thể xác định được sản phẩm cần cập nhật.',
+                array(
+                    'status' => 400,
+                )
+            );
+        }
+
+        $user_data = get_userdata(get_current_user_id());
+        if (in_array('shop_manager', $user_data->roles)) {
+            return $this->update_idf_stock($request);
+        }
+
+        $args = array(
+            'post_type' => 'supplier',
+            'meta_key' => 'supplier_user',
+            'meta_value' => get_current_user_id()
+        );
+        $suppliers = get_posts($args);
+
+        if (empty($suppliers)) {
+            return new WP_Error(
+                'update_supplier_stock_lost_data',
+                'Xin lỗi, không thể xác định được thông tin kho hàng của bạn.',
+                array(
+                    'status' => 400,
+                )
+            );
+        }
+
+        $supplier = current($suppliers);
+        $products_stock = get_field('supplier_products', $supplier->ID);
+        $supplier_num_sku = $request->get_param('supplier_num_sku');
+
+        $stock_row_index = searchSupplierProductsStock($products_stock, $supplier_product);
+
+        if ($stock_row_index == -1) {
+            return new WP_Error(
+                'order_update_lost_data',
+                'Xin lỗi, không thể xác định được kho hàng cần cập nhật.',
+                array(
+                    'status' => 400,
+                )
+            );
+        }
+
+        $stock_row = $products_stock[$stock_row_index];
+        $stock_row['supplier_product'] = $supplier_product;
+        $stock_row['supplier_num_sku'] = $stock_row['supplier_num_sku'] + $supplier_num_sku;
+        $products_stock[$stock_row_index] = $stock_row;
+
+        update_field('supplier_products', $products_stock, $supplier->ID);
+        return $stock_row;
+    }
+
+    public function update_idf_stock(WP_REST_Request $request)
+    {
+        $idf_product = $request->get_param('supplier_product');
+
+        $args = array(
+            'post_type' => 'idf_stock',
+        );
+
+        if (!empty($request->get_param('products'))) {
+            $args['meta_key'] = 'product';
+            $args['meta_value'] = $idf_product;
+            $args['meta_compare'] = 'IN';
+        }
+
+        $idf_stock = get_posts($args);
+        $stock = current($idf_stock);
+
+        if (empty($stock)) {
+            return new WP_Error(
+                'update_supplier_stock_lost_data',
+                'Xin lỗi, không thể xác định được thông tin kho hàng của bạn.',
+                array(
+                    'status' => 400,
+                )
+            );
+        }
+        $supplier_num_sku = $request->get_param('supplier_num_sku');
+        $stock_num = get_field('stock', $stock->ID);
+        $stock_num = $stock_num + $supplier_num_sku;
+
+        update_field('stock', $stock_num, $stock->ID);
+        return array('supplier_num_sku' => $stock_num);
     }
 
     private function findObjectByKey($key, $value, $data = array())
@@ -820,6 +923,7 @@ class WC_REST_Custom_Controller
 
         $last_order = array(
             'id' => $customer->get_id(),
+            'role' => $customer->get_role(),
             'created_at' => $this->format_datetime($customer->get_date_created() ? $customer->get_date_created()->getTimestamp() : 0), // API gives UTC times.
             'last_update' => $this->format_datetime($customer->get_date_modified() ? $customer->get_date_modified()->getTimestamp() : 0), // API gives UTC times.
             'email' => $customer->get_email(),

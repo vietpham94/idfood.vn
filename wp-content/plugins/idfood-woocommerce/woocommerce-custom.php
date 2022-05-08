@@ -102,7 +102,8 @@ function action_woocommerce_api_create_order($order_id)
         if (!empty($users)) {
             update_field('handler_user_id', $users[0]->id, $order_id);
         }
-        $background_process = new WC_IdFood_Background_Process(find_supplier_for_order_process($order_id));
+
+        $background_process = new WC_IdFood_Background_Process(find_supplier_for_order_process($order_id), false);
         $background_process->save()->dispatch();
     }
 }
@@ -112,7 +113,7 @@ function action_woocommerce_api_create_order($order_id)
  * @return void
  * @throws Exception
  */
-function find_supplier_for_order_process($order_id)
+function find_supplier_for_order_process($order_id, $send_notification = true)
 {
     write_log(__FILE__ . ': function find_supplier_for_order_process');
     if (empty($order_id)) return;
@@ -121,7 +122,11 @@ function find_supplier_for_order_process($order_id)
 
     if (empty($handler_user_id)) {
         $handler_user_id = $order->get_meta('_provider');
-        update_field('handler_user_id', $handler_user_id, $order_id);
+        write_log(__FILE__ . ':' . __LINE__);
+        write_log($handler_user_id);
+        if (isset($handler_user_id)) {
+            update_field('handler_user_id', $handler_user_id, $order_id);
+        }
     }
 
     if (empty($handler_user_id)) {
@@ -130,16 +135,37 @@ function find_supplier_for_order_process($order_id)
     }
 
     $customer = new WC_Customer($order->get_customer_id());
-    $create_by = $handler_user_id;
-    $meta_create_by = $customer->get_meta('create_by');
-    if (!empty($meta_create_by)) {
-        $create_by .= ', ' . $meta_create_by;
+
+    $create_by = $customer->get_meta('create_by_users');
+    write_log(__FILE__ . ':' . __LINE__);
+    write_log($create_by);
+    if (empty($create_by)) {
+        $create_by = array($handler_user_id);
+        write_log(__FILE__ . ':' . __LINE__);
+        write_log($create_by);
+    } elseif (is_array($create_by) && !in_array($handler_user_id, $create_by)) {
+        $create_by[] = $handler_user_id;
+        write_log(__FILE__ . ':' . __LINE__);
+        write_log($create_by);
+    } elseif (!is_array($create_by)) {
+        $create_by = unserialize($create_by);
+        write_log(__FILE__ . ':' . __LINE__);
+        write_log($create_by);
+        if (!in_array($handler_user_id, $create_by)) {
+            $create_by[] = $handler_user_id;
+            write_log(__FILE__ . ':' . __LINE__);
+            write_log($create_by);
+        }
     }
 
-    $customer->update_meta_data('create_by', $create_by);
+    $customer->update_meta_data('create_by_users', $create_by);
     $customer->save();
 
-    push_order_notification($handler_user_id, $order_id);
+    $user_data = get_userdata($handler_user_id);
+
+    if ($send_notification || in_array('shop_manager', $user_data->roles)) {
+        push_order_notification($handler_user_id, $order_id);
+    }
 }
 
 /**
@@ -241,46 +267,138 @@ function updateSupplierStock($order_id, bool $increase = false)
         'meta_key' => 'supplier_user',
         'meta_value' => $handler_user_id,
     ));
+
     write_log(__FILE__ . ':' . __LINE__);
     write_log($suppliers);
 
-    foreach ($suppliers as $supplier) {
-        if (get_field('supplier_user', $supplier->ID) != $handler_user_id) {
-            write_log(__FILE__ . ':' . __LINE__ . ' ' . get_field('supplier_user', $supplier->ID) . ' <> ' . $handler_user_id);
+    if (empty($suppliers)) {
+        return;
+    }
+
+    $supplier = current($suppliers);
+    $supplier_user = get_field('supplier_user', $supplier->ID);
+    if ($supplier_user != $handler_user_id) {
+        write_log(__FILE__ . ':' . __LINE__ . ' ' . get_field('supplier_user', $supplier_user) . ' <> ' . $handler_user_id);
+        return;
+    }
+
+    $products_stock = get_field('supplier_products', $supplier->ID);
+    if (empty($products_stock)) {
+        write_log(__FILE__ . ':' . __LINE__ . ' products_stock is empty');
+        return;
+    }
+
+    foreach ($products_stock as $key => $stock_row) {
+        if (!empty($stock_row['supplier_product']->ID) && $stock_row['supplier_product']->ID != $product->get_id()) {
+            write_log(__FILE__ . ':' . __LINE__);
+            write_log($stock_row['supplier_product']->ID);
+            write_log($product->get_id());
             continue;
         }
 
-        $products_stock = get_field('supplier_products', $supplier->ID);
-        if (empty($products_stock)) {
-            write_log(__FILE__ . ':' . __LINE__ . ' products_stock is empty');
-            return;
-        }
-
-        foreach ($products_stock as $key => $stock_row) {
-
-            if ($stock_row['supplier_product']->ID != $product->get_id()) {
-                write_log(__FILE__ . ':' . __LINE__);
-                write_log($stock_row['supplier_product']->ID);
-                write_log($product->get_id());
-                continue;
-            }
-
-            if ($increase) {
-                $stock_row['supplier_num_sku'] = $stock_row['supplier_num_sku'] + $quantity;
-            } else {
-                $stock_row['supplier_num_sku'] = $stock_row['supplier_num_sku'] - $quantity;
-            }
-
+        if (is_numeric($stock_row['supplier_product']) && $stock_row['supplier_product'] != $product->get_id()) {
             write_log(__FILE__ . ':' . __LINE__);
-            write_log($stock_row);
-            write_log($key);
-
-            $products_stock[$key] = $stock_row;
-            break;
+            write_log($stock_row['supplier_product']);
+            write_log($product->get_id());
+            continue;
         }
 
-        update_field('supplier_products', $products_stock, $supplier->ID);
-        break;
+        if ($increase || $supplier_user == $order->get_customer_id()) {
+            $stock_row['supplier_num_sku'] = $stock_row['supplier_num_sku'] + $quantity;
+        } else {
+            $stock_row['supplier_num_sku'] = $stock_row['supplier_num_sku'] - $quantity;
+        }
+
+        write_log(__FILE__ . ':' . __LINE__);
+        write_log($stock_row);
+        write_log($key);
+
+        $products_stock[$key] = $stock_row;
+    }
+
+    $result = update_field('supplier_products', $products_stock, $supplier->ID);
+    write_log(__FILE__ . ':' . __LINE__ . ' Update product stock ' . $result);
+}
+
+/**
+ * Input Supplier Stock
+ *
+ * @param WC_Order $order
+ * @return void
+ */
+function inputSupplierStock(WC_Order $order)
+{
+    $suppliers = get_posts(array(
+        'post_type' => 'supplier',
+        'meta_key' => 'supplier_user',
+        'meta_value' => $order->get_customer_id(),
+    ));
+
+    if (empty($suppliers)) {
+        return;
+    }
+
+    $supplier = current($suppliers);
+    $products_stock = get_field('supplier_products', $supplier->ID);
+
+    foreach ($order->get_items() as $item) {
+        $product = $item->get_product();
+        $quantity = $item->get_quantity();
+
+        if (empty($products_stock)) {
+            $products_stock = array();
+            $products_stock[] = array(
+                'supplier_product' => $product->get_id(),
+                'supplier_num_sku' => $quantity
+            );
+            continue;
+        }
+
+        $stock_row_index = searchSupplierProductsStock($products_stock, $product->get_id());
+        if ($stock_row_index == -1) {
+            $products_stock[] = array(
+                'supplier_product' => $product->get_id(),
+                'supplier_num_sku' => $quantity
+            );
+            continue;
+        }
+
+        $stock_row = $products_stock[$stock_row_index];
+        $stock_row['supplier_num_sku'] = $stock_row['supplier_num_sku'] + $quantity;
+        $products_stock[$stock_row_index] = $stock_row;
+    }
+
+    $result = update_field('supplier_products', $products_stock, $supplier->ID);
+    write_log(__FILE__ . ':' . __LINE__ . ' Update product stock ' . $result);
+}
+
+/**
+ * Search Supplier Products Stock
+ *
+ * @param $products_stock
+ * @param $productId
+ * @return false|int|string|void
+ */
+function searchSupplierProductsStock($products_stock, $productId)
+{
+    if (empty($products_stock)) {
+        return -1;
+    }
+
+    if (empty($productId)) {
+        return -1;
+    }
+
+    foreach ($products_stock as $key => $stock_row) {
+        if (!empty($stock_row['supplier_product']->ID) && $stock_row['supplier_product']->ID != $productId) {
+            continue;
+        }
+
+        if (is_numeric($stock_row['supplier_product']) && $stock_row['supplier_product'] != $productId) {
+            continue;
+        }
+
+        return $key;
     }
 }
 
@@ -362,13 +480,24 @@ function action_woocommerce_order_completed($order_id)
 
     if (empty($order_id)) return;
 
+    $order = wc_get_order($order_id);
+    if (empty($order)) return;
+
     $handler_user_id = get_field('handler_user_id', $order_id);
     $user_data = get_userdata($handler_user_id);
+    $customer_data = get_userdata($order->get_customer_id());
+
     write_log(__FILE__ . ':' . __LINE__);
     write_log($user_data->roles);
+    write_log($customer_data->roles);
 
-    if (in_array('supplier', $user_data->roles) && $handler_user_id == get_current_user_id()) {
+    if (in_array('supplier', $user_data->roles) && $handler_user_id == get_current_user_id() && $order->get_created_via() == 'rest-api') {
         $background_process = new WC_IdFood_Background_Process(updateSupplierStock($order_id));
+        $background_process->save()->dispatch();
+    }
+
+    if (in_array('supplier', $customer_data->roles)) {
+        $background_process = new WC_IdFood_Background_Process(inputSupplierStock($order));
         $background_process->save()->dispatch();
     }
 }
@@ -733,12 +862,21 @@ function update_user_info_bulling_shipping($user_id)
  * @param $order
  * @return mixed
  */
-function remove_myaccount_orders_cancel_button( $actions, WC_Order $order ){
-    if ( $order->get_status() == 'processing') {
+function remove_myaccount_orders_cancel_button($actions, WC_Order $order)
+{
+    if ($order->get_status() == 'processing') {
         unset($actions['cancel']);
     }
     unset($actions['pay']);
 
     return $actions;
+}
+
+/**
+ * @return void
+ */
+function add_stock_histories()
+{
+
 }
 

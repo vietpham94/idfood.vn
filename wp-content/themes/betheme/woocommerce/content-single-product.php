@@ -313,18 +313,26 @@ $translate['all'] = mfn_opts_get('translate') ? mfn_opts_get('translate-all', 'S
                     <?php foreach ($cac_nha_cung_cap_khu_vuc as $diem_ban_le): ?>
                         <div class="location">
                             <p class="location-name mb-1">
-                                <?= $diem_ban_le->display_name; ?>
+                                <?= $diem_ban_le['display_name']; ?>
                             </p>
+                            <?php if ($diem_ban_le['stock'] > 0) : ?>
+                                <p class="stock-quantity mb-1"><?= __('Còn lại trong kho (') . $diem_ban_le['stock'] . ')' ?></p>
+                            <?php else: ?>
+                                <p class="stock-quantity mb-1"><?= __('Hiện tại đang hết hàng') ?></p>
+                            <?php endif; ?>
                             <p class="location-position mb-1 d-none"><?= __('Khoảng cách: 1,5km'); ?></p>
                             <p class="location-address">
-                                <?= $diem_ban_le->address_1; ?><br/>
+                                <?= __('Địa chỉ'); ?>:
+                                <?= $diem_ban_le['billing']['address_1']; ?><br/>
                                 <?= __('Điện thoại'); ?>:
-                                <?php echo $diem_ban_le->billing['phone']; ?>
+                                <?php echo $diem_ban_le['billing']['phone']; ?>
                             </p>
-                            <a class="button buy-now"
-                               data-provider="<?= $diem_ban_le->id; ?>"><?= __('Mua hàng'); ?></a>
+                            <?php if ($diem_ban_le['stock'] > 0) : ?>
+                                <a class="button buy-now"
+                                   data-provider="<?= $diem_ban_le['id']; ?>"><?= __('Mua hàng'); ?></a>
+                            <?php endif; ?>
                             <a class="button direct" target="_blank"
-                               href="https://www.google.co.uk/maps/place/<?= formatSearchAddressGoogle($diem_ban_le->address_1); ?>">
+                               href="https://www.google.co.uk/maps/place/<?= formatSearchAddressGoogle($diem_ban_le['billing']['address_1']); ?>">
                                 <?= __('Chỉ đường'); ?>
                             </a>
                             <hr>

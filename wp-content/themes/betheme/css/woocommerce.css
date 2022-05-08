@@ -2034,6 +2034,11 @@ h3#ship-to-different-address label {
     color: #a1a1a1;
 }
 
+.woocommerce .product-summary .product-location .location .stock-quantity {
+    font-style: italic;
+    color: #f2643d;
+}
+
 .woocommerce .product-summary .product-location .location .location-name {
     font-size: 18px;
     color: #282828;

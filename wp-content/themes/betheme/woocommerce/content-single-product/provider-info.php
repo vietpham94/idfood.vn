@@ -25,19 +25,48 @@ function get_the_providers($providers_number_str, $customerCity)
             continue;
         }
 
-        write_log(__FILE__ . ':' . __LINE__ . ' ' . $provider->get_billing_address_2());
+        $suppliers = get_posts(array(
+            'post_type' => 'supplier',
+            'meta_key' => 'supplier_user',
+            'meta_value' => $item['nha_cung_cap'],
+        ));
 
-        $address = $provider->get_billing_address_1() . ', ' . get_name_village($provider->get_billing_address_2()) . ', ' . get_name_district($provider->get_billing_city()) . ', ' . $tinh_thanhpho[$provider->get_billing_state()];
-        $provider->set_billing_address_1($address);
+        if (empty($suppliers)) {
+            continue;
+        }
+
+        $supplier = current($suppliers);
+
+        $products_stock = get_field('supplier_products', $supplier->ID);
+        if (empty($products_stock)) {
+            write_log(__FILE__ . ':' . __LINE__ . ' products_stock is empty');
+            continue;
+        }
+
+        $inStockProduct = 0;
+        foreach ($products_stock as $key => $stock_row) {
+            if (!empty($stock_row['supplier_product']->ID) && $stock_row['supplier_product']->ID != get_the_ID()) {
+                continue;
+            }
+
+            if (is_numeric($stock_row['supplier_product']) && $stock_row['supplier_product'] != get_the_ID()) {
+                continue;
+            }
+
+            $inStockProduct = $stock_row['supplier_num_sku'];
+        }
+
 
         if (!empty($customerCity) & $customerCity == strtoupper(vn_to_str($provider->get_billing_state()))) {
-            $cac_nha_cung_cap_khu_vuc[] = $provider;
-            $cityVn = $provider->get_billing_state();
-        } else if (empty($customerCity)) {
-            $cac_nha_cung_cap_khu_vuc[] = $provider;
+            $cityVn = $tinh_thanhpho[$provider->get_billing_state()];
         }
-    }
 
+        $arrProvider = $provider->get_data();
+        $address = $provider->get_billing_address_1() . ', ' . get_name_village($provider->get_billing_address_2()) . ', ' . get_name_district($provider->get_billing_city()) . ', ' . $tinh_thanhpho[$provider->get_billing_state()];
+        $arrProvider['billing']['address_1'] = $address;
+        $arrProvider['stock'] = $inStockProduct;
+        $cac_nha_cung_cap_khu_vuc[] = $arrProvider;
+    }
 
     return [$cac_nha_cung_cap_khu_vuc, !empty($cityVn) ? $tinh_thanhpho[$cityVn] : ''];
 }
