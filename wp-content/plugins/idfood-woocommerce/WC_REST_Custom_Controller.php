@@ -150,8 +150,6 @@ class WC_REST_Custom_Controller
             );
         }
 
-        $user_data = get_userdata(get_current_user_id());
-
         $args = array(
             'post_type' => 'shop_order',
             'post_status' => ($request->get_param('status') && $request->get_param('status') != 'any') ? [$request->get_param('status')] : array_keys(wc_get_order_statuses()),
@@ -168,16 +166,14 @@ class WC_REST_Custom_Controller
             if ($request->get_param('customer') != get_current_user_id()) {
                 $args['meta_key'] = 'handler_user_id';
                 $args['meta_value'] = get_current_user_id();
-                if (in_array('supplier', $user_data->roles)) {
-                    $args['created_via'] = 'checkout';
-                }
             }
         } else {
             $args['meta_key'] = 'handler_user_id';
             $args['meta_value'] = get_current_user_id();
-            if (in_array('supplier', $user_data->roles)) {
-                $args['created_via'] = 'checkout';
-            }
+        }
+
+        if (!empty($request->get_param('created_via'))) {
+            $args['created_via'] = $request->get_param('created_via');
         }
 
         if (!empty($request->get_param('after')) && !empty($request->get_param('before'))) {
@@ -367,15 +363,15 @@ class WC_REST_Custom_Controller
                     }
                 }
                 $notificationList[] = array(
-                    id => $notification->ID,
-                    title => $notification->post_title,
-                    body => $notification->post_content,
-                    receiver_id => get_field('receiver_id', $notification->ID),
-                    order_id => get_field('order_id', $notification->ID),
-                    status => get_field('status', $notification->ID),
-                    type => get_field('type', $notification->ID),
-                    order => $orderData,
-                    time => $notification->post_date
+                    'id' => $notification->ID,
+                    'title' => $notification->post_title,
+                    'body' => $notification->post_content,
+                    'receiver_id' => get_field('receiver_id', $notification->ID),
+                    'order_id' => get_field('order_id', $notification->ID),
+                    'status' => get_field('status', $notification->ID),
+                    'type' => get_field('type', $notification->ID),
+                    'order' => $orderData,
+                    'time' => $notification->post_date
                 );
             }
         }
@@ -487,33 +483,31 @@ class WC_REST_Custom_Controller
             $offset = ($request->get_param('page') - 1) * 10;
         }
 
-        $query = new WP_User_Query(apply_filters(
-            'woocommerce_customer_search_customers',
-            array(
-                'fields' => 'ID',
-                'offset' => $offset,
-                'meta_query' => array(
-                    'relation' => 'AND',
+        $query = new WP_User_Query(array(
+            'fields' => 'ID',
+            'offset' => $offset,
+            'paged' => empty($request->get_param('page')) ? $request->get_param('page') : 1,
+            'number' => 10,
+            'meta_query' => array(
+                'relation' => 'AND',
+                array(
+                    'key' => 'create_by_users',
+                    'value' => $provider_id,
+                    'compare' => 'LIKE',
+                ),
+                array(array(
+                    'relation' => 'OR',
                     array(
-                        'key' => 'create_by_users',
-                        'value' => $provider_id,
+                        'key' => 'last_name',
+                        'value' => $request->get_param('search'),
                         'compare' => 'LIKE',
                     ),
-                    array(array(
-                        'relation' => 'OR',
-                        array(
-                            'key' => 'last_name',
-                            'value' => $request->get_param('search'),
-                            'compare' => 'LIKE',
-                        ),
-                        array(
-                            'key' => 'first_name',
-                            'value' => $request->get_param('search'),
-                            'compare' => 'LIKE',
-                        )
-                    )),
-                ),
-                'meta_query'
+                    array(
+                        'key' => 'first_name',
+                        'value' => $request->get_param('search'),
+                        'compare' => 'LIKE',
+                    )
+                )),
             )
         ));
         $customer_ids = $query->get_results();
@@ -730,8 +724,8 @@ class WC_REST_Custom_Controller
                 $stock = get_fields($stock->ID);
                 $product = wc_get_product($stock['product']);
                 $stock['product'] = array(
-                    ID => $product->get_id(),
-                    post_title => $product->get_name()
+                    'ID' => $product->get_id(),
+                    'post_title' => $product->get_name()
                 );
 
                 $_woo_uom_input = $product->get_meta('_woo_uom_input');

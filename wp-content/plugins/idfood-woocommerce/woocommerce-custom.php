@@ -483,6 +483,10 @@ function action_woocommerce_order_completed($order_id)
     $order = wc_get_order($order_id);
     if (empty($order)) return;
 
+    if (!empty($order->get_meta('handler_user_id'))) {
+        update_field('handler_user_id', $order->get_meta('handler_user_id'), $order->get_id());
+    }
+
     $handler_user_id = get_field('handler_user_id', $order_id);
     $user_data = get_userdata($handler_user_id);
     $customer_data = get_userdata($order->get_customer_id());
